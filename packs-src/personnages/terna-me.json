@@ -1,6 +1,6 @@
 {
-  "_id": "R7K1Uy6ilGLwIP8l",
-  "_key": "!actors!R7K1Uy6ilGLwIP8l",
+  "_id": "ZQ3Q850awGtcWow2",
+  "_key": "!actors!ZQ3Q850awGtcWow2",
   "name": "Terna Mé",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "9fsw8UTFDnYgVqVp",
+      "_id": "65wELZOA3rQq3ADb",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.9fsw8UTFDnYgVqVp",
+      "_key": "!actors.items!ZQ3Q850awGtcWow2.65wELZOA3rQq3ADb",
       "effects": []
     },
     {
-      "_id": "8Tn1yQ3jdYXWZURA",
+      "_id": "Dx0WXYP0DSTy9i0r",
       "name": "Mandibules hypertrophiées",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -186,11 +186,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.8Tn1yQ3jdYXWZURA",
+      "_key": "!actors.items!ZQ3Q850awGtcWow2.Dx0WXYP0DSTy9i0r",
       "effects": []
     },
     {
-      "_id": "zTtkjcNyVmsKxYfF",
+      "_id": "2CfXL8cshQTZjdhh",
       "name": "Armure de cuir de Sangchauds",
       "type": "armure",
       "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
@@ -204,11 +204,11 @@
         "prixQuartz": 6,
         "equipee": true
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.zTtkjcNyVmsKxYfF",
+      "_key": "!actors.items!ZQ3Q850awGtcWow2.2CfXL8cshQTZjdhh",
       "effects": []
     },
     {
-      "_id": "oHdUkNr2wIY8JCEa",
+      "_id": "CP2Jc3VvrrTA5bsB",
       "name": "Perception chimique hors du commun",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -224,7 +224,7 @@
           "valeur": 1
         }
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.oHdUkNr2wIY8JCEa",
+      "_key": "!actors.items!ZQ3Q850awGtcWow2.CP2Jc3VvrrTA5bsB",
       "effects": []
     }
   ]

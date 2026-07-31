@@ -1,10 +1,10 @@
 {
-  "_id": "YTNNYl9flAut84Ug",
-  "_key": "!journal!YTNNYl9flAut84Ug",
+  "_id": "HRt2Xk3OQ1eXvPdW",
+  "_key": "!journal!HRt2Xk3OQ1eXvPdW",
   "name": "Insectopia — Castes et métiers (livre de base p.204)",
   "pages": [
     {
-      "_id": "R2QhHtxeeDEzURue",
+      "_id": "RU9H64I6s8pFbJG0",
       "name": "Combattants",
       "type": "text",
       "title": {
@@ -18,10 +18,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!YTNNYl9flAut84Ug.R2QhHtxeeDEzURue"
+      "_key": "!journal.pages!HRt2Xk3OQ1eXvPdW.RU9H64I6s8pFbJG0"
     },
     {
-      "_id": "A6hwBq7rnskh0Ea0",
+      "_id": "tOgkGDoo4T4WRB9m",
       "name": "Divins",
       "type": "text",
       "title": {
@@ -35,10 +35,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!YTNNYl9flAut84Ug.A6hwBq7rnskh0Ea0"
+      "_key": "!journal.pages!HRt2Xk3OQ1eXvPdW.tOgkGDoo4T4WRB9m"
     },
     {
-      "_id": "c17JB5A3G71bsLmN",
+      "_id": "ie44aR3mQ6uAprBE",
       "name": "Dominants",
       "type": "text",
       "title": {
@@ -52,10 +52,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!YTNNYl9flAut84Ug.c17JB5A3G71bsLmN"
+      "_key": "!journal.pages!HRt2Xk3OQ1eXvPdW.ie44aR3mQ6uAprBE"
     },
     {
-      "_id": "82V4RZja97WBz3oz",
+      "_id": "IowSDVrDfRrFdjLG",
       "name": "Hors-caste",
       "type": "text",
       "title": {
@@ -69,10 +69,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!YTNNYl9flAut84Ug.82V4RZja97WBz3oz"
+      "_key": "!journal.pages!HRt2Xk3OQ1eXvPdW.IowSDVrDfRrFdjLG"
     },
     {
-      "_id": "rN6yaHWIjPtfKQgx",
+      "_id": "vZsjPbCKI6BnnMdN",
       "name": "Producteurs",
       "type": "text",
       "title": {
@@ -86,7 +86,24 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!YTNNYl9flAut84Ug.rN6yaHWIjPtfKQgx"
+      "_key": "!journal.pages!HRt2Xk3OQ1eXvPdW.vZsjPbCKI6BnnMdN"
+    },
+    {
+      "_id": "3iIrHZxfCetx6w9p",
+      "name": "Compétences de caste (récapitulatif)",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 2
+      },
+      "text": {
+        "format": 1,
+        "content": "<p>Le personnage possède autant de compétences de caste que sa valeur en Caste (livret p.205). Voici les 26 compétences disponibles :</p><p><strong>Artisanat</strong> — Fabrication d'objets manufacturés dans une spécialité choisie à la création. Test d'Artisanat (ou Médecine et décoctions / Sciences et techniques selon l'objet) opposé à une Difficulté fixée par le Deus. La couleur du résultat détermine la qualité de l'objet obtenu (échec critique : composants perdus + incident ; échec : composants perdus ; réussite : objet conforme ; réussite améliorée/critique : qualité supérieure, délai réduit, ou composants économisés).</p><p><strong>Art de la guerre</strong> — Une fois par tour de combat, permet de tirer un test (opposé à Art de la guerre adverse, ou difficulté 0 s'il ne la possède pas) pour accorder un bonus ou infliger un malus tactique à son escouade (attaque, défense, agilité ou dégâts), utilisable une fois par bénéficiaire pendant le tour. Un échec critique retourne l'effet contre l'équipe du tacticien.</p><p><strong>Art de la forêt</strong> — Connaissance des forêts : déplacement, repérage de pièges et de dangers, recherche de traces d'animaux, de plantes ou de champignons, recherche d'abris. Compétence de survie spécialisée doublée d'une bonne connaissance de la faune et de la flore.</p><p><strong>Art du spectacle</strong> — Divertir un public (musique, danse, théâtre). Un tirage détermine la qualité de la prestation, avec une difficulté fixée selon les Phéromones de la cible, la proximité avec un spectacle précédent, la réputation locale. Une bonne réputation ouvre invitations, cadeaux ou avantages ; une mauvaise rencontre peut au contraire créer un ennemi durable.</p><p><strong>Art des voleurs</strong> — Réputation dans les milieux criminels. Le personnage dispose d'un nombre de points de Marché noir égal à son score ; il tire une Blatte avec ce montant pour obtenir un bien ou un service illégal (difficulté fixée par le Deus selon la rareté). Les résultats vont de l'obtention d'un bien de qualité supérieure à la catastrophe (guet-apens, trahison). Les points se régénèrent en début de scénario ou après une ellipse.</p><p><strong>Belluaire</strong> — Connaissance empathique des animaux sauvages d'Entoma (points faibles, régime alimentaire, communication non-verbale). Un test de Belluaire opposé au Sens de l'animal cible permet une influence ou un apaisement temporaire — mais jamais un contrôle total comme un druide : l'animal n'obéit que si cela sert son intérêt.</p><p><strong>Blocage</strong> — Compétence martiale de saisie et d'immobilisation, très appréciée des soldats animistes. C'est une compétence d'attaque et non de défense : une fois la cible saisie, si elle ne parvient pas à se libérer, l'expert en Blocage peut l'achever facilement au corps à corps. Détail complet dans les règles de combat (compétences spéciales de combat).</p><p><strong>Commerce</strong> — Richesse, contacts et réputation d'un marchand (plafonnée à 4 sans affiliation à la Guilde des Négociants). Le personnage dispose d'un nombre de points de Ressource égal à son score, dépensés via un tirage pour obtenir des biens ou services coûteux ; mêmes paliers de résultat qu'Art des voleurs (bien de qualité supérieure à catastrophe).</p><p><strong>Coup Vicieux</strong> — Compétence d'attaque sournoise et déloyale (bottes interdites, attaques par surprise), dont l'efficacité est proportionnelle à la discrétion de l'assaillant. Certaines armes exigent sa maîtrise. Détail complet dans les règles de combat.</p><p><strong>Courtoisie</strong> — Connaissance des convenances sociales d'Entoma. Un test de Courtoisie opposé à la caractéristique Caste de l'interlocuteur permet de faire bonne impression ou de se sortir d'une situation délicate sans froisser autrui.</p><p><strong>Dressage</strong> — Domestication et dressage de petits Sangchauds, Plumes ou insectes. Progression par 8 paliers de difficulté (de la capture d'un animal sauvage à l'obéissance aveugle), au moins une semaine de jeu s'écoulant entre chaque palier.</p><p><strong>Éducation</strong> — Capacité à éduquer œufs, larves, nymphes et jeunes intres, à transmettre les valeurs raciales et sociétales. Laisse une empreinte durable : un test opposé aux Phéromones de la cible détermine un bonus ou un malus persistant dans les interactions sociales avec les intres qu'il a élevés, selon le souvenir laissé.</p><p><strong>Escrime</strong> — Compétence martiale de précision alliant technique et esthétique du geste, prisée des Bretteurs. Vise à désarmer l'adversaire ou à toucher ses points faibles pour passer au travers de la chitine. Détail complet dans les règles de combat.</p><p><strong>Essaim</strong> — Contrôle phéromonal d'intres non doués d'intelligence (ouvriers), utilisé notamment par les Termides Dominants. Le score détermine le nombre d'ouvriers sous commandement permanent, ainsi que leur facteur de dégâts et de résistance en action collective. Opposé à l'Antenne de la cible (+1 par cible supplémentaire) ; un ordre réussi peut avoir n'importe quelle issue sauf pousser la cible à se donner la mort.</p><p><strong>Fureur</strong> — Compétence d'attaque brutale et dévastatrice au corps à corps, utilisant les armes naturelles. Détail complet dans les règles de combat.</p><p><strong>Histoire et religion</strong> — Connaissances historiques et théologiques couvrant toutes les cultures d'Entoma. En cas de désaccord entre deux personnages sur un fait, un test d'opposition détermine lequel impose son point de vue.</p><p><strong>Infiltration</strong> — S'introduire dans des lieux interdits sans être repéré : mouvement silencieux, camouflage physique et phéromonal, déguisement, comédie, imitation animale.</p><p><strong>Médecine et décoctions</strong> — Soigner intres et araks, ou à l'inverse fabriquer poisons et remèdes. Opposée à un niveau de difficulté selon l'effet recherché (voir chapitres Soins et poisons).</p><p><strong>Navigation</strong> — Diriger une embarcation, un navire fluvial ou une nef aérienne ; s'orienter et estimer les temps de trajet.</p><p><strong>Nefs aériennes</strong> — Confectionner et réparer les nefs de transport Lulle. Compétence réservée à cette race.</p><p><strong>Sciences et techniques</strong> — Concevoir et fabriquer des objets technologiques. Fréquente chez les adeptes des Anciens Dieux, mais pas réservée à ce culte (ex : un Érudit Lulle l'utilise pour améliorer une nef aérienne).</p><p><strong>Sexualité</strong> — Maîtrise de tout ce qui touche à la sexualité (courante et valorisée en Entoma, bien que certaines sociétés la bride) : séduire, donner du plaisir, renforcer une fertilité défaillante. Accorde un bonus de circonstance dans les interactions selon la couleur du tirage.</p><p><strong>Survie</strong> — Trouver nourriture, eau et abri dans n'importe quelles conditions climatiques ou géographiques, opposée à un niveau de difficulté fixé par le Deus.</p><p><strong>Tireur d'élite</strong> — Compétence d'attaque à distance réservée aux Archers (animistes ou cultistes), reflétant précision et concentration. Détail complet dans les règles de combat.</p><p><strong>Vivacité</strong> — Compétence martiale animiste basée sur le mouvement et l'exploitation des capacités naturelles dévastatrices des intres. Détail complet dans les règles de combat.</p><p><strong>Sphère de magie</strong> — Permet de choisir une sphère magique parmi les quatre associées au métier divin choisi (jusqu'à deux au moment du choix de la caste, les deux autres via la répartition des compétences de caste). Compétence active utilisée pour résoudre l'effet de tous les sorts de cette sphère.</p>"
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!HRt2Xk3OQ1eXvPdW.3iIrHZxfCetx6w9p"
     }
   ],
   "folder": null,
