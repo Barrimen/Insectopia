@@ -1,0 +1,86 @@
+<div class="dialog">
+  <div class="intro">
+    <table class="introtable">
+      <tbody>
+        <tr>
+          {{#if (ne charImg "icons/svg/mystery-man.svg")}}
+          <td class="introImg"><img src="{{charImg}}" title="{{actorname}}" /></td>
+          {{/if}}
+          <td class="introtext">
+            {{introText}}{{#if competence}}&nbsp;({{competence.value}}){{/if}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="dialog-main">
+    {{#if isSimple}}
+    <div class="nbblattes">
+      <label>Nombre de Blattes</label>
+      <select id="nbblattes">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </div>
+
+    {{else if isDegatsDialog}}
+    <div class="opposantvalue">
+      <label>Chitine de l'attaquant (arme comprise)</label>
+      <input type="number" id="opposantvalue" value="{{chitineAttaquePrefill}}" />
+    </div>
+    <div class="difficulte">
+      <label>Chitine du défenseur (armure comprise)</label>
+      <input type="number" id="difficulte" value="{{chitineDefensePrefill}}" />
+    </div>
+    <p class="hint">
+      Préremplis automatiquement à partir de l'arme équipée de l'attaquant et, si un token est ciblé sur la
+      scène, de la Chitine + armures du défenseur. Modifiables si besoin.
+    </p>
+
+    {{else}}
+    <div class="opposantvalue">
+      <label>Score de l'opposant (compétence/caractéristique)</label>
+      <input type="number" id="opposantvalue" value="0" />
+    </div>
+    <div class="difficulte">
+      <label>Niveau de difficulté</label>
+      <select id="difficulte">
+        <option value="0">0 - Facile</option>
+        <option value="1" selected>1 - Moyen</option>
+        <option value="2">2 - Complexe</option>
+        <option value="3">3 - Ardu</option>
+        <option value="4">4 - Très difficile</option>
+        <option value="5">5 - Irréalisable</option>
+        <option value="6">6 - Impossible</option>
+      </select>
+    </div>
+    <div class="rollmodifier">
+      <label>Modificateur libre</label>
+      <select id="rollmodifier">
+        <option value="-3">-3</option>
+        <option value="-2">-2</option>
+        <option value="-1">-1</option>
+        <option value="0" selected>0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+    {{/if}}
+  </div>
+
+  {{#unless isDegatsDialog}}
+  {{#unless isSimple}}
+  <p class="hint">
+    Remplissez soit le score de l'opposant (opposition à un autre personnage),
+    soit un niveau de difficulté (action non opposée à un tiers), pas les deux.
+  </p>
+  {{/unless}}
+  {{/unless}}
+</div>

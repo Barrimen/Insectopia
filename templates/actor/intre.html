@@ -1,0 +1,259 @@
+<form class="{{cssClass}} droppable" autocomplete="off">
+  <header class="sheet-header">
+    <img class="portraitimg" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+    <div class="header-fields">
+      <input class="charname" name="name" type="text" value="{{actor.name}}" placeholder="Nom" />
+      <div class="identite-line">
+        <select name="raceSelect" id="raceSelect">
+          {{#each racesListe as |race|}}
+          <option value="{{race.key}}">{{race.label}}</option>
+          {{/each}}
+        </select>
+        <a class="race-apply"><i class="fas fa-check"></i> Appliquer la race (caractéristiques + capacités natives)</a>
+      </div>
+      <div class="identite-line">
+        <input name="system.identite.race" type="text" value="{{system.identite.race}}" placeholder="Race" />
+        <input name="system.identite.casteNom" type="text" value="{{system.identite.casteNom}}" placeholder="Caste" />
+        <input name="system.identite.metier" type="text" value="{{system.identite.metier}}" placeholder="Métier" />
+      </div>
+      <div class="identite-line">
+        <select name="system.identite.religion">
+          <option value="animiste" {{#ife system.identite.religion "animiste"}}selected{{/ife}}>Animiste</option>
+          <option value="cultiste" {{#ife system.identite.religion "cultiste"}}selected{{/ife}}>Cultiste</option>
+          <option value="autre" {{#ife system.identite.religion "autre"}}selected{{/ife}}>Autre / aucune</option>
+        </select>
+        <select name="system.identite.regimealimentaire">
+          <option value="carnivore" {{#ife system.identite.regimealimentaire "carnivore"}}selected{{/ife}}>Carnivore</option>
+          <option value="herbivore" {{#ife system.identite.regimealimentaire "herbivore"}}selected{{/ife}}>Herbivore</option>
+          <option value="omnivore" {{#ife system.identite.regimealimentaire "omnivore"}}selected{{/ife}}>Omnivore</option>
+        </select>
+        <input name="system.identite.couleur" type="text" value="{{system.identite.couleur}}" placeholder="Couleur" />
+      </div>
+    </div>
+
+    <div class="chancebox">
+      <div class="chancebox-title">Blattes de chance</div>
+      <table>
+        <tbody style="text-align:center;">
+          <tr>
+            <td><span class="blatte blatte-rouge"></span></td>
+            <td><span class="blatte blatte-verte"></span></td>
+            <td><span class="blatte blatte-bleue"></span></td>
+            <td><span class="blatte blatte-blanche"></span></td>
+            <td><span class="blatte blatte-noire"></span></td>
+          </tr>
+          <tr>
+            <td><input class="small-input" type="number" name="system.chance.rouge" value="{{system.chance.rouge}}" /></td>
+            <td><input class="small-input" type="number" name="system.chance.verte" value="{{system.chance.verte}}" /></td>
+            <td><input class="small-input" type="number" name="system.chance.bleue" value="{{system.chance.bleue}}" /></td>
+            <td><input class="small-input" type="number" name="system.chance.blanche" value="{{system.chance.blanche}}" /></td>
+            <td><input class="small-input" type="number" name="system.chance.noire" value="{{system.chance.noire}}" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <a class="chance-roll"><i class="fas fa-sack"></i> Tirer les Blattes de chance</a>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="caracteristiques">Caractéristiques</a>
+    <a class="item" data-tab="combat">Combat</a>
+    <a class="item" data-tab="objets">Objets</a>
+    <a class="item" data-tab="capacites">Capacités (notes libres)</a>
+    <a class="item" data-tab="notes">Historique / Notes</a>
+  </nav>
+
+  <section class="sheet-body">
+
+    <div class="tab caracteristiques" data-group="primary" data-tab="caracteristiques">
+      <table class="caracteristiques-table">
+        <thead>
+          <tr><th>Caractéristique</th><th>Valeur</th><th>Compétence</th><th>Valeur</th><th></th></tr>
+        </thead>
+        <tbody>
+          {{#each caracteristiquesListe as |carac|}}
+          <tr class="carac-row">
+            <td>
+              <a class="caract-roll" data-carac="{{carac.key}}">{{localize carac.label}}</a>
+            </td>
+            <td>
+              <input class="small-input" type="number" name="system.caracteristiques.{{carac.key}}.value" value="{{carac.value}}" />
+            </td>
+            {{#if (ne carac.key "caste")}}
+            <td colspan="3" style="padding:0;">
+              <table style="width:100%;">
+                {{#each carac.competencesListe as |comp|}}
+                <tr>
+                  <td>
+                    <a class="comp-roll" data-carac="{{../carac.key}}" data-comp="{{comp.key}}">{{localize comp.label}}</a>
+                  </td>
+                  <td>
+                    <input class="small-input" type="number" name="system.caracteristiques.{{../carac.key}}.competences.{{comp.key}}.value" value="{{comp.value}}" />
+                  </td>
+                </tr>
+                {{/each}}
+              </table>
+            </td>
+            {{else}}
+            <td colspan="3" style="padding:0;">
+              <table style="width:100%;">
+                {{#each carac.competencesListe as |comp index|}}
+                <tr>
+                  <td>
+                    <input type="text" name="system.caracteristiques.caste.competences.{{index}}.label" value="{{comp.label}}" />
+                  </td>
+                  <td>
+                    <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
+                  </td>
+                  <td><a class="caste-comp-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                {{/each}}
+                <tr><td colspan="3"><a class="caste-comp-add"><i class="fas fa-plus"></i> Ajouter une compétence de Caste</a></td></tr>
+              </table>
+            </td>
+            {{/if}}
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <p class="hint">
+        Cliquez sur le nom d'une caractéristique ou d'une compétence pour ouvrir le dialogue de tirage de Blattes.
+        Les deux compétences de Caste dépendent du métier du personnage (Blocage/Fureur, Essaim/Courtoisie, Air/Terre, Navigation, Nefs aériennes, Histoire et religion...).
+      </p>
+    </div>
+
+    <div class="tab combat" data-group="primary" data-tab="combat">
+      <table class="combat-table">
+        <tbody>
+          <tr>
+            <td>Impact (Résistance)</td>
+            <td><input class="small-input" type="number" name="system.combat.blessures.impact.value" value="{{system.combat.blessures.impact.value}}" /> / {{system.combat.blessures.impact.max}}</td>
+            <td>Blessure interne (Métabolisme)</td>
+            <td><input class="small-input" type="number" name="system.combat.blessures.blessureinterne.value" value="{{system.combat.blessures.blessureinterne.value}}" /> / {{system.combat.blessures.blessureinterne.max}}</td>
+          </tr>
+          <tr>
+            <td>Souillure</td>
+            <td><input class="small-input" type="number" name="system.combat.souillure" value="{{system.combat.souillure}}" min="0" max="10" /> / 10</td>
+            <td>Encombrement</td>
+            <td><input class="small-input" type="number" name="system.combat.encombrement" value="{{system.combat.encombrement}}" /></td>
+          </tr>
+          <tr>
+            <td>Fluide (Chrysalide + Métabolisme + Souillure)</td>
+            <td><input class="small-input" type="number" name="system.combat.fluide.value" value="{{system.combat.fluide.value}}" /> / {{system.combat.fluide.max}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Initiative (Activité - encombrement)</td>
+            <td>{{system.combat.initiative}} <a class="init-roll"><i class="fas fa-sack"></i></a></td>
+            <td>Vitesse (sol / vol)</td>
+            <td>{{system.combat.vitesseSol}} / {{system.combat.vitesseVol}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="hint">
+        Malus courant lié aux blessures internes : {{system.malusBlessuresInternes}} (appliqué automatiquement
+        comme modificateur par défaut sur les jets de compétence/caractéristique, y compris les attaques).
+      </p>
+
+      <div class="attack-buttons">
+        <a class="attack-roll" data-competence="melee"><i class="fas fa-sword"></i> Attaque Mêlée</a>
+        <a class="attack-roll" data-competence="tir"><i class="fas fa-bow-arrow"></i> Attaque Tir</a>
+        <a class="attack-roll" data-competence="predateur"><i class="fas fa-paw"></i> Attaque Prédateur</a>
+      </div>
+      <p class="hint">
+        L'attaque compare la compétence choisie à la Défense de l'adversaire (champ "Score de l'opposant" du
+        dialogue). En cas de réussite, le résultat retenu dans le message de chat enchaîne automatiquement le
+        test de Dégâts. Le modificateur de dégâts propre à l'arme sera injecté automatiquement une fois le
+        modèle d'Item posé (étape suivante) — pour l'instant, il se saisit manuellement dans le test de Dégâts
+        (Chitine de l'attaquant "arme comprise").
+      </p>
+    </div>
+
+    <div class="tab objets" data-group="primary" data-tab="objets">
+      <h3>Armes</h3>
+      <table class="items-list">
+        <thead><tr><th></th><th>Nom</th><th>Compétence</th><th>Att.</th><th>Dég.</th><th>Équipée</th><th></th></tr></thead>
+        <tbody>
+          {{#each armes as |arme|}}
+          <tr>
+            <td><img class="item-icon" src="{{arme.img}}" /></td>
+            <td><a class="item-name item-edit" data-item-id="{{arme.id}}">{{arme.name}}</a></td>
+            <td>{{arme.system.competenceCombat}}</td>
+            <td>{{arme.system.modificateurAttaque}}</td>
+            <td>{{arme.system.modificateurDegats}}</td>
+            <td><input type="checkbox" class="item-equip-toggle" data-item-id="{{arme.id}}" {{#if arme.system.equipee}}checked{{/if}} /></td>
+            <td class="item-controls"><a class="item-delete" data-item-id="{{arme.id}}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="item-add item-create" data-type="arme"><i class="fas fa-plus"></i> Ajouter une arme</a>
+
+      <h3>Armures</h3>
+      <table class="items-list">
+        <thead><tr><th></th><th>Nom</th><th>Bonus Chitine</th><th>Malus encombrement</th><th>Équipée</th><th></th></tr></thead>
+        <tbody>
+          {{#each armures as |armure|}}
+          <tr>
+            <td><img class="item-icon" src="{{armure.img}}" /></td>
+            <td><a class="item-name item-edit" data-item-id="{{armure.id}}">{{armure.name}}</a></td>
+            <td>{{armure.system.bonusChitine}}</td>
+            <td>{{armure.system.malusEncombrement}}</td>
+            <td><input type="checkbox" class="item-equip-toggle" data-item-id="{{armure.id}}" {{#if armure.system.equipee}}checked{{/if}} /></td>
+            <td class="item-controls"><a class="item-delete" data-item-id="{{armure.id}}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="item-add item-create" data-type="armure"><i class="fas fa-plus"></i> Ajouter une armure</a>
+
+      <h3>Capacités spéciales (avec bonus automatisé)</h3>
+      <table class="items-list">
+        <thead><tr><th></th><th>Nom</th><th>Catégorie</th><th>Bonus</th><th></th></tr></thead>
+        <tbody>
+          {{#each capacitesItems as |capacite|}}
+          <tr>
+            <td><img class="item-icon" src="{{capacite.img}}" /></td>
+            <td><a class="item-name item-edit" data-item-id="{{capacite.id}}">{{capacite.name}}</a></td>
+            <td>{{capacite.system.categorie}}</td>
+            <td>
+              {{#if capacite.system.bonus.actif}}
+                {{localize capacite.system.bonus.caracKey}}{{#if capacite.system.bonus.compKey}}.{{capacite.system.bonus.compKey}}{{/if}}
+                {{#if (gt capacite.system.bonus.valeur 0)}}+{{/if}}{{capacite.system.bonus.valeur}}
+              {{else}}—{{/if}}
+            </td>
+            <td class="item-controls"><a class="item-delete" data-item-id="{{capacite.id}}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="item-add item-create" data-type="capacite"><i class="fas fa-plus"></i> Ajouter une capacité</a>
+      <p class="hint">
+        Les bonus chiffrés cochés ici s'appliquent automatiquement aux jets concernés (compétence/caractéristique
+        et attaques). Pour les effets non chiffrables (Pestilence, Fouisseur...), décrivez-les dans la capacité
+        sans cocher "bonus automatique" — ou utilisez l'onglet "Capacités (notes libres)" ci-après si vous
+        préférez rester en texte libre, sans créer d'Item.
+      </p>
+    </div>
+
+    <div class="tab capacites" data-group="primary" data-tab="capacites">
+      {{#each system.identite.capacites as |capacite index|}}
+      <div class="capacite-line">
+        <input type="text" name="system.identite.capacites.{{index}}.label" value="{{capacite.label}}" placeholder="Nom de la capacité" />
+        <textarea name="system.identite.capacites.{{index}}.description" placeholder="Description">{{capacite.description}}</textarea>
+        <a class="capacite-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
+      </div>
+      {{/each}}
+      <a class="capacite-add"><i class="fas fa-plus"></i> Ajouter une capacité (raciale ou de caste)</a>
+    </div>
+
+    <div class="tab notes" data-group="primary" data-tab="notes">
+      <h3>Historique</h3>
+      {{editor historiquehtml target="system.identite.historique" button=true owner=owner editable=editable engine="prosemirror"}}
+      <h3>Description / notes de jeu</h3>
+      {{editor descriptionhtml target="system.identite.description" button=true owner=owner editable=editable engine="prosemirror"}}
+    </div>
+
+  </section>
+</form>

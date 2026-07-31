@@ -1,0 +1,144 @@
+{
+  "Actor": {
+    "types": ["intre"],
+    "templates": {
+      "caracteristiques": {
+        "caracteristiques": {
+          "aile": {
+            "value": 3,
+            "label": "INSECTOPIA.label.caracteristiques.aile",
+            "competences": {
+              "agilite": { "value": 1, "label": "INSECTOPIA.label.competences.agilite" },
+              "defense": { "value": 1, "label": "INSECTOPIA.label.competences.defense" }
+            }
+          },
+          "antenne": {
+            "value": 3,
+            "label": "INSECTOPIA.label.caracteristiques.antenne",
+            "competences": {
+              "pheromones": { "value": 1, "label": "INSECTOPIA.label.competences.pheromones" },
+              "tir": { "value": 1, "label": "INSECTOPIA.label.competences.tir" }
+            }
+          },
+          "mandibule": {
+            "value": 3,
+            "label": "INSECTOPIA.label.caracteristiques.mandibule",
+            "competences": {
+              "predateur": { "value": 1, "label": "INSECTOPIA.label.competences.predateur" },
+              "melee": { "value": 1, "label": "INSECTOPIA.label.competences.melee" }
+            }
+          },
+          "esprit": {
+            "value": 3,
+            "label": "INSECTOPIA.label.caracteristiques.esprit",
+            "competences": {
+              "conscience": { "value": 1, "label": "INSECTOPIA.label.competences.conscience" },
+              "instinct": { "value": 1, "label": "INSECTOPIA.label.competences.instinct" }
+            }
+          },
+          "chitine": {
+            "value": 3,
+            "label": "INSECTOPIA.label.caracteristiques.chitine",
+            "competences": {
+              "chrysalide": { "value": 1, "label": "INSECTOPIA.label.competences.chrysalide" },
+              "resistance": { "value": 1, "label": "INSECTOPIA.label.competences.resistance" }
+            }
+          },
+          "temperature": {
+            "value": 3,
+            "label": "INSECTOPIA.label.caracteristiques.temperature",
+            "competences": {
+              "activite": { "value": 1, "label": "INSECTOPIA.label.competences.activite" },
+              "metabolisme": { "value": 1, "label": "INSECTOPIA.label.competences.metabolisme" }
+            }
+          },
+          "caste": {
+            "value": 4,
+            "label": "INSECTOPIA.label.caracteristiques.caste",
+            "competences": []
+          }
+        }
+      },
+      "identite": {
+        "identite": {
+          "race": "",
+          "casteNom": "",
+          "metier": "",
+          "religion": "animiste",
+          "regimealimentaire": "omnivore",
+          "couleur": "",
+          "historique": "",
+          "description": "",
+          "capacites": []
+        }
+      },
+      "chance": {
+        "chance": {
+          "rouge": 0,
+          "verte": 0,
+          "bleue": 0,
+          "blanche": 0,
+          "noire": 0
+        }
+      },
+      "combat": {
+        "combat": {
+          "blessures": {
+            "impact": { "value": 0, "max": 0 },
+            "blessureinterne": { "value": 0, "max": 0 }
+          },
+          "souillure": 0,
+          "fluide": { "value": 0, "max": 0 },
+          "encombrement": 0,
+          "initiative": 0
+        }
+      }
+    },
+    "intre": {
+      "templates": ["caracteristiques", "identite", "chance", "combat"],
+      "notes": ""
+    }
+  },
+  "Item": {
+    "types": ["arme", "armure", "capacite"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "arme": {
+      "templates": ["base"],
+      "competenceCombat": "melee",
+      "modificateurAttaque": 0,
+      "modificateurDegats": 0,
+      "degatsFixes": null,
+      "portee": "",
+      "porteeInsettres": 0,
+      "rechargeActions": 0,
+      "prixQuartz": 0,
+      "equipee": false
+    },
+    "armure": {
+      "templates": ["base"],
+      "bonusChitine": 0,
+      "bonusFeu": 0,
+      "malusAile": 0,
+      "malusEncombrement": 0,
+      "modInitiativeType": "aucun",
+      "prixQuartz": 0,
+      "equipee": false
+    },
+    "capacite": {
+      "templates": ["base"],
+      "categorie": "aile",
+      "souillureCout": 0,
+      "fluideCout": 0,
+      "bonus": {
+        "actif": false,
+        "caracKey": "",
+        "compKey": "",
+        "valeur": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,337 @@
+.insectopia.sheet.actor {
+  font-family: sans-serif;
+}
+.insectopia.sheet.actor .sheet-header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid #444;
+}
+.insectopia.sheet.actor .sheet-header .portraitimg {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border: none;
+}
+.insectopia.sheet.actor .sheet-header .header-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.insectopia.sheet.actor .sheet-header .header-fields .charname {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+.insectopia.sheet.actor .sheet-header .header-fields .identite-line {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4em;
+}
+.insectopia.sheet.actor .sheet-header .header-fields .identite-line input,
+.insectopia.sheet.actor .sheet-header .header-fields .identite-line select {
+  flex: 1;
+}
+.insectopia.sheet.actor .sheet-header .chancebox {
+  border: 1px solid #666;
+  border-radius: 4px;
+  padding: 0.3em;
+  text-align: center;
+}
+.insectopia.sheet.actor .sheet-header .chancebox .chancebox-title {
+  font-weight: bold;
+  font-size: 0.85em;
+}
+.insectopia.sheet.actor .sheet-header .chancebox .small-input {
+  width: 2.2em;
+  text-align: center;
+}
+.insectopia.sheet.actor .sheet-header .chancebox a.chance-roll {
+  display: block;
+  font-size: 0.8em;
+  margin-top: 0.3em;
+  cursor: pointer;
+}
+.insectopia.sheet.actor .sheet-tabs {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #666;
+}
+.insectopia.sheet.actor .sheet-tabs .item {
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+}
+.insectopia.sheet.actor .sheet-tabs .item.active {
+  border-bottom: 2px solid #c0392b;
+  font-weight: bold;
+}
+.insectopia.sheet.actor .sheet-body {
+  padding: 0.5em;
+}
+.insectopia.sheet.actor .caracteristiques-table,
+.insectopia.sheet.actor .combat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.insectopia.sheet.actor .caracteristiques-table td,
+.insectopia.sheet.actor .combat-table td,
+.insectopia.sheet.actor .caracteristiques-table th,
+.insectopia.sheet.actor .combat-table th {
+  padding: 0.2em 0.4em;
+  vertical-align: middle;
+}
+.insectopia.sheet.actor .caracteristiques-table .carac-row > td:first-child,
+.insectopia.sheet.actor .combat-table .carac-row > td:first-child {
+  font-weight: bold;
+}
+.insectopia.sheet.actor a.caract-roll,
+.insectopia.sheet.actor a.comp-roll {
+  cursor: pointer;
+}
+.insectopia.sheet.actor a.caract-roll:hover,
+.insectopia.sheet.actor a.comp-roll:hover {
+  text-decoration: underline;
+}
+.insectopia.sheet.actor .small-input {
+  width: 3em;
+  text-align: center;
+}
+.insectopia.sheet.actor .hint {
+  font-size: 0.8em;
+  font-style: italic;
+  margin: 0.5em 0;
+}
+.insectopia.sheet.actor .attack-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6em;
+  margin: 0.5em 0;
+}
+.insectopia.sheet.actor .attack-buttons a.attack-roll {
+  cursor: pointer;
+  border: 1px solid #c0392b;
+  border-radius: 4px;
+  padding: 0.3em 0.6em;
+}
+.insectopia.sheet.actor .attack-buttons a.attack-roll:hover {
+  background: #c0392b33;
+}
+.insectopia.sheet.actor .capacite-line {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4em;
+  align-items: flex-start;
+  margin-bottom: 0.4em;
+}
+.insectopia.sheet.actor .capacite-line input {
+  flex: 0 0 30%;
+}
+.insectopia.sheet.actor .capacite-line textarea {
+  flex: 1;
+  height: 3em;
+}
+.blattes-initiative {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+.blatte-adjust {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.blatte-adjust .blatteup {
+  cursor: pointer;
+  line-height: 1;
+  padding: 1px;
+}
+.blatte-adjust .blatteup:hover {
+  color: #f1c40f;
+}
+.insectopia.sheet.item {
+  font-family: sans-serif;
+}
+.insectopia.sheet.item .item-sheet-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid #444;
+}
+.insectopia.sheet.item .item-sheet-header .itemimg {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+.insectopia.sheet.item .item-sheet-header .itemname {
+  flex: 1;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.insectopia.sheet.item .item-body {
+  padding: 0.5em;
+}
+.insectopia.sheet.item .item-body .field {
+  margin-bottom: 0.7em;
+  display: flex;
+  flex-direction: column;
+}
+.insectopia.sheet.item .item-body .field label {
+  font-size: 0.85em;
+  font-weight: bold;
+}
+.insectopia.sheet.item .item-body .field.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+.insectopia.sheet.item .item-body .field.checkbox label {
+  font-weight: normal;
+}
+.insectopia.sheet.item .item-body .hint {
+  font-size: 0.75em;
+  font-style: italic;
+  margin: 0 0 0.7em 0;
+}
+.insectopia.sheet.actor .items-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+.insectopia.sheet.actor .items-list td {
+  padding: 0.25em 0.4em;
+  vertical-align: middle;
+}
+.insectopia.sheet.actor .items-list .item-name {
+  cursor: pointer;
+}
+.insectopia.sheet.actor .items-list .item-name:hover {
+  text-decoration: underline;
+}
+.insectopia.sheet.actor .items-list .item-controls a {
+  margin: 0 0.2em;
+  cursor: pointer;
+}
+.insectopia.sheet.actor .item-add {
+  display: inline-block;
+  margin: 0.4em 0;
+  cursor: pointer;
+}
+.blatte {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  vertical-align: middle;
+}
+.blatte-rouge {
+  background-color: #c0392b;
+}
+.blatte-verte {
+  background-color: #27ae60;
+}
+.blatte-bleue {
+  background-color: #2980b9;
+}
+.blatte-blanche {
+  background-color: #ecf0f1;
+}
+.blatte-noire {
+  background-color: #1c1c1c;
+}
+.blatte-small {
+  width: 10px;
+  height: 10px;
+  margin: 0 1px;
+  border-width: 1px;
+}
+.choix-couleurs {
+  width: 100%;
+  border-collapse: collapse;
+}
+.choix-couleurs td {
+  padding: 0.3em;
+  vertical-align: top;
+}
+.choix-couleurs a.choix-couleur {
+  cursor: pointer;
+  color: #f1c40f;
+}
+.choix-couleurs a.choix-couleur:hover {
+  text-decoration: underline;
+}
+.choix-couleurs a.choix-couleur .choix-description {
+  font-size: 0.8em;
+  color: #ccc;
+  font-weight: normal;
+}
+.degats-actions {
+  text-align: center;
+  padding: 0.4em 0;
+}
+.degats-actions a.appliquer-degats {
+  cursor: pointer;
+  color: #f1c40f;
+}
+.chatroll {
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+.chatroll .intro {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.chatroll .intro .introImg img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+.chatroll .intro .introText {
+  width: 210px;
+  padding-top: 0.5em;
+  text-align: center;
+}
+.chatroll .difficultyline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0.5em 0;
+  font-size: 0.85em;
+}
+.chatroll .resultText {
+  padding: 1em 0.5em 0.5em 0.5em;
+  text-align: center;
+}
+.chatroll .rerollicon {
+  text-align: center;
+  padding-bottom: 1em;
+  cursor: pointer;
+}
+.dialog .hint {
+  font-size: 0.8em;
+  font-style: italic;
+  margin: 0.5em 1em;
+}
+.dialog .dialog-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.dialog .dialog-main > div {
+  margin: 0 0 1em 1em;
+  display: flex;
+  flex-direction: column;
+}
+.dialog .dialog-main > div label {
+  font-size: 0.85em;
+}

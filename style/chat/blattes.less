@@ -1,0 +1,106 @@
+// Couleurs des blattes. Pas d'assets graphiques à ce stade : simples
+// pastilles de couleur, à remplacer plus tard par des icônes si besoin.
+@blatte-rouge: #c0392b;
+@blatte-verte: #27ae60;
+@blatte-bleue: #2980b9;
+@blatte-blanche: #ecf0f1;
+@blatte-noire: #1c1c1c;
+
+.blatte {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  vertical-align: middle;
+}
+.blatte-rouge { background-color: @blatte-rouge; }
+.blatte-verte { background-color: @blatte-verte; }
+.blatte-bleue { background-color: @blatte-bleue; }
+.blatte-blanche { background-color: @blatte-blanche; }
+.blatte-noire { background-color: @blatte-noire; }
+
+.blatte-small {
+  width: 10px;
+  height: 10px;
+  margin: 0 1px;
+  border-width: 1px;
+}
+
+.choix-couleurs {
+  width: 100%;
+  border-collapse: collapse;
+  td { padding: 0.3em; vertical-align: top; }
+  a.choix-couleur {
+    cursor: pointer;
+    color: #f1c40f;
+    &:hover { text-decoration: underline; }
+    .choix-description { font-size: 0.8em; color: #ccc; font-weight: normal; }
+  }
+}
+
+.degats-actions {
+  text-align: center;
+  padding: 0.4em 0;
+  a.appliquer-degats { cursor: pointer; color: #f1c40f; }
+}
+
+.chatroll {
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+
+  .intro {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .introImg img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+    .introText {
+      width: 210px;
+      padding-top: 0.5em;
+      text-align: center;
+    }
+  }
+  .difficultyline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0.5em 0;
+    font-size: 0.85em;
+  }
+  .resultText {
+    padding: 1em 0.5em 0.5em 0.5em;
+    text-align: center;
+  }
+  .rerollicon {
+    text-align: center;
+    padding-bottom: 1em;
+    cursor: pointer;
+  }
+}
+
+.dialog {
+  .hint {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0.5em 1em;
+  }
+  .dialog-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    > div {
+      margin: 0 0 1em 1em;
+      display: flex;
+      flex-direction: column;
+      label { font-size: 0.85em; }
+    }
+  }
+}

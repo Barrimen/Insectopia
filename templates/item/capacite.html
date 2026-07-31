@@ -1,0 +1,56 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="item-sheet-header">
+    <img class="itemimg" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <input class="itemname" name="name" type="text" value="{{item.name}}" placeholder="Nom de la capacité" />
+  </header>
+
+  <div class="item-body">
+    <div class="field">
+      <label>Catégorie</label>
+      <select name="system.categorie">
+        <option value="race" {{#ife system.categorie "race"}}selected{{/ife}}>Capacité de race</option>
+        <option value="caste" {{#ife system.categorie "caste"}}selected{{/ife}}>Capacité de caste</option>
+      </select>
+    </div>
+
+    <div class="field checkbox">
+      <label><input type="checkbox" name="system.bonus.actif" {{#if system.bonus.actif}}checked{{/if}} /> Applique un bonus chiffré automatique</label>
+    </div>
+
+    <div class="field">
+      <label>Caractéristique concernée</label>
+      <select name="system.bonus.caracKey">
+        <option value="" {{#ife system.bonus.caracKey ""}}selected{{/ife}}>—</option>
+        <option value="aile" {{#ife system.bonus.caracKey "aile"}}selected{{/ife}}>Aile</option>
+        <option value="antenne" {{#ife system.bonus.caracKey "antenne"}}selected{{/ife}}>Antenne</option>
+        <option value="mandibule" {{#ife system.bonus.caracKey "mandibule"}}selected{{/ife}}>Mandibule</option>
+        <option value="esprit" {{#ife system.bonus.caracKey "esprit"}}selected{{/ife}}>Esprit</option>
+        <option value="chitine" {{#ife system.bonus.caracKey "chitine"}}selected{{/ife}}>Chitine</option>
+        <option value="temperature" {{#ife system.bonus.caracKey "temperature"}}selected{{/ife}}>Température</option>
+        <option value="caste" {{#ife system.bonus.caracKey "caste"}}selected{{/ife}}>Caste</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Compétence concernée (laisser vide pour viser la caractéristique elle-même)</label>
+      <input type="text" name="system.bonus.compKey" value="{{system.bonus.compKey}}" placeholder="ex: pheromones, agilite..." />
+    </div>
+
+    <div class="field">
+      <label>Valeur du bonus</label>
+      <input type="number" name="system.bonus.valeur" value="{{system.bonus.valeur}}" />
+    </div>
+    <p class="hint">
+      Exemple (livret p.28) : Antennes ramifiées → caractéristique "antenne", compétence vide (s'applique à la
+      caractéristique elle-même), valeur +1. Ce bonus s'ajoute automatiquement au modificateur des jets concernés
+      (voir IntreActor.getCapaciteBonus). Pour les effets non chiffrables (Pestilence, Fouisseur, Vitesse
+      surnaturelle...), laissez la case "bonus automatique" décochée et décrivez l'effet ci-dessous ; il reste
+      géré manuellement par le Deus.
+    </p>
+
+    <div class="field">
+      <label>Description</label>
+      {{editor descriptionhtml target="system.description" button=true owner=true editable=editable engine="prosemirror"}}
+    </div>
+  </div>
+</form>

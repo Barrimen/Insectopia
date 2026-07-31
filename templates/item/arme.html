@@ -1,0 +1,45 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="item-sheet-header">
+    <img class="itemimg" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <input class="itemname" name="name" type="text" value="{{item.name}}" placeholder="Nom de l'arme" />
+  </header>
+
+  <div class="item-body">
+    <div class="field">
+      <label>Compétence de combat</label>
+      <select name="system.competenceCombat">
+        <option value="melee" {{#ife system.competenceCombat "melee"}}selected{{/ife}}>Mêlée</option>
+        <option value="tir" {{#ife system.competenceCombat "tir"}}selected{{/ife}}>Tir</option>
+        <option value="predateur" {{#ife system.competenceCombat "predateur"}}selected{{/ife}}>Prédateur</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Modificateur au jet d'Attaque (précision)</label>
+      <input type="number" name="system.modificateurAttaque" value="{{system.modificateurAttaque}}" />
+    </div>
+
+    <div class="field">
+      <label>Modificateur de Dégâts (ajouté à la Chitine de l'attaquant)</label>
+      <input type="number" name="system.modificateurDegats" value="{{system.modificateurDegats}}" />
+      <p class="hint">
+        Cf. livret p.28 : Griffes = Chitine-1, Griffes acérées/Platère = Chitine, Mandibules hypertrophiées = Chitine+1,
+        Pinces = Chitine-1. Ce champ correspond au "+1"/"-1" à ajouter à la Chitine du personnage.
+      </p>
+    </div>
+
+    <div class="field">
+      <label>Portée</label>
+      <input type="text" name="system.portee" value="{{system.portee}}" placeholder="ex: 100 insètres" />
+    </div>
+
+    <div class="field checkbox">
+      <label><input type="checkbox" name="system.equipee" {{#if system.equipee}}checked{{/if}} /> Équipée</label>
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      {{editor descriptionhtml target="system.description" button=true owner=true editable=editable engine="prosemirror"}}
+    </div>
+  </div>
+</form>

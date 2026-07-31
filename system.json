@@ -1,0 +1,74 @@
+{
+  "id": "insectopia",
+  "title": "Insectopia",
+  "description": "Système Foundry VTT non-officiel pour Insectopia (Odonata éditions), adapté depuis le système Omega de Khaali-dev sous licence GPL-3.0, avec l'accord d'Odonata éditions pour l'usage du contenu Insectopia.",
+  "url": "",
+  "version": "0.4.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    { "name": "En cours de conversion depuis Omega (Khaali-dev)", "flags": {} }
+  ],
+  "esmodules": ["insectopia.js"],
+  "styles": ["css/insectopia.css"],
+  "languages": [
+    { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
+  ],
+  "documentTypes": {},
+  "packs": [
+    {
+      "name": "personnages",
+      "label": "Insectopia — Personnages pré-tirés",
+      "system": "insectopia",
+      "path": "packs/personnages",
+      "type": "Actor",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "armes-armures",
+      "label": "Insectopia — Armes et armures",
+      "system": "insectopia",
+      "path": "packs/armes-armures",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "capacites",
+      "label": "Insectopia — Capacités spéciales",
+      "system": "insectopia",
+      "path": "packs/capacites",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "races",
+      "label": "Insectopia — Races (livre de base)",
+      "system": "insectopia",
+      "path": "packs/races",
+      "type": "JournalEntry",
+      "private": false,
+      "flags": {}
+    },
+    {
+      "name": "castes",
+      "label": "Insectopia — Castes et métiers",
+      "system": "insectopia",
+      "path": "packs/castes",
+      "type": "JournalEntry",
+      "private": false,
+      "flags": {}
+    }
+  ],
+  "grid": { "distance": 1, "units": "in" },
+  "primaryTokenAttribute": "combat.blessures.impact",
+  "secondaryTokenAttribute": "combat.blessures.blessureinterne",
+  "background": "",
+  "license": "LICENSE",
+  "readme": "README-etape6.md"
+}

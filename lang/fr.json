@@ -1,0 +1,60 @@
+{
+  "INSECTOPIA": {
+    "dialog": {
+      "introtext": {
+        "attack": "{{actorname}} attaque en utilisant {{competence}}",
+        "opposition": "{{actorname}} utilise {{competence}} en opposition",
+        "difficulte": "{{actorname}} tente une action avec {{competence}}",
+        "chance": "{{actorname}} tire ses Blattes de chance"
+      },
+      "button": {
+        "roll": "Piocher",
+        "cancel": "Annuler"
+      }
+    },
+    "chatmessage": {
+      "difficulte": "Difficulté : {{difficulte}}",
+      "modifier": "Modificateur : {{modifier}}"
+    },
+    "settings": {
+      "visibiliteJetsPNJ": {
+        "name": "Visibilité des jets PNJ",
+        "hint": "Détermine si les jets effectués pour les PNJ sont visibles par les joueurs."
+      }
+    },
+    "label": {
+      "caracteristiques": {
+        "aile": "Aile",
+        "antenne": "Antenne",
+        "mandibule": "Mandibule",
+        "esprit": "Esprit",
+        "chitine": "Chitine",
+        "temperature": "Température",
+        "caste": "Caste"
+      },
+      "competences": {
+        "agilite": "Agilité",
+        "defense": "Défense",
+        "pheromones": "Phéromones",
+        "tir": "Tir",
+        "predateur": "Prédateur",
+        "melee": "Mêlée",
+        "conscience": "Conscience",
+        "instinct": "Instinct",
+        "chrysalide": "Chrysalide",
+        "resistance": "Résistance",
+        "activite": "Activité",
+        "metabolisme": "Métabolisme"
+      },
+      "combat": {
+        "initiative": "Initiative",
+        "degats": "Dégâts"
+      },
+      "item": {
+        "arme": "Arme",
+        "armure": "Armure",
+        "capacite": "Capacité"
+      }
+    }
+  }
+}

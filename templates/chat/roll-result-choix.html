@@ -1,0 +1,42 @@
+<div class="chatroll" data-actor-id="{{owner}}">
+    <div class="intro">
+        {{#if (ne actingCharImg "icons/svg/mystery-man.svg")}}
+        <div class="introImg"><img src="{{actingCharImg}}" title="{{actingCharName}}" /></div>
+        {{/if}}
+        <div class="introText">{{data.introText}}</div>
+    </div>
+
+    {{#if isDegats}}
+    <div class="difficultyline">
+        <div>Chitine attaquant : {{data.chitineAttaque}}</div>
+        <div>Chitine défenseur : {{data.chitineDefense}}</div>
+        {{#if data.bonusBlattes}}<div>Bonus : +{{data.bonusBlattes}} blatte</div>{{/if}}
+    </div>
+    {{else}}
+    <div class="difficultyline">
+        {{#if data.difficulte includeZero=true}}<div>Difficulté : {{data.difficulteLabel}} ({{data.difficulte}})</div>{{/if}}
+        {{#if data.opposantValue includeZero=true}}<div>Défense adverse : {{data.opposantValue}}</div>{{/if}}
+    </div>
+    {{/if}}
+
+    <table class="choix-couleurs">
+        <tbody>
+            {{#each choix}}
+            <tr>
+                <td class="chance-blatte-line">{{this.count}}</td>
+                <td><span class="blatte blatte-{{this.couleur}}"></span></td>
+                <td>
+                    <a class="choix-couleur {{#if @root.isAttack}}choix-attaque{{else}}choix-degats{{/if}}" data-couleur="{{this.couleur}}">
+                        <strong>{{this.label}}</strong>
+                        {{#if @root.isDegats}} — {{this.impacts}} impact(s){{/if}}
+                        <br /><span class="choix-description">{{this.description}}</span>
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <div class="resultText">Cliquez sur la couleur que vous retenez comme résultat.</div>
+    <div class="endimg"></div>
+</div>

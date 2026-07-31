@@ -1,0 +1,11 @@
+{
+  "INSECTOPIA": {
+    "label": {
+      "item": {
+        "arme": "Arme",
+        "armure": "Armure",
+        "capacite": "Capacité"
+      }
+    }
+  }
+}

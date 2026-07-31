@@ -1,0 +1,40 @@
+.insectopia.sheet.item {
+  font-family: sans-serif;
+  .item-sheet-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid #444;
+    .itemimg { width: 60px; height: 60px; object-fit: contain; }
+    .itemname { flex: 1; font-size: 1.2em; font-weight: bold; }
+  }
+  .item-body {
+    padding: 0.5em;
+    .field {
+      margin-bottom: 0.7em;
+      display: flex;
+      flex-direction: column;
+      label { font-size: 0.85em; font-weight: bold; }
+      &.checkbox { flex-direction: row; align-items: center; label { font-weight: normal; } }
+    }
+    .hint { font-size: 0.75em; font-style: italic; margin: 0 0 0.7em 0; }
+  }
+}
+
+.insectopia.sheet.actor {
+  .items-list {
+    width: 100%;
+    border-collapse: collapse;
+    td { padding: 0.25em 0.4em; vertical-align: middle; }
+    .item-name { cursor: pointer; }
+    .item-name:hover { text-decoration: underline; }
+    .item-controls a { margin: 0 0.2em; cursor: pointer; }
+  }
+  .item-add {
+    display: inline-block;
+    margin: 0.4em 0;
+    cursor: pointer;
+  }
+}

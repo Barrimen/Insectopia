@@ -1,0 +1,65 @@
+<div class="chatroll" data-actor-id="{{owner}}">
+    <div class="intro">
+        {{#if (ne actingCharImg "icons/svg/mystery-man.svg")}}
+        <div class="introImg">
+            <img src="{{actingCharImg}}" title="{{actingCharName}}" />
+        </div>
+        {{/if}}
+        <div class="introText">{{data.introText}}</div>
+    </div>
+
+    <div class="difficultyline">
+        {{#if data.difficulte includeZero=true}}<div>Difficulté : {{data.difficulteLabel}} ({{data.difficulte}})</div>{{/if}}
+        {{#if data.opposantValue includeZero=true}}<div>Opposition : {{data.opposantValue}}</div>{{/if}}
+        {{#if data.modifier}}<div>Modificateur : {{data.modifier}}</div>{{/if}}
+    </div>
+
+    <table class="blattesresult">
+        <thead>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody style="text-align:center;">
+            {{#if data.blattesParCouleur.rouge}}
+            <tr>
+                <td class="chance-blatte-line">{{data.blattesParCouleur.rouge}}</td>
+                <td><span class="blatte blatte-rouge" title="Réussite critique"></span></td>
+            </tr>
+            {{/if}}
+            {{#if data.blattesParCouleur.verte}}
+            <tr>
+                <td class="chance-blatte-line">{{data.blattesParCouleur.verte}}</td>
+                <td><span class="blatte blatte-verte" title="Réussite améliorée"></span></td>
+            </tr>
+            {{/if}}
+            {{#if data.blattesParCouleur.bleue}}
+            <tr>
+                <td class="chance-blatte-line">{{data.blattesParCouleur.bleue}}</td>
+                <td><span class="blatte blatte-bleue" title="Réussite"></span></td>
+            </tr>
+            {{/if}}
+            {{#if data.blattesParCouleur.blanche}}
+            <tr>
+                <td class="chance-blatte-line">{{data.blattesParCouleur.blanche}}</td>
+                <td><span class="blatte blatte-blanche" title="Échec"></span></td>
+            </tr>
+            {{/if}}
+            {{#if data.blattesParCouleur.noire}}
+            <tr>
+                <td class="chance-blatte-line">{{data.blattesParCouleur.noire}}</td>
+                <td><span class="blatte blatte-noire" title="Échec critique"></span></td>
+            </tr>
+            {{/if}}
+        </tbody>
+    </table>
+
+    <div class="resultText">{{resultText}}</div>
+
+    {{#if rerollButton}}
+    <div class="rerollicon tooltip">
+        <i class="fas fa-sack repiocher"></i><span class="tooltiptext">Piocher à nouveau</span>
+    </div>
+    {{/if}}
+
+    <div class="endimg"></div>
+</div>

@@ -1,0 +1,32 @@
+{
+  "INSECTOPIA": {
+    "label": {
+      "caracteristiques": {
+        "aile": "Aile",
+        "antenne": "Antenne",
+        "mandibule": "Mandibule",
+        "esprit": "Esprit",
+        "chitine": "Chitine",
+        "temperature": "Température",
+        "caste": "Caste"
+      },
+      "competences": {
+        "agilite": "Agilité",
+        "defense": "Défense",
+        "pheromones": "Phéromones",
+        "tir": "Tir",
+        "predateur": "Prédateur",
+        "melee": "Mêlée",
+        "conscience": "Conscience",
+        "instinct": "Instinct",
+        "chrysalide": "Chrysalide",
+        "resistance": "Résistance",
+        "activite": "Activité",
+        "metabolisme": "Métabolisme"
+      },
+      "combat": {
+        "initiative": "Initiative"
+      }
+    }
+  }
+}

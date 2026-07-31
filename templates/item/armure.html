@@ -1,0 +1,28 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="item-sheet-header">
+    <img class="itemimg" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <input class="itemname" name="name" type="text" value="{{item.name}}" placeholder="Nom de l'armure" />
+  </header>
+
+  <div class="item-body">
+    <div class="field">
+      <label>Bonus de Chitine (résistance aux dégâts)</label>
+      <input type="number" name="system.bonusChitine" value="{{system.bonusChitine}}" />
+      <p class="hint">Cf. livret p.29 : l'armure de cuir de Sangchauds augmente la Chitine du défenseur de 1.</p>
+    </div>
+
+    <div class="field">
+      <label>Malus d'encombrement (soustrait à l'Activité/Initiative)</label>
+      <input type="number" name="system.malusEncombrement" value="{{system.malusEncombrement}}" />
+    </div>
+
+    <div class="field checkbox">
+      <label><input type="checkbox" name="system.equipee" {{#if system.equipee}}checked{{/if}} /> Équipée</label>
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      {{editor descriptionhtml target="system.description" button=true owner=true editable=editable engine="prosemirror"}}
+    </div>
+  </div>
+</form>
