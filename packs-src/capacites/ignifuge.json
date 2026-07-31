@@ -1,0 +1,24 @@
+{
+  "_id": "I5CvxnIUMiNixU6L",
+  "_key": "!items!I5CvxnIUMiNixU6L",
+  "name": "Ignifugé",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Résistance renforcée au feu.",
+    "categorie": "chitine",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

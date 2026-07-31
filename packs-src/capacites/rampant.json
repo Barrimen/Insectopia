@@ -1,0 +1,24 @@
+{
+  "_id": "hT7lNnvKuKayboUs",
+  "_key": "!items!hT7lNnvKuKayboUs",
+  "name": "Rampant",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Vitesse de déplacement au sol égale à Aile + 2, en utilisant au moins quatre pattes.",
+    "categorie": "aile",
+    "souillureCout": 1,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

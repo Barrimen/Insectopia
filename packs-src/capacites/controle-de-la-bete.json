@@ -1,0 +1,24 @@
+{
+  "_id": "IOIlDN47PEL2e3cn",
+  "_key": "!items!IOIlDN47PEL2e3cn",
+  "name": "Contrôle de la bête",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Ignore les tests de Conscience liés à la bestialité ; choisit librement s'il cède à l'insectophagie.",
+    "categorie": "esprit",
+    "souillureCout": 1,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

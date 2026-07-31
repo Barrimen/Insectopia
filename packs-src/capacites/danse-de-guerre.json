@@ -1,0 +1,24 @@
+{
+  "_id": "j8rwfsOF1F0f0uQY",
+  "_key": "!items!j8rwfsOF1F0f0uQY",
+  "name": "Danse de guerre",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur d'un test d'intimidation (Mandibule vs Mandibule).",
+    "categorie": "mandibule",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

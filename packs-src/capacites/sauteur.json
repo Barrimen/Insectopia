@@ -1,0 +1,24 @@
+{
+  "_id": "TOxJxwfiGksVWZUy",
+  "_key": "!items!TOxJxwfiGksVWZUy",
+  "name": "Sauteur",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Bonds impressionnants (portée = Aile x10) ; bonus gratuit sur l'action Foncer, et sur l'Agilité pour se dégager d'un combat.",
+    "categorie": "aile",
+    "souillureCout": 1,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

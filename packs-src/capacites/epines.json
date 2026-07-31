@@ -1,0 +1,24 @@
+{
+  "_id": "408xAPJ7A1DQElJZ",
+  "_key": "!items!408xAPJ7A1DQElJZ",
+  "name": "Épines",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, réduit la couleur d'une attaque de corps à corps adverse.",
+    "categorie": "chitine",
+    "souillureCout": 4,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "IldOBLh2mFx7AmJJ",
+  "_key": "!items!IldOBLh2mFx7AmJJ",
+  "name": "Parure de séduction",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur d'un test de séduction.",
+    "categorie": "antenne",
+    "souillureCout": 2,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

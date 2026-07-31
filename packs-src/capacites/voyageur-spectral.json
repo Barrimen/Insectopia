@@ -1,0 +1,24 @@
+{
+  "_id": "0lno2xMHK6qeHU3v",
+  "_key": "!items!0lno2xMHK6qeHU3v",
+  "name": "Voyageur Spectral",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Voyage dans le Payolave (plans parallèles), seul ou en groupe, en opposant Esprit à une difficulté fixée comme pour un sort.",
+    "categorie": "esprit",
+    "souillureCout": 4,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

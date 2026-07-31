@@ -1,0 +1,24 @@
+{
+  "_id": "07un3VBg4xYrDa92",
+  "_key": "!items!07un3VBg4xYrDa92",
+  "name": "Platère",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "La platère est fabriquée à partir des pattes anguleuses et acérées des Skarabs de Thron. Une fois la bête tuée, on retire la partie inférieure de sa patte, effilée et rectiligne, taillée en un long tranchoir. Facteur de dégâts équivalent à la Chitine de l'assaillant.",
+    "competenceCombat": "melee",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

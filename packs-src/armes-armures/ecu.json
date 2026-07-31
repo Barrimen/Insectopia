@@ -1,0 +1,22 @@
+{
+  "_id": "waxPbgF8TlRvPpfu",
+  "_key": "!items!waxPbgF8TlRvPpfu",
+  "name": "Écu",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Petit bouclier à une patte. +1 Parade (une fois par tour). Non effectif contre les attaques Prédateur, de saisie, de Blocage, en fuite ou par surprise. Prix : 12 quartz.",
+    "bonusChitine": -1,
+    "bonusFeu": 0,
+    "malusAile": 0,
+    "malusEncombrement": 0,
+    "modInitiativeType": "aucun",
+    "prixQuartz": 12,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

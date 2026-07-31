@@ -1,0 +1,24 @@
+{
+  "_id": "84Ye2fLWBID9buac",
+  "_key": "!items!84Ye2fLWBID9buac",
+  "name": "Soie",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Production de soie (toile, cocon).",
+    "categorie": "temperature",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "W9d9u6VkM7ihCM5d",
+  "_key": "!items!W9d9u6VkM7ihCM5d",
+  "name": "Fouisseur",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Peut creuser et s'enterrer rapidement ; la galerie créée a une taille équivalente au score de Chitine.",
+    "categorie": "aile",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

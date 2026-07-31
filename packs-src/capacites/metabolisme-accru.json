@@ -1,0 +1,24 @@
+{
+  "_id": "ouUHjq42yDFLPejx",
+  "_key": "!items!ouUHjq42yDFLPejx",
+  "name": "Métabolisme accru",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Ne subit pas de blessure interne supplémentaire en cas de chute de température brutale.",
+    "categorie": "temperature",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

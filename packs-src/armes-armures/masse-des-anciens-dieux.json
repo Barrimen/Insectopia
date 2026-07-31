@@ -1,0 +1,24 @@
+{
+  "_id": "RXnoTszXhjlFo64x",
+  "_key": "!items!RXnoTszXhjlFo64x",
+  "name": "Masse des Anciens Dieux",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme contondante dévastatrice, utilisée pour défoncer armures et chitines épaisses. Dégâts égaux à la Chitine plus un. Modificateur d'initiative : moins une couleur. Prix : 280 quartz.",
+    "competenceCombat": "melee",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 280,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

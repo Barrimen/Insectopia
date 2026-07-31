@@ -1,0 +1,24 @@
+{
+  "_id": "pDVbvW0bXCiIQXHh",
+  "_key": "!items!pDVbvW0bXCiIQXHh",
+  "name": "Pouvoir renforcé",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Renforce l'effet d'une autre capacité du personnage.",
+    "categorie": "temperature",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "hsHCIj6S66XVWCa6",
+  "_key": "!items!hsHCIj6S66XVWCa6",
+  "name": "Épée de justice",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme fétiche des armées cultistes, forgée par la volonté des Anciens Dieux. Dégâts égaux à la Chitine plus un. Aucun modificateur d'initiative. Prix : 50 quartz.",
+    "competenceCombat": "melee",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 50,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "cGm7xuvhLiOjx7wd",
+  "_key": "!items!cGm7xuvhLiOjx7wd",
+  "name": "Neuf vies",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Bonus de survie dans les situations critiques.",
+    "categorie": "temperature",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

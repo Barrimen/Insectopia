@@ -1,0 +1,24 @@
+{
+  "_id": "taaVzcTyhHX6mPck",
+  "_key": "!items!taaVzcTyhHX6mPck",
+  "name": "Aura magique",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore d'un cran une colonne du tableau d'influence des sorts sans augmenter la difficulté.",
+    "categorie": "esprit",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "ngzzKjzqy5LFzNTY",
+  "_key": "!items!ngzzKjzqy5LFzNTY",
+  "name": "Crache-sang fétide des Anciens Dieux",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme sophistiquée propulsant un liquide corrosif depuis une poche de cuir de Sangchaud. Dégâts fixes de 5, indépendants de la Chitine. Modificateur d'initiative : moins une couleur. Portée 50 insètres. Rare. Prix : 1000 quartz.",
+    "competenceCombat": "tir",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": 5,
+    "portee": "50 insètres",
+    "porteeInsettres": 50,
+    "rechargeActions": 1,
+    "prixQuartz": 1000,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "MvuzmYA6vsLsPDof",
+  "_key": "!items!MvuzmYA6vsLsPDof",
+  "name": "Mimétisme",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Diminue la couleur du test adverse de repérage tant que le personnage reste immobile en environnement naturel.",
+    "categorie": "antenne",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

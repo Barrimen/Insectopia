@@ -1,0 +1,24 @@
+{
+  "_id": "EmSdKZs9LbmLtn9W",
+  "_key": "!items!EmSdKZs9LbmLtn9W",
+  "name": "Arbalète des Anciens Dieux",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme cultiste redoutable en siège, mais lourde et lente à recharger (2 actions). Dégâts fixes de 4, indépendants de la Chitine de l'attaquant. Portée 300 insètres. Prix : 100 quartz.",
+    "competenceCombat": "tir",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": 4,
+    "portee": "300 insètres",
+    "porteeInsettres": 300,
+    "rechargeActions": 2,
+    "prixQuartz": 100,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

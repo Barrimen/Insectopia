@@ -1,0 +1,24 @@
+{
+  "_id": "cjyk4PMOiKIP1FVV",
+  "_key": "!items!cjyk4PMOiKIP1FVV",
+  "name": "Jet de toile",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Projette une toile englobante à distance (test de Tir) ; résistance égale à la compétence Soie.",
+    "categorie": "antenne",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

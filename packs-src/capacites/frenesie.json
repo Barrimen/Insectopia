@@ -1,0 +1,24 @@
+{
+  "_id": "GSKPTZk47DDWfnz7",
+  "_key": "!items!GSKPTZk47DDWfnz7",
+  "name": "Frénésie",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Déclenchée en encaissant une blessure interne (coût 2 Fluide) : augmentations gratuites de couleur en Initiative/Mêlée/Prédateur, mais Défense réduite à zéro.",
+    "categorie": "mandibule",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "Up76HmZU3vZSDTuG",
+  "_key": "!items!Up76HmZU3vZSDTuG",
+  "name": "Musicien",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Organe stridulant permettant de produire des mélodies, utilisable aussi comme mode de communication.",
+    "categorie": "aile",
+    "souillureCout": 1,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

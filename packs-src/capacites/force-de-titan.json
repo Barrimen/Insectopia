@@ -1,0 +1,24 @@
+{
+  "_id": "0v32vsW2pFogd6ts",
+  "_key": "!items!0v32vsW2pFogd6ts",
+  "name": "Force de titan",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Force brute renforcée (capacité native Myrmide).",
+    "categorie": "chitine",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "n4LI9G3j5XiqhHGW",
+  "_key": "!items!n4LI9G3j5XiqhHGW",
+  "name": "Amphibien",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Adaptation à la vie aquatique.",
+    "categorie": "temperature",
+    "souillureCout": 2,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

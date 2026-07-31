@@ -1,0 +1,24 @@
+{
+  "_id": "g1lGD34Y93mA1Rhe",
+  "_key": "!items!g1lGD34Y93mA1Rhe",
+  "name": "Chitine renforcée",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Impacts = Résistance + 2 ; pour 1 Fluide, améliore la couleur d'un test de Résistance.",
+    "categorie": "chitine",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

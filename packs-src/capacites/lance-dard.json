@@ -1,0 +1,24 @@
+{
+  "_id": "pFfR4Y00gcpN068D",
+  "_key": "!items!pFfR4Y00gcpN068D",
+  "name": "Lance-dard",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Lance un dard empoisonné à distance (nécessite la capacité Dard).",
+    "categorie": "antenne",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "HLLrasrMinV3FOc6",
+  "_key": "!items!HLLrasrMinV3FOc6",
+  "name": "Armure de bois",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Réalisée à partir d'écorce d'arbre, légère mais protectrice. Bonus de Chitine +1. Modificateur d'initiative : moins une couleur. Prix : 30 quartz.",
+    "bonusChitine": 1,
+    "bonusFeu": 0,
+    "malusAile": 0,
+    "malusEncombrement": 1,
+    "modInitiativeType": "-1couleur",
+    "prixQuartz": 30,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

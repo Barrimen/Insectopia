@@ -1,0 +1,24 @@
+{
+  "_id": "j9nPaEVuyXMpo5Ow",
+  "_key": "!items!j9nPaEVuyXMpo5Ow",
+  "name": "Résistance à la Souillure",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Résistance renforcée à la maladie des Blafards.",
+    "categorie": "chitine",
+    "souillureCout": 1,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

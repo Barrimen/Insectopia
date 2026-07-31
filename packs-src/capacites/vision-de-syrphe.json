@@ -1,0 +1,24 @@
+{
+  "_id": "o3q57K663sDIsqoA",
+  "_key": "!items!o3q57K663sDIsqoA",
+  "name": "Vision de Syrphe",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, réduit la couleur du résultat d'une attaque à distance subie.",
+    "categorie": "antenne",
+    "souillureCout": 1,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

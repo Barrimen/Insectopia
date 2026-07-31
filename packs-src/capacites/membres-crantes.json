@@ -1,0 +1,24 @@
+{
+  "_id": "er31ZFthj2jR8aqv",
+  "_key": "!items!er31ZFthj2jR8aqv",
+  "name": "Membres crantés",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur d'une attaque de saisie ou d'immobilisation (Blocage).",
+    "categorie": "mandibule",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

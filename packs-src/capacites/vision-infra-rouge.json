@@ -1,0 +1,22 @@
+{
+  "_id": "csqSTXmgeyxPViw5",
+  "_key": "!items!csqSTXmgeyxPViw5",
+  "name": "Vision infra rouge",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Permet de voir les formes dégageant de la chaleur dans le noir. Le niveau de difficulté pour repérer un intre camouflé dans l'obscurité est égal à la caractéristique Antenne moins la caractéristique Température de la cible.",
+    "categorie": "caste",
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

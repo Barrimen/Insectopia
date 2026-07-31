@@ -1,0 +1,24 @@
+{
+  "_id": "sm1dIv1Ok0fzWBhA",
+  "_key": "!items!sm1dIv1Ok0fzWBhA",
+  "name": "Flottant",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Peut flotter et se déplacer sur l'eau à sa vitesse Aile normale ; peut plonger brièvement (durée : Métabolisme en minutes).",
+    "categorie": "aile",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "KBoEyFOkUMZ690tJ",
+  "_key": "!items!KBoEyFOkUMZ690tJ",
+  "name": "Armure de cuir clouté (Anciens Dieux)",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Cuir renforcé de clous de métal. Bonus de Chitine +1 et résistance au feu +1. Modificateur d'initiative : moins une couleur. Prix : 12 quartz.",
+    "bonusChitine": 1,
+    "bonusFeu": 1,
+    "malusAile": 0,
+    "malusEncombrement": 1,
+    "modInitiativeType": "-1couleur",
+    "prixQuartz": 12,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

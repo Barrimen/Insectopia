@@ -1,0 +1,24 @@
+{
+  "_id": "kRRX705dVuFk0tjx",
+  "_key": "!items!kRRX705dVuFk0tjx",
+  "name": "Omniscient",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur d'un test de Connaissance (Conscience).",
+    "categorie": "esprit",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

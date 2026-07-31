@@ -1,0 +1,24 @@
+{
+  "_id": "JPsYhJqz5JAceLNO",
+  "_key": "!items!JPsYhJqz5JAceLNO",
+  "name": "Pinces (arme)",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Les pinces infligent des dégâts mineurs, équivalant à Chitine moins un. Cette arme permet aussi de saisir un adversaire (voir la capacité \"Pince\").",
+    "competenceCombat": "predateur",
+    "modificateurAttaque": 0,
+    "modificateurDegats": -1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

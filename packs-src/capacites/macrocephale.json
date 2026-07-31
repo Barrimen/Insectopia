@@ -1,0 +1,24 @@
+{
+  "_id": "gntEM84fG1E4gQYe",
+  "_key": "!items!gntEM84fG1E4gQYe",
+  "name": "Macrocéphale",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Modification permanente des caractéristiques : Esprit +2, Température -1.",
+    "categorie": "esprit",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

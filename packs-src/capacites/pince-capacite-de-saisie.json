@@ -1,0 +1,24 @@
+{
+  "_id": "hvnmZRtVcdqFsKRa",
+  "_key": "!items!hvnmZRtVcdqFsKRa",
+  "name": "Pince (capacité de saisie)",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Permet de saisir un adversaire et de l'immobiliser avec un test de Prédateur réussi (capacité native Cerk ; détail exact du coût non vérifié depuis le livre de base, repris du kit de démarrage).",
+    "categorie": "mandibule",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

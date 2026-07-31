@@ -1,0 +1,24 @@
+{
+  "_id": "pIu8zhuMz5wvGB8h",
+  "_key": "!items!pIu8zhuMz5wvGB8h",
+  "name": "Fronde",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme ancienne utilisée par les chasseurs et bergers du Sud. Dégâts égaux à la Chitine moins un. Portée 50 insètres. Prix : 3 quartz.",
+    "competenceCombat": "tir",
+    "modificateurAttaque": 0,
+    "modificateurDegats": -1,
+    "degatsFixes": null,
+    "portee": "50 insètres",
+    "porteeInsettres": 50,
+    "rechargeActions": 1,
+    "prixQuartz": 3,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

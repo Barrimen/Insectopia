@@ -1,0 +1,24 @@
+{
+  "_id": "ev3CdaiTTHm7ao3Q",
+  "_key": "!items!ev3CdaiTTHm7ao3Q",
+  "name": "Rostre hypertrophié",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Rostre rétractable (portée 10 insètres) permettant de saisir puis ramener une proie (compétence Prédateur).",
+    "categorie": "antenne",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

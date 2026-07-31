@@ -1,0 +1,24 @@
+{
+  "_id": "IrwuFTsm7KSOlNmY",
+  "_key": "!items!IrwuFTsm7KSOlNmY",
+  "name": "Commandant suprême",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, donne une de ses Blattes d'action à un autre joueur.",
+    "categorie": "esprit",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

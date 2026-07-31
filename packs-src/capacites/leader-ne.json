@@ -1,0 +1,24 @@
+{
+  "_id": "Wq9gMgnNAEs1edSy",
+  "_key": "!items!Wq9gMgnNAEs1edSy",
+  "name": "Leader né",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Peut donner ses Blattes de chance à un autre intre.",
+    "categorie": "esprit",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

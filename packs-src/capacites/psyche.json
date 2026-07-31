@@ -1,0 +1,24 @@
+{
+  "_id": "ZRu4B2zXst3vW4sj",
+  "_key": "!items!ZRu4B2zXst3vW4sj",
+  "name": "Psyché",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Lit les pensées et crée un lien mental de groupe (Esprit vs Esprit) ; un échec révèle le pouvoir à la cible.",
+    "categorie": "esprit",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

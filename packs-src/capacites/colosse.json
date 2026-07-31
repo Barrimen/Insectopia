@@ -1,0 +1,24 @@
+{
+  "_id": "61FfoLqLOfXIZtf9",
+  "_key": "!items!61FfoLqLOfXIZtf9",
+  "name": "Colosse",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Modification permanente : +1 Chitine et +1 impact, mais -1 Température (coûte de la Souillure hors création de personnage).",
+    "categorie": "chitine",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

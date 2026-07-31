@@ -1,0 +1,22 @@
+{
+  "_id": "6yVC4VYDoeRK3cal",
+  "_key": "!items!6yVC4VYDoeRK3cal",
+  "name": "Armure de cuir de Sangchauds",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Le cuir utilisé pour réaliser ces armures est celui des petits ou des gros Sangchauds poilus, tanné dans les quartiers des tanneurs des cités d'Entoma. N'ajoute pas de bonus de Chitine mais confère un bonus de résistance au feu de +1. Prix : 6 quartz.",
+    "bonusChitine": 0,
+    "bonusFeu": 1,
+    "malusAile": 0,
+    "malusEncombrement": 0,
+    "modInitiativeType": "aucun",
+    "prixQuartz": 6,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "njGhAEsY7XMl9fbz",
+  "_key": "!items!njGhAEsY7XMl9fbz",
+  "name": "Armure de carapace",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Restes de chitine d'Insectes réutilisés comme armure ; mal vue socialement (associée à l'insectophagie). Bonus de Chitine +2, -1 en Aile. Modificateur d'initiative : moins une action. Prix : 70 quartz.",
+    "bonusChitine": 2,
+    "bonusFeu": 0,
+    "malusAile": -1,
+    "malusEncombrement": 0,
+    "modInitiativeType": "-1action",
+    "prixQuartz": 70,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

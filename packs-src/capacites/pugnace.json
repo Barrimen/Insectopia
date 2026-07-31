@@ -1,0 +1,24 @@
+{
+  "_id": "ytQeN0tAgYdQQKhp",
+  "_key": "!items!ytQeN0tAgYdQQKhp",
+  "name": "Pugnace",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, ignore les malus des Blessures internes pendant un combat.",
+    "categorie": "mandibule",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

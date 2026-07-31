@@ -1,0 +1,24 @@
+{
+  "_id": "hAmypTIW6NsSI17W",
+  "_key": "!items!hAmypTIW6NsSI17W",
+  "name": "Bonne étoile",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Tire deux fois ses Blattes de chance en début de scénario et choisit le résultat conservé ; peut aussi repiocher une Blatte de chance pour 1 Fluide.",
+    "categorie": "esprit",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "hAecJKNaaRO953gy",
+  "_key": "!items!hAecJKNaaRO953gy",
+  "name": "Membres allongés",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Allonge supplémentaire au corps à corps.",
+    "categorie": "chitine",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_id": "nvS9KIaCvHc1iYed",
+  "_key": "!items!nvS9KIaCvHc1iYed",
+  "name": "Grand bouclier",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Grand bouclier à trois pattes. +2 Parade, +1 couvert. Modificateur d'initiative : moins une action. Prix : 80 quartz.",
+    "bonusChitine": -1,
+    "bonusFeu": 0,
+    "malusAile": 0,
+    "malusEncombrement": 0,
+    "modInitiativeType": "-1action",
+    "prixQuartz": 80,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

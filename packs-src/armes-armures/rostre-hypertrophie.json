@@ -1,0 +1,24 @@
+{
+  "_id": "R4mcxFeskTiA3VDA",
+  "_key": "!items!R4mcxFeskTiA3VDA",
+  "name": "Rostre hypertrophié",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Rostre rétractable permettant de saisir une proie à distance et de la ramener jusqu'à l'appendice buccal. Dégâts égaux à la Chitine.",
+    "competenceCombat": "predateur",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": null,
+    "portee": "10 insètres",
+    "porteeInsettres": 10,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

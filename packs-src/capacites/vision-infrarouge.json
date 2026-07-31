@@ -1,0 +1,24 @@
+{
+  "_id": "bg1cHcZY4DIfrxBH",
+  "_key": "!items!bg1cHcZY4DIfrxBH",
+  "name": "Vision infrarouge",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Permet de repérer les sources de chaleur dans l'obscurité.",
+    "categorie": "antenne",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

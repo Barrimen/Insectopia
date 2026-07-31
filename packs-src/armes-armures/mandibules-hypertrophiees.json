@@ -1,0 +1,24 @@
+{
+  "_id": "67mGVNJ2YvwFJC6J",
+  "_key": "!items!67mGVNJ2YvwFJC6J",
+  "name": "Mandibules hypertrophiées",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Immenses armes naturelles extrêmement dévastatrices. Elles infligent des dégâts équivalents à la Chitine plus un.",
+    "competenceCombat": "predateur",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

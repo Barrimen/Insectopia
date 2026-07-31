@@ -1,0 +1,24 @@
+{
+  "_id": "0dJxNGFiCTKZtyCg",
+  "_key": "!items!0dJxNGFiCTKZtyCg",
+  "name": "Monstrueux",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Impose un test de Peur (Mandibule vs Mandibule) aux intres qui l'attaquent.",
+    "categorie": "mandibule",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "YU7xDJTOrmbmwb6K",
+  "_key": "!items!YU7xDJTOrmbmwb6K",
+  "name": "Contorsion",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Réduit d'un cran le résultat d'une tentative de saisie ou d'immobilisation adverse.",
+    "categorie": "aile",
+    "souillureCout": 1,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

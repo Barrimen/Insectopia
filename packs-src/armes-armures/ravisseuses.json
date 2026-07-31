@@ -1,0 +1,24 @@
+{
+  "_id": "hLEaT4ivwDL2kNOj",
+  "_key": "!items!hLEaT4ivwDL2kNOj",
+  "name": "Ravisseuses",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Membres antérieurs en forme de ravisseuses offrant de l'allonge. Dégâts égaux à la Chitine ; améliore la couleur de la première Blatte d'initiative en attaquant.",
+    "competenceCombat": "predateur",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

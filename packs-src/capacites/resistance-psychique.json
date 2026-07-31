@@ -1,0 +1,24 @@
+{
+  "_id": "j9JAa3vXMPGIbZAj",
+  "_key": "!items!j9JAa3vXMPGIbZAj",
+  "name": "Résistance psychique",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Augmente d'une Blatte la difficulté des sorts qui le ciblent (bonus d'une Blatte sur les sorts de zone).",
+    "categorie": "esprit",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

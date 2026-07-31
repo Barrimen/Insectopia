@@ -1,0 +1,24 @@
+{
+  "_id": "TvNDKfPfWm6CYApQ",
+  "_key": "!items!TvNDKfPfWm6CYApQ",
+  "name": "Pestilence",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Nuage de gaz (Température vs Température, portée 10 insètres, dure un tour) qui fait fuir Sangchauds/Plumes/Écailles et fait perdre 1 à 3 actions aux intres selon la réussite.",
+    "categorie": "antenne",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

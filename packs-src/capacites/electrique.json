@@ -1,0 +1,24 @@
+{
+  "_id": "lHNep6NJv7O5L2VR",
+  "_key": "!items!lHNep6NJv7O5L2VR",
+  "name": "Électrique",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arcs électriques (portée 10 insètres, Température vs Température) qui paralysent l'adversaire 1 à 3 tours selon la réussite.",
+    "categorie": "esprit",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

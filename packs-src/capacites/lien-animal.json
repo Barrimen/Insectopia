@@ -1,0 +1,24 @@
+{
+  "_id": "onGA1hMg6CVD1hoc",
+  "_key": "!items!onGA1hMg6CVD1hoc",
+  "name": "Lien animal",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur d'un test visant à calmer un animal.",
+    "categorie": "antenne",
+    "souillureCout": 1,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

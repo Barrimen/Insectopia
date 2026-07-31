@@ -1,0 +1,24 @@
+{
+  "_id": "mPDjEMzombc9B8V1",
+  "_key": "!items!mPDjEMzombc9B8V1",
+  "name": "Arcin",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Les arcins sont des armes animistes ressemblant aux arcs, fabriquées à partir de tiges de bois souples et résistantes ou d'os de créatures aux mêmes propriétés. Facteur de dégâts équivalent à la Chitine de l'assaillant.",
+    "competenceCombat": "tir",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": null,
+    "portee": "jusqu'à 100 insètres",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

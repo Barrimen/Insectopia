@@ -1,0 +1,24 @@
+{
+  "_id": "hwksF9qFYLWd5f5e",
+  "_key": "!items!hwksF9qFYLWd5f5e",
+  "name": "Téméraire",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur des tests de peur ou de terreur.",
+    "categorie": "mandibule",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

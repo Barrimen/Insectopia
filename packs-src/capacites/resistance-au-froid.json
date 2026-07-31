@@ -1,0 +1,24 @@
+{
+  "_id": "6yETQ2mfiMebD0Uw",
+  "_key": "!items!6yETQ2mfiMebD0Uw",
+  "name": "Résistance au froid",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Résistance renforcée au froid.",
+    "categorie": "temperature",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

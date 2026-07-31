@@ -1,0 +1,22 @@
+{
+  "_id": "7XJ4j49399HtRsAT",
+  "_key": "!items!7XJ4j49399HtRsAT",
+  "name": "Cotte de mailles (Anciens Dieux)",
+  "type": "armure",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Anneaux de métal couvrant membres antérieurs et thorax, portée par les gradés d'armée. Bonus de Chitine +2, -1 en Aile. Modificateur d'initiative : moins une action. Prix : 100 quartz.",
+    "bonusChitine": 2,
+    "bonusFeu": 0,
+    "malusAile": -1,
+    "malusEncombrement": 0,
+    "modInitiativeType": "-1action",
+    "prixQuartz": 100,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

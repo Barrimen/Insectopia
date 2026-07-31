@@ -1,0 +1,24 @@
+{
+  "_id": "kfgtaCkOLplQ0nuT",
+  "_key": "!items!kfgtaCkOLplQ0nuT",
+  "name": "Morsure venimeuse",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Attaque empoisonnée au contact (Prédateur vs Défense), dégâts résolus via Température vs Température.",
+    "categorie": "mandibule",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

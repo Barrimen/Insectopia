@@ -1,0 +1,24 @@
+{
+  "_id": "BYoOOTL6GI8GqFld",
+  "_key": "!items!BYoOOTL6GI8GqFld",
+  "name": "Crache-acide",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Attaque à distance (Tir vs Agilité, jusqu'à 50 insètres, ou en cône) infligeant des dégâts via Température.",
+    "categorie": "antenne",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

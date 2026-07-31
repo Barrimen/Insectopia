@@ -1,0 +1,24 @@
+{
+  "_id": "SSAjGPIAFl9Js6Zu",
+  "_key": "!items!SSAjGPIAFl9Js6Zu",
+  "name": "Perception chimique hors du commun",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Pour 1 Fluide, améliore la couleur d'un test de Phéromones.",
+    "categorie": "antenne",
+    "souillureCout": 2,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": true,
+      "caracKey": "antenne",
+      "compKey": "pheromones",
+      "valeur": 1
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

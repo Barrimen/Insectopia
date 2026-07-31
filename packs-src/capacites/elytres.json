@@ -1,0 +1,24 @@
+{
+  "_id": "BAVxpvVEgtGjUMs5",
+  "_key": "!items!BAVxpvVEgtGjUMs5",
+  "name": "Élytres",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Membranes chitineuses protégeant les ailes au repos (+1 impact), mais vitesse en vol réduite à Aile + 1 au lieu de Aile + 2.",
+    "categorie": "chitine",
+    "souillureCout": 2,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

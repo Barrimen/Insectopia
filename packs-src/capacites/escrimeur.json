@@ -1,0 +1,24 @@
+{
+  "_id": "sl4pjMeNYcE6uSAb",
+  "_key": "!items!sl4pjMeNYcE6uSAb",
+  "name": "Escrimeur",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Dégâts de mêlée basés sur Antenne -1 au lieu de Chitine ; pour 1 Fluide, améliore la couleur d'une attaque de mêlée.",
+    "categorie": "mandibule",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

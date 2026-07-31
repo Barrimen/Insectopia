@@ -1,0 +1,24 @@
+{
+  "_id": "As9T0OiiieUk3yOc",
+  "_key": "!items!As9T0OiiieUk3yOc",
+  "name": "Catalyseur de chaleur",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Manipulation de sa propre chaleur corporelle.",
+    "categorie": "temperature",
+    "souillureCout": 0,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

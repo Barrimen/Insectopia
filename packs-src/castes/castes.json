@@ -1,0 +1,96 @@
+{
+  "_id": "YTNNYl9flAut84Ug",
+  "_key": "!journal!YTNNYl9flAut84Ug",
+  "name": "Insectopia — Castes et métiers (livre de base p.204)",
+  "pages": [
+    {
+      "_id": "R2QhHtxeeDEzURue",
+      "name": "Combattants",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 2
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><strong>Bonus de caste :</strong> +1 en Mandibule ou +1 en Antenne</p>\n<p><strong>Capacités de caste :</strong> Au choix, 1 capacité en Chitine ou Température, ou 2 capacités en Aile, Antenne ou Mandibule</p>\n<p><strong>Métiers et compétences de départ :</strong></p>\n<ul><li><strong>Archer</strong> : Tireur d'élite, Infiltration</li><li><strong>Bretteur</strong> : Escrime, Vivacité</li><li><strong>Éclaireur</strong> : Escrime ou Vivacité, Infiltration</li><li><strong>Goliath</strong> : Fureur, Blocage</li><li><strong>Soldat</strong> : Art de la guerre, Blocage ou Escrime</li><li><strong>Voltigeur</strong> : Fureur, Vivacité</li></ul>"
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!YTNNYl9flAut84Ug.R2QhHtxeeDEzURue"
+    },
+    {
+      "_id": "A6hwBq7rnskh0Ea0",
+      "name": "Divins",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 2
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><strong>Bonus de caste :</strong> +1 en Esprit</p>\n<p><strong>Capacités de caste :</strong> 2 capacités en Aile, Antenne ou Esprit</p>\n<p><strong>Métiers et compétences de départ :</strong></p>\n<ul><li><strong>Chaman</strong> : Sphère de magie (Vie), Sphère de magie (Bois, Feu ou Ancêtre)</li><li><strong>Contrôleur d'énergie</strong> : Sphère de magie (au choix parmi Eau/Air/Feu/Terre), Sphère de magie (au choix parmi Eau/Air/Feu/Terre)</li><li><strong>Druide</strong> : Sphère de magie (au choix parmi Sangchauds/Écailles/Plumes/Insectes), Sphère de magie (au choix parmi Sangchauds/Écailles/Plumes/Insectes)</li><li><strong>Héraut de la souillure</strong> : Sphère de magie (au choix parmi Alchimie/Folie/Terre/Souillure), Sphère de magie (au choix parmi Alchimie/Folie/Terre/Souillure)</li><li><strong>Maîtresse des pouvoirs</strong> : Sphère de magie (au choix parmi Pensée/Temps/Souillure/Vie), Sphère de magie (au choix parmi Pensée/Temps/Souillure/Vie)</li><li><strong>Prêtre des Anciens Dieux</strong> : Sphère de magie (au choix parmi Alchimie/Pensée/Foudre/Souillure), Sphère de magie (au choix parmi Alchimie/Pensée/Foudre/Souillure)</li><li><strong>Psyché</strong> : Sphère de magie (au choix parmi Télékinésie/Pensée/Insecte/Souillure), Sphère de magie (au choix parmi Télékinésie/Pensée/Insecte/Souillure)</li><li><strong>Sylvegarde</strong> : Sphère de magie (au choix parmi Bois/Eau/Mycélium/Terre), Sphère de magie (au choix parmi Bois/Eau/Mycélium/Terre)</li></ul>"
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!YTNNYl9flAut84Ug.A6hwBq7rnskh0Ea0"
+    },
+    {
+      "_id": "c17JB5A3G71bsLmN",
+      "name": "Dominants",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 2
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><strong>Bonus de caste :</strong> +1 en Antenne ou +1 en Esprit</p>\n<p><strong>Capacités de caste :</strong> Au choix, 1 capacité en Chitine ou Température, ou 2 capacités en Antenne ou Esprit</p>\n<p><strong>Métiers et compétences de départ :</strong></p>\n<ul><li><strong>Couveuse</strong> : Éducation, Sexualité</li><li><strong>Diplomate</strong> : Courtoisie, Essaim</li><li><strong>Érudit</strong> : Histoire et religion, Science et technique</li><li><strong>Reproducteur</strong> : Escrime ou Blocage, Essaim</li></ul>"
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!YTNNYl9flAut84Ug.c17JB5A3G71bsLmN"
+    },
+    {
+      "_id": "82V4RZja97WBz3oz",
+      "name": "Hors-caste",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 2
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><strong>Bonus de caste :</strong> +1 en Aile ou +1 en Antenne</p>\n<p><strong>Capacités de caste :</strong> Au choix, 1 capacité en Température, ou 2 capacités en Antenne, Aile ou Esprit</p>\n<p><strong>Métiers et compétences de départ :</strong></p>\n<ul><li><strong>Assassin</strong> : Coup Vicieux, Infiltration</li><li><strong>Explorateur</strong> : Histoire et religion, Survie</li><li><strong>Roublard</strong> : Art des voleurs, Infiltration</li><li><strong>Troubadour</strong> : Arts du spectacle, Essaim</li></ul>"
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!YTNNYl9flAut84Ug.82V4RZja97WBz3oz"
+    },
+    {
+      "_id": "rN6yaHWIjPtfKQgx",
+      "name": "Producteurs",
+      "type": "text",
+      "title": {
+        "show": true,
+        "level": 2
+      },
+      "text": {
+        "format": 1,
+        "content": "<p><strong>Bonus de caste :</strong> +1 en Caste</p>\n<p><strong>Capacités de caste :</strong> Au choix, 1 capacité en Chitine ou Température, ou 2 capacités en Antenne ou Aile</p>\n<p><strong>Métiers et compétences de départ :</strong></p>\n<ul><li><strong>Artisan / Marchand</strong> : Artisanat et commerce ou Commerce et courtoisie</li><li><strong>Chasseur</strong> : Arts de la forêt, Belluaire</li><li><strong>Dresseur</strong> : Belluaire, Dressage</li><li><strong>Transporteur</strong> : Nefs aériennes, Navigation</li></ul>"
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!YTNNYl9flAut84Ug.rN6yaHWIjPtfKQgx"
+    }
+  ],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

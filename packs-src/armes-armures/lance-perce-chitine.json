@@ -1,0 +1,24 @@
+{
+  "_id": "79oOxXDWHlvjyIOy",
+  "_key": "!items!79oOxXDWHlvjyIOy",
+  "name": "Lance perce-chitine",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Longue lance utilisée pour arrêter les charges, avantageuse au premier tour de combat mais peu maniable ensuite. Dégâts égaux à la Chitine plus un. Modificateur d'initiative : moins une couleur. Prix : 150 quartz.",
+    "competenceCombat": "melee",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 150,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "_id": "FS0nnhzDAfhARGhD",
+  "_key": "!items!FS0nnhzDAfhARGhD",
+  "name": "Microbe",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Effet lié à une contamination mineure contrôlée.",
+    "categorie": "temperature",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

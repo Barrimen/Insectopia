@@ -1,0 +1,24 @@
+{
+  "_id": "70y6TtmYbp1mvY5q",
+  "_key": "!items!70y6TtmYbp1mvY5q",
+  "name": "Mutagène",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Effet lié à une mutation mineure.",
+    "categorie": "temperature",
+    "souillureCout": 0,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

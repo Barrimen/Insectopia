@@ -1,0 +1,24 @@
+{
+  "_id": "bFUHnT1dzNmMMuDG",
+  "_key": "!items!bFUHnT1dzNmMMuDG",
+  "name": "Piqueur-suceur",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Vole des points de Fluide à sa cible lors d'une attaque réussie (Prédateur vs Défense) ; risque de contamination sur un Blafard.",
+    "categorie": "mandibule",
+    "souillureCout": 3,
+    "fluideCout": 1,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

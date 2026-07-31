@@ -1,0 +1,24 @@
+{
+  "_id": "FwYpji66IsuJ4VAT",
+  "_key": "!items!FwYpji66IsuJ4VAT",
+  "name": "Ailé",
+  "type": "capacite",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Le personnage possède des ailes et peut voler (vitesse en vol = Aile + 2).",
+    "categorie": "aile",
+    "souillureCout": 3,
+    "fluideCout": 0,
+    "bonus": {
+      "actif": false,
+      "caracKey": "",
+      "compKey": "",
+      "valeur": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}
