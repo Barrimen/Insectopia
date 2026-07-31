@@ -1,0 +1,231 @@
+{
+  "_id": "4fgvuMYZJ9oJHNXc",
+  "_key": "!actors!4fgvuMYZJ9oJHNXc",
+  "name": "Norim",
+  "type": "intre",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "caracteristiques": {
+      "aile": {
+        "value": 4,
+        "label": "INSECTOPIA.label.caracteristiques.aile",
+        "competences": {
+          "agilite": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.agilite"
+          },
+          "defense": {
+            "value": 3,
+            "label": "INSECTOPIA.label.competences.defense"
+          }
+        }
+      },
+      "antenne": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.antenne",
+        "competences": {
+          "pheromones": {
+            "value": 1,
+            "label": "INSECTOPIA.label.competences.pheromones"
+          },
+          "tir": {
+            "value": 3,
+            "label": "INSECTOPIA.label.competences.tir"
+          }
+        }
+      },
+      "mandibule": {
+        "value": 4,
+        "label": "INSECTOPIA.label.caracteristiques.mandibule",
+        "competences": {
+          "predateur": {
+            "value": 4,
+            "label": "INSECTOPIA.label.competences.predateur"
+          },
+          "melee": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.melee"
+          }
+        }
+      },
+      "esprit": {
+        "value": 2,
+        "label": "INSECTOPIA.label.caracteristiques.esprit",
+        "competences": {
+          "conscience": {
+            "value": 1,
+            "label": "INSECTOPIA.label.competences.conscience"
+          },
+          "instinct": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.instinct"
+          }
+        }
+      },
+      "chitine": {
+        "value": 4,
+        "label": "INSECTOPIA.label.caracteristiques.chitine",
+        "competences": {
+          "chrysalide": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.chrysalide"
+          },
+          "resistance": {
+            "value": 3,
+            "label": "INSECTOPIA.label.competences.resistance"
+          }
+        }
+      },
+      "temperature": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.temperature",
+        "competences": {
+          "activite": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.activite"
+          },
+          "metabolisme": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.metabolisme"
+          }
+        }
+      },
+      "caste": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.caste",
+        "competences": [
+          {
+            "label": "Fureur",
+            "value": 2
+          },
+          {
+            "label": "Nefs aériennes",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "identite": {
+      "race": "Lulle",
+      "casteNom": "Combattant",
+      "metier": "Soldat",
+      "religion": "animiste",
+      "regimealimentaire": "omnivore",
+      "couleur": "Bleue",
+      "historique": "<p>Né dans les nids aquatiques de Linné, au caractère impulsif et turbulent, Norim fut condamné à mort après avoir dévoré une partie du crâne d'une Putère qui le provoquait. Évadé, il erra dans le désert Locustir avant de rencontrer le capitaine Apenlys, qu'il suit depuis fidèlement.</p>",
+      "description": "",
+      "capacites": []
+    },
+    "chance": {
+      "rouge": 0,
+      "verte": 0,
+      "bleue": 0,
+      "blanche": 0,
+      "noire": 0
+    },
+    "combat": {
+      "blessures": {
+        "impact": {
+          "value": 0,
+          "max": 0
+        },
+        "blessureinterne": {
+          "value": 0,
+          "max": 0
+        }
+      },
+      "souillure": 0,
+      "fluide": {
+        "value": 0,
+        "max": 0
+      },
+      "encombrement": 0,
+      "initiative": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "items": [
+    {
+      "_id": "VptUKXx6W9dAvd0t",
+      "name": "Platère",
+      "type": "arme",
+      "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
+      "system": {
+        "description": "La platère est fabriquée à partir des pattes anguleuses et acérées des Skarabs de Thron. Une fois la bête tuée, on retire la partie inférieure de sa patte, effilée et rectiligne, taillée en un long tranchoir. Facteur de dégâts équivalent à la Chitine de l'assaillant.",
+        "competenceCombat": "melee",
+        "modificateurAttaque": 0,
+        "modificateurDegats": 0,
+        "degatsFixes": null,
+        "portee": "",
+        "porteeInsettres": 0,
+        "rechargeActions": 0,
+        "prixQuartz": 0,
+        "equipee": true
+      },
+      "_key": "!actors.items!4fgvuMYZJ9oJHNXc.VptUKXx6W9dAvd0t",
+      "effects": []
+    },
+    {
+      "_id": "3yaBH1wKNYdpDIG3",
+      "name": "Griffes acérées",
+      "type": "arme",
+      "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
+      "system": {
+        "description": "Certains intres possèdent des griffes particulièrement longues et effilées. Dégâts égaux à la caractéristique Chitine du personnage.",
+        "competenceCombat": "predateur",
+        "modificateurAttaque": 0,
+        "modificateurDegats": 0,
+        "degatsFixes": null,
+        "portee": "",
+        "porteeInsettres": 0,
+        "rechargeActions": 0,
+        "prixQuartz": 0,
+        "equipee": true
+      },
+      "_key": "!actors.items!4fgvuMYZJ9oJHNXc.3yaBH1wKNYdpDIG3",
+      "effects": []
+    },
+    {
+      "_id": "oFCEzG3a699nIuGC",
+      "name": "Armure de cuir de Sangchauds",
+      "type": "armure",
+      "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
+      "system": {
+        "description": "Le cuir utilisé pour réaliser ces armures est celui des petits ou des gros Sangchauds poilus, tanné dans les quartiers des tanneurs des cités d'Entoma. N'ajoute pas de bonus de Chitine mais confère un bonus de résistance au feu de +1. Prix : 6 quartz.",
+        "bonusChitine": 0,
+        "bonusFeu": 1,
+        "malusAile": 0,
+        "malusEncombrement": 0,
+        "modInitiativeType": "aucun",
+        "prixQuartz": 6,
+        "equipee": true
+      },
+      "_key": "!actors.items!4fgvuMYZJ9oJHNXc.oFCEzG3a699nIuGC",
+      "effects": []
+    },
+    {
+      "_id": "K4f2uhFwK1uqbs3d",
+      "name": "Vitesse surnaturelle",
+      "type": "capacite",
+      "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
+      "system": {
+        "description": "Vitesse en vol égale à Aile + 3 au lieu de Aile + 2.",
+        "categorie": "aile",
+        "souillureCout": 2,
+        "fluideCout": 0,
+        "bonus": {
+          "actif": false,
+          "caracKey": "",
+          "compKey": "",
+          "valeur": 0
+        }
+      },
+      "_key": "!actors.items!4fgvuMYZJ9oJHNXc.K4f2uhFwK1uqbs3d",
+      "effects": []
+    }
+  ]
+}

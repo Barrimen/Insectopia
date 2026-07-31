@@ -1,0 +1,251 @@
+{
+  "_id": "GqmJv2lBsj7Jwtna",
+  "_key": "!actors!GqmJv2lBsj7Jwtna",
+  "name": "Combeis Marginatus",
+  "type": "intre",
+  "img": "icons/svg/mystery-man.svg",
+  "system": {
+    "caracteristiques": {
+      "aile": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.aile",
+        "competences": {
+          "agilite": {
+            "value": 1,
+            "label": "INSECTOPIA.label.competences.agilite"
+          },
+          "defense": {
+            "value": 3,
+            "label": "INSECTOPIA.label.competences.defense"
+          }
+        }
+      },
+      "antenne": {
+        "value": 4,
+        "label": "INSECTOPIA.label.caracteristiques.antenne",
+        "competences": {
+          "pheromones": {
+            "value": 3,
+            "label": "INSECTOPIA.label.competences.pheromones"
+          },
+          "tir": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.tir"
+          }
+        }
+      },
+      "mandibule": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.mandibule",
+        "competences": {
+          "predateur": {
+            "value": 1,
+            "label": "INSECTOPIA.label.competences.predateur"
+          },
+          "melee": {
+            "value": 3,
+            "label": "INSECTOPIA.label.competences.melee"
+          }
+        }
+      },
+      "esprit": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.esprit",
+        "competences": {
+          "conscience": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.conscience"
+          },
+          "instinct": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.instinct"
+          }
+        }
+      },
+      "chitine": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.chitine",
+        "competences": {
+          "chrysalide": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.chrysalide"
+          },
+          "resistance": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.resistance"
+          }
+        }
+      },
+      "temperature": {
+        "value": 3,
+        "label": "INSECTOPIA.label.caracteristiques.temperature",
+        "competences": {
+          "activite": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.activite"
+          },
+          "metabolisme": {
+            "value": 2,
+            "label": "INSECTOPIA.label.competences.metabolisme"
+          }
+        }
+      },
+      "caste": {
+        "value": 4,
+        "label": "INSECTOPIA.label.caracteristiques.caste",
+        "competences": [
+          {
+            "label": "Essaim",
+            "value": 3
+          },
+          {
+            "label": "Courtoisie",
+            "value": 2
+          }
+        ]
+      }
+    },
+    "identite": {
+      "race": "Putère",
+      "casteNom": "Dominant",
+      "metier": "Reproducteur",
+      "religion": "animiste",
+      "regimealimentaire": "omnivore",
+      "couleur": "Ocre",
+      "historique": "<p>Issu d'une famille de dominants d'Aran Bara, Combeis fit les frais des jeux de cour des Royaumes Marchands et fut exilé à Akis, où il rejeta le culte des Anciens Dieux pour embrasser le culte d'Onono. Il commande depuis deux cycles une troupe de huit Putères affiliées aux Fils d'Onono, spécialisées dans l'assaut chimique.</p>",
+      "description": "",
+      "capacites": []
+    },
+    "chance": {
+      "rouge": 0,
+      "verte": 0,
+      "bleue": 0,
+      "blanche": 0,
+      "noire": 0
+    },
+    "combat": {
+      "blessures": {
+        "impact": {
+          "value": 0,
+          "max": 0
+        },
+        "blessureinterne": {
+          "value": 0,
+          "max": 0
+        }
+      },
+      "souillure": 0,
+      "fluide": {
+        "value": 0,
+        "max": 0
+      },
+      "encombrement": 0,
+      "initiative": 0
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "items": [
+    {
+      "_id": "I7JUrI08PA4gVln7",
+      "name": "Platère",
+      "type": "arme",
+      "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
+      "system": {
+        "description": "La platère est fabriquée à partir des pattes anguleuses et acérées des Skarabs de Thron. Une fois la bête tuée, on retire la partie inférieure de sa patte, effilée et rectiligne, taillée en un long tranchoir. Facteur de dégâts équivalent à la Chitine de l'assaillant.",
+        "competenceCombat": "melee",
+        "modificateurAttaque": 0,
+        "modificateurDegats": 0,
+        "degatsFixes": null,
+        "portee": "",
+        "porteeInsettres": 0,
+        "rechargeActions": 0,
+        "prixQuartz": 0,
+        "equipee": true
+      },
+      "_key": "!actors.items!GqmJv2lBsj7Jwtna.I7JUrI08PA4gVln7",
+      "effects": []
+    },
+    {
+      "_id": "O1GT2rtSbjRNqJNJ",
+      "name": "Armure de cuir de Sangchauds",
+      "type": "armure",
+      "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
+      "system": {
+        "description": "Le cuir utilisé pour réaliser ces armures est celui des petits ou des gros Sangchauds poilus, tanné dans les quartiers des tanneurs des cités d'Entoma. N'ajoute pas de bonus de Chitine mais confère un bonus de résistance au feu de +1. Prix : 6 quartz.",
+        "bonusChitine": 0,
+        "bonusFeu": 1,
+        "malusAile": 0,
+        "malusEncombrement": 0,
+        "modInitiativeType": "aucun",
+        "prixQuartz": 6,
+        "equipee": true
+      },
+      "_key": "!actors.items!GqmJv2lBsj7Jwtna.O1GT2rtSbjRNqJNJ",
+      "effects": []
+    },
+    {
+      "_id": "QfqTDUZNOq0bF19s",
+      "name": "Ailé",
+      "type": "capacite",
+      "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
+      "system": {
+        "description": "Le personnage possède des ailes et peut voler (vitesse en vol = Aile + 2).",
+        "categorie": "aile",
+        "souillureCout": 3,
+        "fluideCout": 0,
+        "bonus": {
+          "actif": false,
+          "caracKey": "",
+          "compKey": "",
+          "valeur": 0
+        }
+      },
+      "_key": "!actors.items!GqmJv2lBsj7Jwtna.QfqTDUZNOq0bF19s",
+      "effects": []
+    },
+    {
+      "_id": "0d555Y1MWswvqkxY",
+      "name": "Pestilence",
+      "type": "capacite",
+      "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
+      "system": {
+        "description": "Nuage de gaz (Température vs Température, portée 10 insètres, dure un tour) qui fait fuir Sangchauds/Plumes/Écailles et fait perdre 1 à 3 actions aux intres selon la réussite.",
+        "categorie": "antenne",
+        "souillureCout": 3,
+        "fluideCout": 1,
+        "bonus": {
+          "actif": false,
+          "caracKey": "",
+          "compKey": "",
+          "valeur": 0
+        }
+      },
+      "_key": "!actors.items!GqmJv2lBsj7Jwtna.0d555Y1MWswvqkxY",
+      "effects": []
+    },
+    {
+      "_id": "ZXxGwfcAsVLBLhsu",
+      "name": "Antennes ramifiées",
+      "type": "capacite",
+      "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
+      "system": {
+        "description": "Pour 1 Fluide, améliore la couleur d'un test de repérage à l'ouïe ou à l'odorat.",
+        "categorie": "antenne",
+        "souillureCout": 1,
+        "fluideCout": 1,
+        "bonus": {
+          "actif": false,
+          "caracKey": "",
+          "compKey": "",
+          "valeur": 0
+        }
+      },
+      "_key": "!actors.items!GqmJv2lBsj7Jwtna.ZXxGwfcAsVLBLhsu",
+      "effects": []
+    }
+  ]
+}
