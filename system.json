@@ -3,7 +3,7 @@
   "title": "Insectopia",
   "description": "Système Foundry VTT non-officiel pour Insectopia (Odonata éditions), adapté depuis le système Omega de Khaali-dev sous licence GPL-3.0, avec l'accord d'Odonata éditions pour l'usage du contenu Insectopia.",
   "url": "",
-  "version": "0.4.1",
+  "version": "0.4.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14",

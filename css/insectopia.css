@@ -118,6 +118,20 @@
 .insectopia.sheet.actor .attack-buttons a.attack-roll:hover {
   background: #c0392b33;
 }
+.insectopia.sheet.actor .capacite-line {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4em;
+  align-items: flex-start;
+  margin-bottom: 0.4em;
+}
+.insectopia.sheet.actor .capacite-line input {
+  flex: 0 0 30%;
+}
+.insectopia.sheet.actor .capacite-line textarea {
+  flex: 1;
+  height: 3em;
+}
 .blattes-initiative {
   display: flex;
   flex-direction: row;

@@ -1,5 +1,5 @@
 import { RACES } from "../../common/data-races.js";
-import { CAPACITES } from "../../common/data-capacites.js";
+import CharacterWizard from "../character-wizard.js";
 
 export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   constructor(...args) {
@@ -29,6 +29,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     context.owner = this.actor.isOwner;
     context.isGm = game.user.isGM;
     context.unlocked = this.actor.getFlag(game.system.id, "SheetUnlocked");
+    context.creationTerminee = this.actor.getFlag(game.system.id, "creationTerminee");
 
     context.historiquehtml = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       this.actor.system.identite.historique,
@@ -54,7 +55,6 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     context.armures = this.actor.items.filter((i) => i.type === "armure");
     context.capacitesItems = this.actor.items.filter((i) => i.type === "capacite");
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
-    context.capacitesListeConnues = CAPACITES.map((c, index) => ({ index, label: c.name }));
 
     return context;
   }
@@ -74,13 +74,44 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     html.find(".caste-comp-add").click(this._onCasteCompAdd.bind(this));
     html.find(".caste-comp-remove").click(this._onCasteCompRemove.bind(this));
 
+    html.find(".capacite-add").click(this._onCapaciteAdd.bind(this));
+    html.find(".capacite-remove").click(this._onCapaciteRemove.bind(this));
+
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-equip-toggle").change(this._onItemEquipToggle.bind(this));
 
     html.find(".race-apply").click(this._onRaceApply.bind(this));
-    html.find(".capacite-connue-add").click(this._onCapaciteConnueAdd.bind(this));
+
+    html.find(".character-wizard-open").click(this._onWizardOpen.bind(this));
+    html.find(".character-wizard-gm-toggle").click(this._onWizardGmToggle.bind(this));
+  }
+
+  /** Lance l'assistant de création de personnage (livre de base p.196-206). */
+  async _onWizardOpen(event) {
+    event.preventDefault();
+    return new CharacterWizard(this.actor).start();
+  }
+
+  /**
+   * Bascule manuelle, réservée au Deus (MJ), du statut "création
+   * terminée" — utile pour un PNJ importé ou un personnage prêt à jouer
+   * qui n'est pas passé par l'assistant.
+   */
+  async _onWizardGmToggle(event) {
+    event.preventDefault();
+    const actuel = this.actor.getFlag(game.system.id, "creationTerminee");
+    const confirmed = await Dialog.confirm({
+      title: "Assistant de création",
+      content: actuel
+        ? `<p>Rouvrir la création de personnage pour ${this.actor.name} (réaffiche le bouton de l'assistant) ?</p>`
+        : `<p>Marquer la création de ${this.actor.name} comme terminée (masque le bouton de l'assistant) ?</p>`,
+    });
+    if (!confirmed) return;
+    if (actuel) await this.actor.unsetFlag(game.system.id, "creationTerminee");
+    else await this.actor.setFlag(game.system.id, "creationTerminee", true);
+    this.render(false);
   }
 
   async _onSheetChangelock(event) {
@@ -141,31 +172,22 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   }
 
   /**
-   * Ajoute une capacité choisie dans le sélecteur (liste des 68 capacités
-   * du livre de base) comme un véritable Item embarqué — même mécanisme
-   * que pour les armes/armures, donc pas de bug de suppression possible :
-   * la suppression passe par le bouton .item-delete déjà en place.
+   * Ajoute une capacité spéciale (de race ou de caste, cf. livret p.27-28 :
+   * Pince, Vitesse surnaturelle, Pestilence, Antennes ramifiées, etc.)
    */
-  async _onCapaciteConnueAdd(event) {
+  async _onCapaciteAdd(event) {
     event.preventDefault();
-    const index = parseInt(this.element.find("#capaciteConnueSelect")[0]?.value);
-    if (Number.isNaN(index)) return;
-    const source = CAPACITES[index];
-    if (!source) return;
-    return this.actor.createEmbeddedDocuments("Item", [
-      {
-        name: source.name,
-        type: "capacite",
-        img: "icons/magic/symbols/rune-sigil-blue-pink.webp",
-        system: {
-          description: source.description,
-          categorie: source.categorie,
-          souillureCout: source.souillureCout,
-          fluideCout: source.fluideCout,
-          bonus: { ...source.bonus },
-        },
-      },
-    ]);
+    const capacites = foundry.utils.duplicate(this.actor.system.identite.capacites);
+    capacites.push({ label: "Nouvelle capacité", description: "" });
+    await this.actor.update({ "system.identite.capacites": capacites });
+  }
+
+  async _onCapaciteRemove(event) {
+    event.preventDefault();
+    const index = parseInt(event.currentTarget.dataset.index);
+    const capacites = foundry.utils.duplicate(this.actor.system.identite.capacites);
+    capacites.splice(index, 1);
+    await this.actor.update({ "system.identite.capacites": capacites });
   }
 
   /** Crée un nouvel Item embarqué du type indiqué (data-type: arme|armure|capacite). */

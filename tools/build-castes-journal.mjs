@@ -11,7 +11,6 @@ function id16() {
 }
 
 const { CASTES } = await import("../module/common/data-castes.js");
-const { COMPETENCES_CASTE } = await import("../module/common/data-competences-caste.js");
 
 const pages = Object.entries(CASTES).map(([key, caste]) => {
   const metiersHtml = Object.values(caste.metiers)
@@ -32,20 +31,6 @@ const pages = Object.entries(CASTES).map(([key, caste]) => {
     text: { format: 1, content: html },
     ownership: { default: -1 },
   };
-});
-
-// Page récapitulative des 26 compétences de caste (livre de base p.229-236).
-const competencesHtml = COMPETENCES_CASTE.map((c) => `<p><strong>${c.nom}</strong> — ${c.description}</p>`).join("");
-pages.push({
-  _id: id16(),
-  name: "Compétences de caste (récapitulatif)",
-  type: "text",
-  title: { show: true, level: 2 },
-  text: {
-    format: 1,
-    content: `<p>Le personnage possède autant de compétences de caste que sa valeur en Caste (livret p.205). Voici les 26 compétences disponibles :</p>${competencesHtml}`,
-  },
-  ownership: { default: -1 },
 });
 
 fs.mkdirSync("packs-src/castes", { recursive: true });

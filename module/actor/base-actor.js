@@ -1,6 +1,7 @@
 import { Blattes } from "../common/roll.js";
 import { ROLL_TYPE } from "../common/config.js";
 import { RACES } from "../common/data-races.js";
+import { CASTES } from "../common/data-castes.js";
 
 /**
  * IntreActor
@@ -196,6 +197,42 @@ export default class IntreActor extends Actor {
     }
   }
 
+  /**
+   * Applique le choix de caste et de métier (livre de base p.203-204) :
+   *  - Nom de la caste/métier sur la fiche.
+   *  - Bonus de caste : +1 sur la caractéristique choisie.
+   *  - Les deux compétences de métier, ajoutées comme compétences de
+   *    Caste de départ (tableau libre system.caracteristiques.caste.competences).
+   *  - Les capacités de caste ne sont volontairement pas automatisées ici :
+   *    leur liste précise dépend d'un choix libre du joueur (livre de base
+   *    p.203, "au choix") ; à ajouter manuellement via le bouton "Ajouter
+   *    une capacité" de la fiche, ou depuis le compendium de capacités.
+   *
+   * @param casteKey        clé dans CASTES (ex: "combattant")
+   * @param metierKey       clé du métier dans CASTES[casteKey].metiers
+   * @param bonusCaracKey   caractéristique choisie pour le bonus de caste
+   */
+  async applyCaste(casteKey, metierKey, bonusCaracKey) {
+    const caste = CASTES[casteKey];
+    const metier = caste?.metiers?.[metierKey];
+    if (!caste || !metier) return;
+
+    const updates = {
+      "system.identite.casteNom": caste.label,
+      "system.identite.metier": metier.label,
+    };
+    if (bonusCaracKey && this.system.caracteristiques[bonusCaracKey]) {
+      updates[`system.caracteristiques.${bonusCaracKey}.value`] = this.system.caracteristiques[bonusCaracKey].value + 1;
+    }
+
+    const competencesCaste = foundry.utils.duplicate(this.system.caracteristiques.caste.competences ?? []);
+    for (const label of metier.competences) {
+      if (!competencesCaste.some((c) => c.label === label)) competencesCaste.push({ label, value: 1 });
+    }
+    updates["system.caracteristiques.caste.competences"] = competencesCaste;
+
+    await this.update(updates);
+  }
 
   /**
    * Tirage des Blattes de chance en début de scénario. Le nombre de
