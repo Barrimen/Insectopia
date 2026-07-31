@@ -143,3 +143,32 @@ export const COMPETENCES_CASTE = [
       "Permet de choisir une sphère magique parmi les quatre associées au métier divin choisi (jusqu'à deux au moment du choix de la caste, les deux autres via la répartition des compétences de caste). Compétence active utilisée pour résoudre l'effet de tous les sorts de cette sphère.",
   },
 ];
+
+/**
+ * Compétences de caste accessibles à chaque race (livre de base p.236-237,
+ * "Tableau récapitulatif des compétences par races"). Une race ne peut
+ * choisir ses compétences de caste que dans cette liste (en plus des
+ * compétences de son métier). Clés de race identiques à data-races.js.
+ */
+export const COMPETENCES_CASTE_PAR_RACE = {
+  apis: ["Art de la guerre", "Art des voleurs", "Artisanat", "Art du spectacle", "Commerce", "Courtoisie", "Éducation", "Essaim", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Sexualité", "Survie", "Sphère de magie"],
+  araktiss: ["Art de la forêt", "Art des voleurs", "Artisanat", "Art du spectacle", "Belluaire", "Commerce", "Courtoisie", "Dressage", "Éducation", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Sexualité", "Survie", "Sphère de magie"],
+  blatere: ["Art de la guerre", "Artisanat", "Commerce", "Courtoisie", "Éducation", "Infiltration", "Médecine et décoctions", "Survie", "Sphère de magie"],
+  brindis: ["Artisanat", "Commerce", "Courtoisie", "Éducation", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Navigation", "Sciences et techniques", "Sphère de magie"],
+  cerk: ["Art de la guerre", "Artisanat", "Belluaire", "Commerce", "Courtoisie", "Dressage", "Éducation", "Essaim", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Survie", "Sphère de magie"],
+  crinar: ["Art de la forêt", "Artisanat", "Belluaire", "Commerce", "Dressage", "Infiltration", "Médecine et décoctions", "Navigation", "Sexualité", "Survie", "Sphère de magie"],
+  crinelle: ["Art de la forêt", "Art des voleurs", "Artisanat", "Art du spectacle", "Belluaire", "Commerce", "Courtoisie", "Dressage", "Éducation", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Navigation", "Sexualité", "Survie", "Sphère de magie"],
+  koksihne: ["Art de la forêt", "Art des voleurs", "Artisanat", "Art du spectacle", "Belluaire", "Commerce", "Courtoisie", "Dressage", "Éducation", "Infiltration", "Médecine et décoctions", "Survie", "Sphère de magie"],
+  lepide: ["Artisanat", "Art du spectacle", "Commerce", "Courtoisie", "Éducation", "Infiltration", "Médecine et décoctions", "Sciences et techniques", "Sphère de magie"],
+  lulle: ["Art de la forêt", "Artisanat", "Art du spectacle", "Belluaire", "Commerce", "Courtoisie", "Dressage", "Éducation", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Navigation", "Nefs aériennes", "Sexualité", "Survie", "Sphère de magie"],
+  mantide: ["Art de la forêt", "Artisanat", "Belluaire", "Dressage", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Survie", "Sphère de magie"],
+  myrmide: ["Art de la guerre", "Artisanat", "Commerce", "Courtoisie", "Éducation", "Essaim", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Sciences et techniques", "Survie", "Sphère de magie"],
+  putere: ["Art des voleurs", "Artisanat", "Art du spectacle", "Commerce", "Courtoisie", "Éducation", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Navigation", "Sexualité", "Survie", "Sphère de magie"],
+  skadan: ["Art de la forêt", "Artisanat", "Éducation", "Médecine et décoctions", "Survie", "Sphère de magie"],
+  skarab: ["Art de la forêt", "Art de la guerre", "Artisanat", "Commerce", "Courtoisie", "Éducation", "Infiltration", "Médecine et décoctions", "Survie", "Sphère de magie"],
+  stick: ["Art des voleurs", "Artisanat", "Belluaire", "Commerce", "Courtoisie", "Dressage", "Éducation", "Infiltration", "Médecine et décoctions", "Sexualité", "Survie", "Sphère de magie"],
+  syrphe: ["Art des voleurs", "Artisanat", "Art du spectacle", "Commerce", "Coup Vicieux", "Courtoisie", "Éducation", "Infiltration", "Médecine et décoctions", "Sexualité", "Survie", "Sphère de magie"],
+  termide: ["Art de la guerre", "Artisanat", "Art du spectacle", "Belluaire", "Courtoisie", "Dressage", "Éducation", "Essaim", "Histoire et religion", "Infiltration", "Médecine et décoctions", "Navigation", "Survie", "Sphère de magie"],
+  vespale: ["Art de la forêt", "Art des voleurs", "Artisanat", "Art du spectacle", "Belluaire", "Courtoisie", "Dressage", "Éducation", "Infiltration", "Médecine et décoctions", "Sexualité", "Survie", "Sphère de magie"],
+  arakchass: ["Art de la forêt", "Artisanat", "Belluaire", "Dressage", "Médecine et décoctions", "Survie", "Sphère de magie"],
+};
