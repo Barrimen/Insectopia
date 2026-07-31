@@ -4,6 +4,22 @@
  * Capacités de caste = choix de capacités selon la caractéristique.
  * Chaque métier ouvre deux compétences de caste de départ.
  */
+/**
+ * Récapitulatif complet des compétences de caste disponibles (livre de
+ * base p.229). Sert de vivier pour le choix libre de l'étape 4 du wizard
+ * de création (score en Caste - 2 compétences supplémentaires) : le livre
+ * indique une restriction "selon la race" mais ne donne pas de table
+ * exhaustive croisant race x compétence, donc ce pool n'est pas filtré
+ * par race pour l'instant.
+ */
+export const COMPETENCES_CASTE = [
+  "Artisanat", "Art de la guerre", "Art de la forêt", "Art du spectacle", "Art des voleurs",
+  "Belluaire", "Blocage", "Commerce", "Coup Vicieux", "Courtoisie", "Dressage",
+  "Éducation", "Escrime", "Essaim", "Fureur", "Histoire et religion", "Infiltration",
+  "Médecine et décoctions", "Navigation", "Nefs aériennes", "Sciences et techniques",
+  "Survie", "Sexualité", "Sphère de magie", "Tireur d'élite", "Vivacité",
+];
+
 export const CASTES = {
   combattant: {
     label: "Combattants",
@@ -37,6 +53,8 @@ export const CASTES = {
     label: "Dominants",
     bonus: "+1 en Antenne ou +1 en Esprit",
     capacites: "Au choix, 1 capacité en Chitine ou Température, ou 2 capacités en Antenne ou Esprit",
+    // p.229 : la capacité Ailé est acquise et gratuite pour tous les Dominants dès la création (ne compte pas dans les choix ci-dessus).
+    capaciteGratuite: "Ailé",
     metiers: {
       couveuse: { label: "Couveuse", competences: ["Éducation", "Sexualité"] },
       diplomate: { label: "Diplomate", competences: ["Courtoisie", "Essaim"] },

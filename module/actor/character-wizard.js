@@ -1,5 +1,5 @@
 import { RACES } from "../common/data-races.js";
-import { CASTES } from "../common/data-castes.js";
+import { CASTES, COMPETENCES_CASTE } from "../common/data-castes.js";
 import { tirerBlattesEvolution, EFFETS_BLATTES_EVOLUTION, ORDRE_CARACS_EVOLUTION } from "../common/evolution.js";
 
 const LABELS_CARAC = {
@@ -330,11 +330,14 @@ export default class CharacterWizard {
     const nbActuelles = this.actor.system.caracteristiques.caste.competences.length;
     const nbAChoisir = Math.max(0, scoreCaste - 2 - Math.max(0, nbActuelles - 2));
 
+    const optionsCompetences = COMPETENCES_CASTE.map((label) => `<option value="${label}">${label}</option>`).join("");
+
     const content = `
-      <p>Étape 4/7 — Compétences de caste et leurs évolutions (livre de base p.205).</p>
+      <p>Étape 4/7 — Compétences de caste et leurs évolutions (livre de base p.205 et 229).</p>
       <p>Score en Caste : <b>${scoreCaste}</b>. Vous avez déjà ${Math.min(nbActuelles, 2)} compétence(s) de métier.
-      Il vous reste donc <b>${nbAChoisir}</b> compétence(s) de caste à choisir librement (section "Compétences de
-      caste" p.229 du livre de base — liste non encore intégrée au système : saisissez le nom manuellement).</p>
+      Il vous reste donc <b>${nbAChoisir}</b> compétence(s) de caste à choisir parmi la liste du récapitulatif p.229
+      (le livre indique une restriction "selon la race", mais ne fournit pas de table exhaustive croisant race et
+      compétence — le choix ci-dessous n'est donc pas filtré par race).</p>
       <div id="wizard-competences-supp"></div>
       <a id="wizard-add-comp"><i class="fas fa-plus"></i> Ajouter une compétence de caste</a>`;
 
@@ -368,7 +371,7 @@ export default class CharacterWizard {
           const addRow = () => {
             count++;
             html.find("#wizard-competences-supp").append(
-              `<div class="form-group"><label>Compétence #${count}</label><input type="text" class="wizard-comp-supp-input" /></div>`
+              `<div class="form-group"><label>Compétence #${count}</label><select class="wizard-comp-supp-input">${optionsCompetences}</select></div>`
             );
           };
           html.find("#wizard-add-comp").click((e) => {

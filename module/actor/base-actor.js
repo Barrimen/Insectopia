@@ -232,6 +232,21 @@ export default class IntreActor extends Actor {
     updates["system.caracteristiques.caste.competences"] = competencesCaste;
 
     await this.update(updates);
+
+    // p.229 : capacité offerte automatiquement par certaines castes (ex. Ailé pour les Dominants), sans coût de choix ni Souillure.
+    if (caste.capaciteGratuite) {
+      const dejaPresente = this.items.some((i) => i.type === "capacite" && i.name === caste.capaciteGratuite);
+      if (!dejaPresente) {
+        await this.createEmbeddedDocuments("Item", [
+          {
+            name: caste.capaciteGratuite,
+            type: "capacite",
+            img: "icons/magic/symbols/rune-sigil-blue-pink.webp",
+            system: { categorie: "caste", description: `Capacité offerte gratuitement par la caste (${caste.label}, livre de base p.229).` },
+          },
+        ]);
+      }
+    }
   }
 
   /**
