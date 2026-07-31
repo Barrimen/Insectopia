@@ -59,7 +59,6 @@
     <a class="item" data-tab="caracteristiques">Caractéristiques</a>
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="objets">Objets</a>
-    <a class="item" data-tab="capacites">Capacités (notes libres)</a>
     <a class="item" data-tab="notes">Historique / Notes</a>
   </nav>
 
@@ -209,6 +208,14 @@
       <a class="item-add item-create" data-type="armure"><i class="fas fa-plus"></i> Ajouter une armure</a>
 
       <h3>Capacités spéciales (avec bonus automatisé)</h3>
+      <div class="identite-line">
+        <select id="capaciteConnueSelect">
+          {{#each capacitesListeConnues as |cap|}}
+          <option value="{{cap.index}}">{{cap.label}}</option>
+          {{/each}}
+        </select>
+        <a class="capacite-connue-add"><i class="fas fa-plus"></i> Ajouter cette capacité</a>
+      </div>
       <table class="items-list">
         <thead><tr><th></th><th>Nom</th><th>Catégorie</th><th>Bonus</th><th></th></tr></thead>
         <tbody>
@@ -228,24 +235,13 @@
           {{/each}}
         </tbody>
       </table>
-      <a class="item-add item-create" data-type="capacite"><i class="fas fa-plus"></i> Ajouter une capacité</a>
+      <a class="item-add item-create" data-type="capacite"><i class="fas fa-plus"></i> Créer une capacité personnalisée</a>
       <p class="hint">
-        Les bonus chiffrés cochés ici s'appliquent automatiquement aux jets concernés (compétence/caractéristique
-        et attaques). Pour les effets non chiffrables (Pestilence, Fouisseur...), décrivez-les dans la capacité
-        sans cocher "bonus automatique" — ou utilisez l'onglet "Capacités (notes libres)" ci-après si vous
-        préférez rester en texte libre, sans créer d'Item.
+        Choisissez une capacité dans le sélecteur pour l'ajouter avec ses coûts en Souillure/Fluide déjà remplis, ou
+        créez une capacité personnalisée si elle n'est pas dans la liste. Cliquez sur son nom pour l'éditer
+        (description, catégorie, bonus automatique éventuel), sur la corbeille pour la supprimer. Les bonus
+        chiffrés cochés s'appliquent automatiquement aux jets concernés (compétence/caractéristique et attaques).
       </p>
-    </div>
-
-    <div class="tab capacites" data-group="primary" data-tab="capacites">
-      {{#each system.identite.capacites as |capacite index|}}
-      <div class="capacite-line">
-        <input type="text" name="system.identite.capacites.{{index}}.label" value="{{capacite.label}}" placeholder="Nom de la capacité" />
-        <textarea name="system.identite.capacites.{{index}}.description" placeholder="Description">{{capacite.description}}</textarea>
-        <a class="capacite-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
-      </div>
-      {{/each}}
-      <a class="capacite-add"><i class="fas fa-plus"></i> Ajouter une capacité (raciale ou de caste)</a>
     </div>
 
     <div class="tab notes" data-group="primary" data-tab="notes">

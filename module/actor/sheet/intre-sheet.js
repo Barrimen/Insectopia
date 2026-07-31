@@ -1,4 +1,5 @@
 import { RACES } from "../../common/data-races.js";
+import { CAPACITES } from "../../common/data-capacites.js";
 
 export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   constructor(...args) {
@@ -53,6 +54,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     context.armures = this.actor.items.filter((i) => i.type === "armure");
     context.capacitesItems = this.actor.items.filter((i) => i.type === "capacite");
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
+    context.capacitesListeConnues = CAPACITES.map((c, index) => ({ index, label: c.name }));
 
     return context;
   }
@@ -72,15 +74,13 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     html.find(".caste-comp-add").click(this._onCasteCompAdd.bind(this));
     html.find(".caste-comp-remove").click(this._onCasteCompRemove.bind(this));
 
-    html.find(".capacite-add").click(this._onCapaciteAdd.bind(this));
-    html.find(".capacite-remove").click(this._onCapaciteRemove.bind(this));
-
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-equip-toggle").change(this._onItemEquipToggle.bind(this));
 
     html.find(".race-apply").click(this._onRaceApply.bind(this));
+    html.find(".capacite-connue-add").click(this._onCapaciteConnueAdd.bind(this));
   }
 
   async _onSheetChangelock(event) {
@@ -141,22 +141,31 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   }
 
   /**
-   * Ajoute une capacité spéciale (de race ou de caste, cf. livret p.27-28 :
-   * Pince, Vitesse surnaturelle, Pestilence, Antennes ramifiées, etc.)
+   * Ajoute une capacité choisie dans le sélecteur (liste des 68 capacités
+   * du livre de base) comme un véritable Item embarqué — même mécanisme
+   * que pour les armes/armures, donc pas de bug de suppression possible :
+   * la suppression passe par le bouton .item-delete déjà en place.
    */
-  async _onCapaciteAdd(event) {
+  async _onCapaciteConnueAdd(event) {
     event.preventDefault();
-    const capacites = foundry.utils.duplicate(this.actor.system.identite.capacites);
-    capacites.push({ label: "Nouvelle capacité", description: "" });
-    await this.actor.update({ "system.identite.capacites": capacites });
-  }
-
-  async _onCapaciteRemove(event) {
-    event.preventDefault();
-    const index = parseInt(event.currentTarget.dataset.index);
-    const capacites = foundry.utils.duplicate(this.actor.system.identite.capacites);
-    capacites.splice(index, 1);
-    await this.actor.update({ "system.identite.capacites": capacites });
+    const index = parseInt(this.element.find("#capaciteConnueSelect")[0]?.value);
+    if (Number.isNaN(index)) return;
+    const source = CAPACITES[index];
+    if (!source) return;
+    return this.actor.createEmbeddedDocuments("Item", [
+      {
+        name: source.name,
+        type: "capacite",
+        img: "icons/magic/symbols/rune-sigil-blue-pink.webp",
+        system: {
+          description: source.description,
+          categorie: source.categorie,
+          souillureCout: source.souillureCout,
+          fluideCout: source.fluideCout,
+          bonus: { ...source.bonus },
+        },
+      },
+    ]);
   }
 
   /** Crée un nouvel Item embarqué du type indiqué (data-type: arme|armure|capacite). */
