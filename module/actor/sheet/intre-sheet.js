@@ -1,5 +1,8 @@
 import { RACES } from "../../common/data-races.js";
 import CharacterWizard from "../character-wizard.js";
+import { ouvrirDialogueLancerSort } from "../../common/magic.js";
+import { SPHERES } from "../../common/data-spheres.js";
+import { asArray } from "../../common/utils.js";
 
 export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   constructor(...args) {
@@ -47,7 +50,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
       ...carac,
       competencesListe:
         key === "caste"
-          ? carac.competences // tableau libre pour Caste
+          ? asArray(carac.competences) // tableau libre pour Caste
           : Object.entries(carac.competences).map(([ckey, comp]) => ({ key: ckey, ...comp })),
     }));
 
@@ -55,6 +58,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     context.armures = this.actor.items.filter((i) => i.type === "armure");
     context.capacitesItems = this.actor.items.filter((i) => i.type === "capacite");
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
+    context.spheresListe = Object.entries(SPHERES).map(([key, sphere]) => ({ key, label: sphere.label }));
 
     return context;
   }
@@ -73,6 +77,9 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
 
     html.find(".caste-comp-add").click(this._onCasteCompAdd.bind(this));
     html.find(".caste-comp-remove").click(this._onCasteCompRemove.bind(this));
+    html.find(".caste-comp-sphere").change(this._onCasteCompSphereChange.bind(this));
+
+    html.find(".sort-cast-open").click(this._onSortCastOpen.bind(this));
 
     html.find(".capacite-add").click(this._onCapaciteAdd.bind(this));
     html.find(".capacite-remove").click(this._onCapaciteRemove.bind(this));
@@ -158,7 +165,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
    */
   async _onCasteCompAdd(event) {
     event.preventDefault();
-    const competences = foundry.utils.duplicate(this.actor.system.caracteristiques.caste.competences);
+    const competences = foundry.utils.duplicate(asArray(this.actor.system.caracteristiques.caste.competences));
     competences.push({ label: "Nouvelle compétence", value: 1 });
     await this.actor.update({ "system.caracteristiques.caste.competences": competences });
   }
@@ -166,9 +173,32 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   async _onCasteCompRemove(event) {
     event.preventDefault();
     const index = parseInt(event.currentTarget.dataset.index);
-    const competences = foundry.utils.duplicate(this.actor.system.caracteristiques.caste.competences);
+    const competences = foundry.utils.duplicate(asArray(this.actor.system.caracteristiques.caste.competences));
     competences.splice(index, 1);
     await this.actor.update({ "system.caracteristiques.caste.competences": competences });
+  }
+
+  /**
+   * Tague (ou détague) manuellement une compétence de Caste comme Sphère
+   * de magie connue (livre p.267) — nécessaire quand le libellé décrit un
+   * choix parmi plusieurs sphères ("au choix parmi ..."), qu'applyCaste()
+   * ne peut pas déduire automatiquement, ou pour une "Sphère de magie"
+   * générique ajoutée librement à l'étape 4 du wizard.
+   */
+  async _onCasteCompSphereChange(event) {
+    event.preventDefault();
+    const index = parseInt(event.currentTarget.dataset.index);
+    const competences = foundry.utils.duplicate(asArray(this.actor.system.caracteristiques.caste.competences));
+    const sphereKey = event.currentTarget.value;
+    if (sphereKey) competences[index].sphere = sphereKey;
+    else delete competences[index].sphere;
+    await this.actor.update({ "system.caracteristiques.caste.competences": competences });
+  }
+
+  /** Ouvre la boîte de dialogue de lancer de sort (livre p.262-276). */
+  async _onSortCastOpen(event) {
+    event.preventDefault();
+    return ouvrirDialogueLancerSort(this.actor);
   }
 
   /**

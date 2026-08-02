@@ -2,6 +2,8 @@ import { Blattes } from "../common/roll.js";
 import { ROLL_TYPE } from "../common/config.js";
 import { RACES } from "../common/data-races.js";
 import { CASTES } from "../common/data-castes.js";
+import { extraireSphereDepuisLabel } from "../common/data-spheres.js";
+import { asArray } from "../common/utils.js";
 
 /**
  * IntreActor
@@ -220,14 +222,22 @@ export default class IntreActor extends Actor {
     const updates = {
       "system.identite.casteNom": caste.label,
       "system.identite.metier": metier.label,
+      "system.identite.casteKey": casteKey,
+      "system.identite.metierKey": metierKey,
     };
     if (bonusCaracKey && this.system.caracteristiques[bonusCaracKey]) {
       updates[`system.caracteristiques.${bonusCaracKey}.value`] = this.system.caracteristiques[bonusCaracKey].value + 1;
     }
 
-    const competencesCaste = foundry.utils.duplicate(this.system.caracteristiques.caste.competences ?? []);
+    const competencesCaste = foundry.utils.duplicate(asArray(this.system.caracteristiques.caste.competences));
     for (const label of metier.competences) {
-      if (!competencesCaste.some((c) => c.label === label)) competencesCaste.push({ label, value: 1 });
+      if (!competencesCaste.some((c) => c.label === label)) {
+        // Pour un métier divin, "Sphère de magie (Vie)" est non ambigu et se
+        // tague automatiquement ; "Sphère de magie (au choix parmi ...)"
+        // reste à taguer manuellement sur la fiche (livre de base p.267).
+        const sphere = extraireSphereDepuisLabel(label);
+        competencesCaste.push(sphere ? { label, value: 1, sphere } : { label, value: 1 });
+      }
     }
     updates["system.caracteristiques.caste.competences"] = competencesCaste;
 
