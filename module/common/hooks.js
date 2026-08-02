@@ -31,6 +31,15 @@ export default function registerHooks() {
       });
     }
 
+    // Choix de la couleur retenue pour un test de Sphère de magie :
+    // enchaîne sur la Maladresse ou l'Effet du sort selon le résultat
+    // (livre p.262-276).
+    for (const btn of html.querySelectorAll(".choix-sort")) {
+      btn.addEventListener("click", async () => {
+        await Blattes.resoudreChoixSort(btn.dataset.couleur, message);
+      });
+    }
+
     // Application des impacts (et de la mutilation éventuelle) à la
     // cible actuellement ciblée sur la scène (game.user.targets).
     for (const btn of html.querySelectorAll(".appliquer-degats")) {

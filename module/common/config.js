@@ -16,6 +16,10 @@ export const LOG_HEAD = "Insectopia | ";
  * - CHANCE      : tirage des Blattes de chance en début de scénario (= score d'Instinct)
  * - INITIATIVE  : tirage d'Activité (modifiée par l'encombrement) déterminant l'ordre et le nombre d'actions
  * - SIMPLE      : tirage libre, à la discrétion du Deus (nombre de blattes choisi manuellement)
+ * - SORT        : test de Sphère de magie vs Difficulté de l'Influence du sort (livre de base p.262-276).
+ *                 La résolution de l'effet (Puissance vs compétence d'opposition, livre p.270) et le
+ *                 test de Maladresse (Difficulté du sort vs Résistance, livre p.270) réutilisent tous
+ *                 les deux le ROLL_TYPE.OPPOSITION générique existant, avec un texte d'intro dédié.
  */
 export const ROLL_TYPE = {
   ATTACK: "attack",
@@ -25,6 +29,7 @@ export const ROLL_TYPE = {
   CHANCE: "chance",
   INITIATIVE: "initiative",
   SIMPLE: "simple",
+  SORT: "sort",
 };
 
 /**
@@ -102,6 +107,22 @@ export const RESULTAT_DEGATS = {
   bleue: { label: "Coup porté", impacts: 2, mutilation: false, description: "L'attaque porte normalement." },
   verte: { label: "Blessure aggravée", impacts: 4, mutilation: false, description: "Point sensible touché." },
   rouge: { label: "Mutilation", impacts: 4, mutilation: true, description: "Point vital touché : mutilation (voir livret p.30)." },
+};
+
+/**
+ * Résultats du test de Sphère de magie vs Difficulté (livre p.262-276).
+ * Contrairement à RESULTAT_ATTAQUE/RESULTAT_DEGATS, aucune table de
+ * sévérité chiffrée n'est donnée par le livre pour la magie : la couleur
+ * ne fait que déclencher la suite de la résolution (Maladresse ou Effet du
+ * sort), voir Blattes.resoudreChoixSort(). Les bonus de cran d'Influence
+ * sur Blatte verte/rouge (livre p.270) ne sont pas automatisés (v2).
+ */
+export const RESULTAT_SORT = {
+  noire: { label: "Maladresse", description: "Le sort se retourne contre son lanceur (livre p.270)." },
+  blanche: { label: "Échec", description: "Le sort échoue, aucun effet ne se produit." },
+  bleue: { label: "Réussite", description: "Le sort réussit, ses effets s'appliquent." },
+  verte: { label: "Réussite améliorée", description: "Réussite ; +1 cran d'Influence au choix, non automatisé (livre p.270)." },
+  rouge: { label: "Réussite critique", description: "Réussite ; +2 crans d'Influence au choix, non automatisé (livre p.270)." },
 };
 
 export const INSECTOPIA = {

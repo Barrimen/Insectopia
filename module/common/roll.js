@@ -1,4 +1,4 @@
-import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, ORDRE_COULEURS_CROISSANT } from "./config.js";
+import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, RESULTAT_SORT, ORDRE_COULEURS_CROISSANT } from "./config.js";
 
 /**
  * Classe Blattes
@@ -58,10 +58,12 @@ export class Blattes {
       this.data.actorname = game.users.get(game.userId)?.name;
       this.data.charImg = "icons/svg/mystery-man.svg";
     } else {
-      this.data.introText = game.i18n.format("INSECTOPIA.dialog.introtext." + this.rolltype, {
-        actorname: this.actor.name,
-        competence: game.i18n.localize(this.competence.label),
-      });
+      this.data.introText =
+        this.data.introTextOverride ??
+        game.i18n.format("INSECTOPIA.dialog.introtext." + this.rolltype, {
+          actorname: this.actor.name,
+          competence: game.i18n.localize(this.competence.label),
+        });
       this.data.actorname = this.actor.name;
       this.data.charImg = this.actor.img;
     }
@@ -188,6 +190,38 @@ export class Blattes {
     }).render(true);
   }
 
+  /**
+   * Résout directement le test de Sphère de magie vs Difficulté (livre
+   * p.262-276), sans dialogue générique intermédiaire : la Sphère, le Mot
+   * de pouvoir et les 5 niveaux d'Influence ont déjà été choisis dans la
+   * boîte de dialogue de lancer de sort (module/common/magic.js), qui a
+   * placé la Difficulté totale dans this.data.difficulteSort avant
+   * d'appeler cette méthode.
+   */
+  async lancerSort() {
+    const difficulte = this.data.difficulteSort ?? 0;
+    const modifier = this.data.modifier || 0;
+    this.data.formulaValue = this.competence.value - difficulte + modifier;
+    this.data.formula = `${this.competence.value} - ${difficulte}`.concat(
+      modifier ? (modifier > 0 ? ` + ${modifier}` : ` ${modifier}`) : ""
+    );
+
+    let visibilityMode = this.data.rollMode ?? game.settings.get("core", "rollMode");
+    if (game.user.isGM) {
+      const visibilityChoice = game.settings.get("insectopia", "visibiliteJetsPNJ");
+      if (visibilityChoice === "public") visibilityMode = "publicroll";
+      else if (visibilityChoice === "private") visibilityMode = "gmroll";
+      else if (visibilityChoice === "depends") visibilityMode = game.settings.get("core", "rollMode");
+    }
+    this.data.rollMode = visibilityMode;
+    this.data.actorname = this.actor.name;
+    this.data.charImg = this.actor.img;
+    this.data.introText = this.data.introTextOverride ?? `${this.actor.name} lance un sort.`;
+
+    await this.piocher();
+    return this.showResult();
+  }
+
   // --------------------------------------------------------------------
   // Tirage des blattes
   // --------------------------------------------------------------------
@@ -243,7 +277,7 @@ export class Blattes {
     // Les jets d'Attaque et de Dégâts utilisent un gabarit à part, avec
     // des boutons de choix de couleur qui déclenchent la suite de la
     // résolution (voir hooks.js).
-    if (this.rolltype === ROLL_TYPE.ATTACK || this.rolltype === ROLL_TYPE.DEGATS) {
+    if (this.rolltype === ROLL_TYPE.ATTACK || this.rolltype === ROLL_TYPE.DEGATS || this.rolltype === ROLL_TYPE.SORT) {
       return this.showResultChoix();
     }
 
@@ -310,7 +344,8 @@ export class Blattes {
    * resoudreChoixDegats (voir hooks.js pour le branchement du clic).
    */
   async showResultChoix() {
-    const table = this.rolltype === ROLL_TYPE.ATTACK ? RESULTAT_ATTAQUE : RESULTAT_DEGATS;
+    const table =
+      this.rolltype === ROLL_TYPE.ATTACK ? RESULTAT_ATTAQUE : this.rolltype === ROLL_TYPE.SORT ? RESULTAT_SORT : RESULTAT_DEGATS;
     const choix = this.couleursPresentes().map((couleur) => ({
       couleur,
       count: this.data.blattesParCouleur[couleur],
@@ -326,6 +361,7 @@ export class Blattes {
       data: this.data,
       isAttack: this.rolltype === ROLL_TYPE.ATTACK,
       isDegats: this.rolltype === ROLL_TYPE.DEGATS,
+      isSort: this.rolltype === ROLL_TYPE.SORT,
       choix,
     };
 
@@ -474,5 +510,55 @@ export class Blattes {
           `<i class="fas fa-bolt"></i> Appliquer à la cible</a></div>`
       ),
     });
+  }
+
+  /**
+   * Le joueur/Deus a retenu `couleur` comme résultat du test de Sphère de
+   * magie vs Difficulté (livre p.262-276).
+   *  - blanche : échec simple, rien de plus à résoudre.
+   *  - noire (Maladresse, p.270) : le sort se retourne contre le lanceur —
+   *    test de Difficulté du sort vs Résistance, sauf sur la sphère
+   *    Souillure où le lanceur gagne des points de Souillure au lieu de
+   *    subir des dégâts (le livre ne précise pas de quantité pour ce cas
+   *    précis ; ce système applique +1 par défaut, à ajuster à la main).
+   *  - bleue/verte/rouge : réussite -> résolution de l'Effet du sort
+   *    (Puissance vs compétence d'opposition laissée au choix du Deus,
+   *    livre p.270). Les crans d'Influence bonus sur verte/rouge ne sont
+   *    pas automatisés (v2).
+   */
+  static async resoudreChoixSort(couleur, message) {
+    const flagData = message.getFlag("world", "choixData");
+    if (!flagData) return;
+    const actor = game.actors.get(flagData.actorId);
+
+    await message.update({
+      content: message.content.concat(
+        `<div class="resultText">Résultat retenu : <strong>${RESULTAT_SORT[couleur].label}</strong></div>`
+      ),
+    });
+
+    if (couleur === "blanche") return; // Échec simple, aucun effet.
+
+    if (couleur === "noire") {
+      if (flagData.data.sphereKey === "souillure") {
+        const souillureActuelle = actor?.system.combat.souillure || 0;
+        await actor.update({ "system.combat.souillure": souillureActuelle + 1 });
+        ui.notifications.warn(
+          `${actor.name} gagne 1 point de Souillure (Maladresse sur la sphère Souillure, livre p.270 — quantité non précisée par le livre, valeur par défaut ajustable sur la fiche).`
+        );
+        return;
+      }
+      const competence = { value: flagData.data.difficulteSort, label: "INSECTOPIA.label.combat.maladresse" };
+      const blattes = new Blattes(actor, ROLL_TYPE.OPPOSITION, competence, {
+        introTextOverride: `Maladresse : le sort de ${actor.name} se retourne contre lui — Difficulté du sort (${flagData.data.difficulteSort}) vs Résistance du lanceur (livre p.270).`,
+      });
+      return blattes.openDialog();
+    }
+
+    const competence = { value: flagData.data.niveauPuissance, label: "INSECTOPIA.label.combat.sorteffet" };
+    const blattes = new Blattes(actor, ROLL_TYPE.OPPOSITION, competence, {
+      introTextOverride: `Effet du sort (${flagData.data.sphereLabel} — ${flagData.data.motPouvoirLabel}) : Puissance ${flagData.data.niveauPuissance} vs compétence d'opposition au choix du Deus (livre p.270).`,
+    });
+    return blattes.openDialog();
   }
 }
