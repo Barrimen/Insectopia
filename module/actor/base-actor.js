@@ -215,7 +215,7 @@ export default class IntreActor extends Actor {
       .map((nom) => ({
         name: nom,
         type: "capacite",
-        img: "icons/magic/symbols/rune-sigil-blue-pink.webp",
+        img: "icons/svg/mystery-man.svg",
         system: { categorie: "race", description: `Capacité native de race (${race.label}).` },
       }));
     if (nouvellesCapacites.length) await this.createEmbeddedDocuments("Item", nouvellesCapacites);
@@ -279,7 +279,7 @@ export default class IntreActor extends Actor {
           {
             name: caste.capaciteGratuite,
             type: "capacite",
-            img: "icons/magic/symbols/rune-sigil-blue-pink.webp",
+            img: "icons/svg/mystery-man.svg",
             system: { categorie: "caste", description: `Capacité offerte gratuitement par la caste (${caste.label}, livre de base p.229).` },
           },
         ]);
