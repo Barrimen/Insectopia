@@ -88,7 +88,7 @@ export const MOTS_POUVOIR_PAR_METIER = {
     alchimie: ["alteration", "connaissance"],
     pensee: ["controle", "negation"], 
     foudre: ["alteration", "connaissance", "evocation", "negation"],
-    souillure: ["connaissance", "evocation"],
+    souillure: ["altéraion","connaissance"],
   },
   psyche: {
     pensee: ["alteration", "controle", "connaissance", "evocation", "negation"],
