@@ -62,9 +62,9 @@ export const SPHERES = {
 export const MOTS_POUVOIR_PAR_METIER = {
   chaman: {
     ancetre: ["connaissance", "negation"],
-    bois: ["connaissance", "evocation"], // À VÉRIFIER (2 mots sur 4 possibles)
+    bois: ["alteration", "connaissance"],
     feu: ["alteration", "connaissance", "evocation", "negation"],
-    vie: ["alteration", "connaissance", "evocation"], // À VÉRIFIER (3 mots sur 4 possibles)
+    vie: ["alteration", "connaissance", "evocation"],
   },
   controleurenergie: {
     air: ["alteration", "connaissance", "evocation", "negation"],
@@ -79,21 +79,21 @@ export const MOTS_POUVOIR_PAR_METIER = {
     sangchaud: ["alteration", "controle", "connaissance"],
   },
   maitressedespouvoirs: {
-    pensee: ["alteration"], // À VÉRIFIER (1 mot sur 5 possibles)
+    pensee: ["alteration"], 
     temps: ["alteration", "connaissance"],
     vie: ["alteration", "connaissance", "evocation", "negation"],
-    souillure: ["connaissance", "negation"], // À VÉRIFIER (2 mots sur 4 possibles)
+    souillure: ["connaissance", "negation"], 
   },
   pretreanciensdieux: {
     alchimie: ["alteration", "connaissance"],
-    pensee: ["controle", "negation"], // À VÉRIFIER (2 mots sur 5 possibles)
+    pensee: ["controle", "negation"], 
     foudre: ["alteration", "connaissance", "evocation", "negation"],
-    souillure: ["connaissance", "evocation"], // À VÉRIFIER (2 mots sur 4 possibles)
+    souillure: ["connaissance", "evocation"],
   },
   psyche: {
     pensee: ["alteration", "controle", "connaissance", "evocation", "negation"],
     insecte: ["alteration", "controle", "connaissance"],
-    souillure: ["connaissance", "negation"], // À VÉRIFIER (2 mots sur 4 possibles)
+    souillure: ["connaissance", "negation"],
     telekinesie: ["evocation"],
   },
   herautsouillure: {

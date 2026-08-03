@@ -45,7 +45,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
 
     // Liste à plat des caractéristiques + compétences, pour un affichage
     // simple en tableau côté template.
-    context.caracteristiquesListe = Object.entries(this.actor.system.caracteristiques).map(([key, carac]) => ({
+context.caracteristiquesListe = Object.entries(this.actor.system.caracteristiques).filter(([key]) => key).map(([key, carac]) => ({
       key,
       ...carac,
       competencesListe:
