@@ -116,7 +116,17 @@
                   <td>
                     <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
                   </td>
-                  <td><a class="caste-comp-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a></td>
+                  <td>
+                    <select class="caste-comp-sphere" data-index="{{index}}">
+                      <option value="">— Sphère —</option>
+                      {{#each @root.spheresListe as |sphere|}}
+                      <option value="{{sphere.key}}" {{#if (eq comp.sphere sphere.key)}}selected{{/if}}>{{sphere.label}}</option>
+                      {{/each}}
+                    </select>
+                  </td>
+                  <td>
+                    <a class="caste-comp-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
+                  </td>
                 </tr>
                 {{/each}}
                 <tr><td colspan="3"><a class="caste-comp-add"><i class="fas fa-plus"></i> Ajouter une compétence de Caste</a></td></tr>
