@@ -12,6 +12,12 @@
         <div>Chitine défenseur : {{data.chitineDefense}}</div>
         {{#if data.bonusBlattes}}<div>Bonus : +{{data.bonusBlattes}} blatte</div>{{/if}}
     </div>
+    {{else if isSort}}
+    <div class="difficultyline">
+        <div>Sphère : {{data.sphereLabel}}</div>
+        <div>Mot de pouvoir : {{data.motPouvoirLabel}}</div>
+        <div>Difficulté du sort : {{data.difficulteSort}} (Puissance {{data.niveauPuissance}})</div>
+    </div>
     {{else}}
     <div class="difficultyline">
         {{#if data.difficulte includeZero=true}}<div>Difficulté : {{data.difficulteLabel}} ({{data.difficulte}})</div>{{/if}}
@@ -26,7 +32,7 @@
                 <td class="chance-blatte-line">{{this.count}}</td>
                 <td><span class="blatte blatte-{{this.couleur}}"></span></td>
                 <td>
-                    <a class="choix-couleur {{#if @root.isAttack}}choix-attaque{{else}}choix-degats{{/if}}" data-couleur="{{this.couleur}}">
+                    <a class="choix-couleur {{#if @root.isAttack}}choix-attaque{{else if @root.isSort}}choix-sort{{else}}choix-degats{{/if}}" data-couleur="{{this.couleur}}">
                         <strong>{{this.label}}</strong>
                         {{#if @root.isDegats}} — {{this.impacts}} impact(s){{/if}}
                         <br /><span class="choix-description">{{this.description}}</span>

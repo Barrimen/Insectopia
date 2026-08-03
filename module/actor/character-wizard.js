@@ -114,14 +114,18 @@ export default class CharacterWizard {
     if (couleur === "rouge") {
       corpsSpecifique = `<p><i class="fas fa-check"></i> ${LABELS_CARAC[caracKey]} passera de ${carac.value} à ${carac.value + 1}.</p>`;
     } else if (couleur === "noire") {
-      const capacitesRace = this.actor.system.identite.capacites?.length
-        ? ""
-        : "<p><i>Aucune capacité de race enregistrée pour l'instant — indiquez-en une manuellement à l'étape suivante ou via la fiche.</i></p>";
-      corpsSpecifique = `
-        <p>Choisissez une capacité liée à ${LABELS_CARAC[caracKey]} (parmi celles de la race, livre de base p.207+).</p>
-        <div class="form-group"><label>Nom de la capacité</label><input type="text" id="wizard-capacite-nom" placeholder="Ex : Antennes ramifiées" /></div>
-        <div class="form-group"><label><input type="checkbox" id="wizard-capacite-evolutive" /> Capacité évolutive pour cette race (pas de gain de Souillure)</label></div>
-        ${capacitesRace}`;
+      const capacitesDispo = await this._getCapacitesCompendium(caracKey);
+      corpsSpecifique =
+        capacitesDispo.length
+          ? `
+        <p>Choisissez une capacité liée à ${LABELS_CARAC[caracKey]} (compendium des capacités spéciales).</p>
+        <div class="form-group"><label>Capacité</label>
+          <select id="wizard-capacite-choix">
+            ${capacitesDispo.map((c) => `<option value="${c.id}">${c.name}</option>`).join("")}
+          </select>
+        </div>
+        <div class="form-group"><label><input type="checkbox" id="wizard-capacite-evolutive" /> Capacité évolutive pour cette race (pas de gain de Souillure)</label></div>`
+          : `<p><i>Aucune capacité répertoriée dans le compendium pour ${LABELS_CARAC[caracKey]} — à ajouter manuellement sur la fiche une fois le compendium complété.</i></p>`;
     } else {
       // vert / bleue / blanche : choix des compétences à incrémenter
       const optionsCompetences = competencesEntries
@@ -138,8 +142,8 @@ export default class CharacterWizard {
         }
         ${
           couleur === "verte"
-            ? `<div class="form-group"><label>Point libre — n'importe quelle compétence (indiquez caractéristique.compétence, ex: chitine.resistance)</label>
-               <input type="text" id="wizard-comp-libre" placeholder="ex: chitine.resistance" /></div>`
+            ? `<div class="form-group"><label>Point libre — n'importe quelle compétence</label>
+               <select id="wizard-comp-libre">${this._optionsToutesCompetences()}</select></div>`
             : ""
         }`;
     }
@@ -165,6 +169,29 @@ export default class CharacterWizard {
     });
   }
 
+  /** Récupère, dans le compendium "insectopia.capacites", les capacités dont system.categorie correspond à la caractéristique donnée. */
+  async _getCapacitesCompendium(caracKey) {
+    const pack = game.packs.get("insectopia.capacites");
+    if (!pack) return [];
+    const index = await pack.getIndex({ fields: ["system.categorie"] });
+    return index.filter((e) => e.system?.categorie === caracKey).map((e) => ({ id: e._id, name: e.name }));
+  }
+
+  /** Construit les <option> pour toutes les compétences des 6 caractéristiques physiques (point libre, Blatte verte). */
+  _optionsToutesCompetences() {
+    const caracsPhysiques = ["aile", "antenne", "esprit", "mandibule", "chitine", "temperature"];
+    const options = [];
+    for (const caracKey of caracsPhysiques) {
+      const carac = this.actor.system.caracteristiques[caracKey];
+      for (const [compKey, comp] of Object.entries(carac.competences)) {
+        options.push(
+          `<option value="${caracKey}.${compKey}">${LABELS_CARAC[caracKey]} — ${game.i18n.localize(comp.label)} (actuel : ${comp.value})</option>`
+        );
+      }
+    }
+    return options.join("");
+  }
+
   async _resoudreBlatte(caracKey, couleur, html) {
     const updates = {};
     const carac = this.actor.system.caracteristiques[caracKey];
@@ -172,17 +199,12 @@ export default class CharacterWizard {
     if (couleur === "rouge") {
       updates[`system.caracteristiques.${caracKey}.value`] = carac.value + 1;
     } else if (couleur === "noire") {
-      const nom = html.find("#wizard-capacite-nom")[0].value?.trim();
-      const evolutive = html.find("#wizard-capacite-evolutive")[0].checked;
-      if (nom) {
-        await this.actor.createEmbeddedDocuments("Item", [
-          {
-            name: nom,
-            type: "capacite",
-            img: "icons/magic/symbols/rune-sigil-blue-pink.webp",
-            system: { categorie: caracKey, description: `Capacité acquise par tirage d'évolution (${LABELS_CARAC[caracKey]}).` },
-          },
-        ]);
+      const capaciteId = html.find("#wizard-capacite-choix")[0]?.value;
+      const evolutive = html.find("#wizard-capacite-evolutive")[0]?.checked;
+      if (capaciteId) {
+        const pack = game.packs.get("insectopia.capacites");
+        const source = await pack.getDocument(capaciteId);
+        await this.actor.createEmbeddedDocuments("Item", [source.toObject()]);
         if (!evolutive) {
           updates["system.combat.souillure"] = (this.actor.system.combat.souillure || 0) + 1;
         }
@@ -201,17 +223,13 @@ export default class CharacterWizard {
         bump(html.find("#wizard-comp-2")[0].value, 1);
       } else if (couleur === "verte") {
         bump(html.find("#wizard-comp-1")[0].value, 1);
-        const libre = html.find("#wizard-comp-libre")[0].value?.trim();
+        const libre = html.find("#wizard-comp-libre")[0]?.value;
         if (libre && libre.includes(".")) {
           const [lCarac, lComp] = libre.split(".");
-          if (this.actor.system.caracteristiques[lCarac]?.competences?.[lComp]) {
-            const key = `system.caracteristiques.${lCarac}.competences.${lComp}.value`;
-            const cur = this.actor.system.caracteristiques[lCarac].competences[lComp].value;
-            const plafond = this.actor.system.caracteristiques[lCarac].value;
-            updates[key] = Math.min(plafond, (updates[key] ?? cur) + 1);
-          } else {
-            ui.notifications.warn(`Compétence libre "${libre}" introuvable — point non attribué, à ajouter manuellement sur la fiche.`);
-          }
+          const key = `system.caracteristiques.${lCarac}.competences.${lComp}.value`;
+          const cur = this.actor.system.caracteristiques[lCarac].competences[lComp].value;
+          const plafond = this.actor.system.caracteristiques[lCarac].value;
+          updates[key] = Math.min(plafond, (updates[key] ?? cur) + 1);
         }
       }
     }
@@ -393,20 +411,24 @@ export default class CharacterWizard {
       .map((key) => {
         const carac = this.actor.system.caracteristiques[key];
         const comps = Object.entries(carac.competences)
-          .map(
-            ([ckey, comp]) =>
-              `<label style="margin-right:1em">${game.i18n.localize(comp.label)}
-               <input type="number" min="1" max="${carac.value}" value="${comp.value}" class="wizard-repart" data-carac="${key}" data-comp="${ckey}" style="width:3em" /></label>`
-          )
+          .map(([ckey, comp]) => {
+            const plafondLigne = carac.value - comp.value; // marge max pour cette compétence
+            return `<label style="margin-right:1em">${game.i18n.localize(comp.label)} (actuel : ${comp.value})
+               +<input type="number" min="0" max="${plafondLigne}" value="0" class="wizard-repart" data-carac="${key}" data-comp="${ckey}" data-actuel="${comp.value}" style="width:3em" /></label>`;
+          })
           .join("");
-        return `<div class="form-group"><b>${LABELS_CARAC[key]} (valeur ${carac.value}, à répartir : ${carac.value} points)</b><br/>${comps}</div>`;
+        return `<div class="form-group" data-carac-group="${key}">
+          <b>${LABELS_CARAC[key]}</b> — points à ajouter : <b>${carac.value}</b>,
+          reste : <span class="wizard-reste" data-carac="${key}">${carac.value}</span><br/>${comps}
+        </div>`;
       })
       .join("");
 
     const content = `
       <p>Étape 5/7 — Répartition des points de compétence (livre de base p.205). Pour chaque caractéristique,
-      répartissez autant de points que sa valeur entre ses compétences liées (1 pour 1, plafonné par la valeur
-      de la caractéristique, minimum 1 par compétence). Ces valeurs incluent déjà les points de l'étape 2.</p>
+      vous disposez d'un nouveau budget de points égal à sa valeur, à ajouter aux compétences liées (plafond
+      final = valeur de la caractéristique). Ce budget s'ajoute aux points déjà obtenus via les Blattes
+      d'évolution (étape 2), qui ne sont pas remis en jeu ici.</p>
       ${lignes}`;
 
     return new Promise((resolve) => {
@@ -423,17 +445,17 @@ export default class CharacterWizard {
               html.find(".wizard-repart").each((_, el) => {
                 const carac = el.dataset.carac;
                 const comp = el.dataset.comp;
-                let value = parseInt(el.value) || 1;
+                const actuel = parseInt(el.dataset.actuel);
                 const plafond = this.actor.system.caracteristiques[carac].value;
-                value = Math.max(1, Math.min(plafond, value));
-                updates[`system.caracteristiques.${carac}.competences.${comp}.value`] = value;
-                totals[carac] = (totals[carac] || 0) + value;
+                const ajout = Math.max(0, Math.min(plafond - actuel, parseInt(el.value) || 0));
+                updates[`system.caracteristiques.${carac}.competences.${comp}.value`] = actuel + ajout;
+                totals[carac] = (totals[carac] || 0) + ajout;
               });
               for (const [carac, total] of Object.entries(totals)) {
                 const attendu = this.actor.system.caracteristiques[carac].value;
                 if (total !== attendu) {
                   ui.notifications.warn(
-                    `${LABELS_CARAC[carac]} : ${total} point(s) répartis pour ${attendu} attendus — vérifiez la répartition sur la fiche si besoin.`
+                    `${LABELS_CARAC[carac]} : ${total}/${attendu} point(s) attribués — il reste des points non répartis, à ajuster sur la fiche si besoin.`
                   );
                 }
               }
@@ -443,6 +465,19 @@ export default class CharacterWizard {
           },
         },
         default: "next",
+        render: (html) => {
+          const majReste = (caracKey) => {
+            const budget = this.actor.system.caracteristiques[caracKey].value;
+            let somme = 0;
+            html.find(`.wizard-repart[data-carac="${caracKey}"]`).each((_, el) => (somme += parseInt(el.value) || 0));
+            const reste = budget - somme;
+            const span = html.find(`.wizard-reste[data-carac="${caracKey}"]`);
+            span.text(reste);
+            span.css("color", reste === 0 ? "green" : reste < 0 ? "red" : "inherit");
+          };
+          html.find(".wizard-repart").on("input", (e) => majReste(e.currentTarget.dataset.carac));
+          for (const key of caracsPhysiques) majReste(key);
+        },
       }).render(true);
     });
   }

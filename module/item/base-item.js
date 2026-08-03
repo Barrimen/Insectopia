@@ -1,7 +1,7 @@
 /**
  * IntreItem
  * ---------------------------------------------------------------------
- * Trois types d'Item pour l'instant : arme, armure, capacite.
+ * Quatre types d'Item pour l'instant : arme, armure, capacite, objet.
  * - arme    : modificateurAttaque (précision) + modificateurDegats
  *             (ajouté à la Chitine de l'attaquant pour le test de Dégâts),
  *             liée à une compétence de combat (melee/tir/predateur).
@@ -11,6 +11,10 @@
  *              Peut porter un bonus simple à une caractéristique ou une
  *              compétence (ex : Antennes ramifiées => +1 Antenne), lu
  *              automatiquement par IntreActor.getCapaciteBonus().
+ * - objet    : équipement générique sans effet mécanique automatisé
+ *              (livre de base p.242 : longue-vue, papier, gourdes...).
+ *              quantite + poidsUnitaire (indrammes) alimentent le calcul
+ *              de poids porté, voir IntreActor.getPoidsTotalObjets().
  */
 export default class IntreItem extends Item {
   estArme() {
@@ -21,5 +25,8 @@ export default class IntreItem extends Item {
   }
   estCapacite() {
     return this.type === "capacite";
+  }
+  estObjet() {
+    return this.type === "objet";
   }
 }

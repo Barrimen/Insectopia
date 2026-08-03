@@ -1,0 +1,191 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="item-sheet-header">
+    <img
+      class="itemimg"
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      alt="Illustration de {{item.name}}"
+    />
+
+    <div class="item-header-fields">
+      <span class="item-type-label">Armure</span>
+
+      <input
+        class="itemname"
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="Nom de l’armure"
+        aria-label="Nom de l’armure"
+      />
+
+      <label class="item-equipped-toggle">
+        <input
+          type="checkbox"
+          name="system.equipee"
+          {{#if system.equipee}}checked{{/if}}
+        />
+        <span>Armure équipée</span>
+      </label>
+    </div>
+  </header>
+
+  <div class="item-body">
+    <section class="item-section" aria-labelledby="armure-protection-title">
+      <h2 id="armure-protection-title" class="item-section-title">
+        Protection
+      </h2>
+
+      <div class="item-fields-grid">
+        <div class="field">
+          <label for="armure-bonus-chitine">
+            Bonus de Chitine
+          </label>
+          <input
+            id="armure-bonus-chitine"
+            type="number"
+            name="system.bonusChitine"
+            value="{{system.bonusChitine}}"
+            step="1"
+          />
+          <p class="hint">
+            Modificateur appliqué à la résistance aux dégâts.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="armure-bonus-feu">
+            Bonus contre le feu
+          </label>
+          <input
+            id="armure-bonus-feu"
+            type="number"
+            name="system.bonusFeu"
+            value="{{system.bonusFeu}}"
+            step="1"
+          />
+          <p class="hint">
+            Protection spécifique enregistrée pour les effets liés au feu.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="item-section" aria-labelledby="armure-contraintes-title">
+      <h2 id="armure-contraintes-title" class="item-section-title">
+        Contraintes
+      </h2>
+
+      <div class="item-fields-grid">
+        <div class="field">
+          <label for="armure-malus-aile">
+            Malus d’Aile
+          </label>
+          <input
+            id="armure-malus-aile"
+            type="number"
+            name="system.malusAile"
+            value="{{system.malusAile}}"
+            step="1"
+          />
+          <p class="hint">
+            Valeur enregistrée pour les pénalités affectant la caractéristique
+            Aile.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="armure-malus-encombrement">
+            Malus d’encombrement
+          </label>
+          <input
+            id="armure-malus-encombrement"
+            type="number"
+            name="system.malusEncombrement"
+            value="{{system.malusEncombrement}}"
+            step="1"
+          />
+          <p class="hint">
+            Valeur enregistrée pour les pénalités liées à l’encombrement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="item-section" aria-labelledby="armure-initiative-title">
+      <h2 id="armure-initiative-title" class="item-section-title">
+        Initiative et valeur
+      </h2>
+
+      <div class="item-fields-grid">
+        <div class="field">
+          <label for="armure-mod-initiative-type">
+            Modification d’initiative
+          </label>
+          <select
+            id="armure-mod-initiative-type"
+            name="system.modInitiativeType"
+          >
+            <option
+              value="aucun"
+              {{#ife system.modInitiativeType "aucun"}}selected{{/ife}}
+            >
+              Aucune
+            </option>
+            <option
+              value="bonus"
+              {{#ife system.modInitiativeType "bonus"}}selected{{/ife}}
+            >
+              Bonus
+            </option>
+            <option
+              value="malus"
+              {{#ife system.modInitiativeType "malus"}}selected{{/ife}}
+            >
+              Malus
+            </option>
+          </select>
+          <p class="hint">
+            Ce champ décrit le type de modification prévu par l’armure. Le
+            modèle actuel ne contient pas de valeur numérique dédiée.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="armure-prix-quartz">
+            Prix en Quartz
+          </label>
+          <input
+            id="armure-prix-quartz"
+            type="number"
+            name="system.prixQuartz"
+            value="{{system.prixQuartz}}"
+            min="0"
+            step="1"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="item-section item-section-description"
+      aria-labelledby="armure-description-title"
+    >
+      <h2 id="armure-description-title" class="item-section-title">
+        Description
+      </h2>
+
+      <div class="field">
+        {{editor
+          descriptionhtml
+          target="system.description"
+          button=true
+          owner=owner
+          editable=editable
+          engine="prosemirror"
+        }}
+      </div>
+    </section>
+  </div>
+</form>

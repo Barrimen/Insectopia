@@ -100,7 +100,7 @@
     }
   },
   "Item": {
-    "types": ["arme", "armure", "capacite"],
+    "types": ["arme", "armure", "capacite", "objet"],
     "templates": {
       "base": {
         "description": ""
@@ -139,6 +139,12 @@
         "compKey": "",
         "valeur": 0
       }
+    },
+    "objet": {
+      "templates": ["base"],
+      "quantite": 1,
+      "poidsUnitaire": 0,
+      "prixQuartz": 0
     }
   }
 }

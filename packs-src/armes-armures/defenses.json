@@ -1,0 +1,24 @@
+{
+  "_id": "6ukd47nFpd1H8QfN",
+  "_key": "!items!6ukd47nFpd1H8QfN",
+  "name": "Défenses",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Défenses naturelles de l'intre. Facteur de dégâts équivalent à la Chitine plus un.",
+    "competenceCombat": "predateur",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

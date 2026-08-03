@@ -1,0 +1,78 @@
+<div class="dialog sort-cast">
+  <div class="sort-combo-select">
+    <label>Sphère de magie — Mot de pouvoir</label>
+    <select id="sort-combo">
+      {{#each combinaisons}}
+      <option value="{{this.value}}">{{this.label}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <p class="hint">
+    Seules les combinaisons Sphère/Mot de pouvoir autorisées par le métier de ce personnage sont proposées
+    (livre de base p.267).
+  </p>
+
+  <table class="sort-influence-table">
+    <thead>
+      <tr><th>Axe</th><th>Niveau</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Puissance</td>
+        <td>
+          <select id="sort-puissance">
+            {{#each tableInfluence}}
+            <option value="{{this.niveau}}" {{#if (eq this.niveau 0)}}selected{{/if}}>{{this.niveau}}</option>
+            {{/each}}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Portée</td>
+        <td>
+          <select id="sort-portee">
+            {{#each tableInfluence}}
+            <option value="{{this.niveau}}" {{#if (eq this.niveau 0)}}selected{{/if}}>{{this.niveau}} — {{this.portee}}</option>
+            {{/each}}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Cibles</td>
+        <td>
+          <select id="sort-cibles">
+            {{#each tableInfluence}}
+            <option value="{{this.niveau}}" {{#if (eq this.niveau 0)}}selected{{/if}}>{{this.niveau}} — {{this.cibles}}</option>
+            {{/each}}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Zone d'effet</td>
+        <td>
+          <select id="sort-zone">
+            {{#each tableInfluence}}
+            <option value="{{this.niveau}}" {{#if (eq this.niveau 0)}}selected{{/if}}>{{this.niveau}} — {{this.zone}}</option>
+            {{/each}}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Durée</td>
+        <td>
+          <select id="sort-duree">
+            {{#each tableInfluence}}
+            <option value="{{this.niveau}}" {{#if (eq this.niveau 0)}}selected{{/if}}>{{this.niveau}} — {{this.duree}}</option>
+            {{/each}}
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="hint">
+    La Difficulté du sort est la somme des 5 niveaux choisis (livre p.269, base gratuite = tous les niveaux à 0).
+    Le sort nécessite normalement 3 Actions pour être lancé (1 à 5 en combat, livre p.270) — à décompter manuellement.
+  </p>
+</div>

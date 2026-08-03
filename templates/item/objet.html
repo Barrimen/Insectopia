@@ -1,0 +1,30 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="item-sheet-header">
+    <img class="itemimg" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <input class="itemname" name="name" type="text" value="{{item.name}}" placeholder="Nom de l'objet" />
+  </header>
+
+  <div class="item-body">
+    <div class="field">
+      <label>Quantité</label>
+      <input type="number" min="0" step="1" name="system.quantite" value="{{system.quantite}}" />
+    </div>
+
+    <div class="field">
+      <label>Poids unitaire (indrammes)</label>
+      <input type="number" min="0" step="0.1" name="system.poidsUnitaire" value="{{system.poidsUnitaire}}" />
+      <p class="hint">Cf. livret p.242 et table Lever/Porter p.206. Le poids total (quantité × poids unitaire)
+        s'additionne à celui des autres objets de l'inventaire dans le total affiché sur la fiche de personnage.</p>
+    </div>
+
+    <div class="field">
+      <label>Prix (quartz)</label>
+      <input type="number" min="0" step="1" name="system.prixQuartz" value="{{system.prixQuartz}}" />
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      {{editor descriptionhtml target="system.description" button=true owner=true editable=editable engine="prosemirror"}}
+    </div>
+  </div>
+</form>

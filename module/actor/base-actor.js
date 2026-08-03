@@ -150,6 +150,34 @@ export default class IntreActor extends Actor {
   }
 
   /**
+   * Poids total porté (indrammes), somme de quantite * poidsUnitaire sur
+   * tous les Items de type "objet" (livre de base p.242). N'inclut
+   * volontairement pas les armes/armures, qui n'ont pas de champ poids
+   * dans ce système — à revoir si besoin un jour.
+   */
+  getPoidsTotalObjets() {
+    return this.items
+      .filter((i) => i.type === "objet")
+      .reduce((sum, i) => sum + (i.system.quantite || 0) * (i.system.poidsUnitaire || 0), 0);
+  }
+
+  /**
+   * Seuil "Porter" (livre de base p.206, table Chitine -> Lever/Porter,
+   * en indrammes). Pas de formule donnée dans le livre : table en dur,
+   * bornée aux valeurs 2-8 listées. Au-delà, on extrapole en gardant la
+   * dernière valeur connue plutôt que d'inventer une progression.
+   * Note : ce seuil n'est pour l'instant qu'informatif — aucun malus
+   * automatique n'est appliqué en cas de dépassement (à faire si besoin).
+   */
+  getPoidsPorte() {
+    const TABLE_PORTER = { 2: 10, 3: 20, 4: 30, 5: 50, 6: 80, 7: 100, 8: 150 };
+    const chitine = this.system.caracteristiques?.chitine?.value ?? 3;
+    if (TABLE_PORTER[chitine] !== undefined) return TABLE_PORTER[chitine];
+    const clef = Math.max(2, Math.min(8, chitine));
+    return TABLE_PORTER[clef];
+  }
+
+  /**
    * Bonus chiffré automatique apporté par les capacités spéciales
    * possédées (livret p.27-28, ex : Antennes ramifiées => +1 Antenne).
    * Ne prend en compte que les capacités dont system.bonus.actif est

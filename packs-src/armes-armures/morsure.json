@@ -1,0 +1,24 @@
+{
+  "_id": "C6K5Hz46NfVDUjg6",
+  "_key": "!items!C6K5Hz46NfVDUjg6",
+  "name": "Morsure",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Les intres dotés de mandibules peuvent mordre leur adversaire, infligeant des dégâts équivalents à la Chitine de l'assaillant.",
+    "competenceCombat": "predateur",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 0,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

@@ -245,6 +245,29 @@
         sans cocher "bonus automatique" — ou utilisez l'onglet "Capacités (notes libres)" ci-après si vous
         préférez rester en texte libre, sans créer d'Item.
       </p>
+
+      <h3>Objets</h3>
+      <table class="items-list">
+        <thead><tr><th></th><th>Nom</th><th>Qté</th><th>Poids unit.</th><th>Prix</th><th></th></tr></thead>
+        <tbody>
+          {{#each objets as |objet|}}
+          <tr>
+            <td><img class="item-icon" src="{{objet.img}}" /></td>
+            <td><a class="item-name item-edit" data-item-id="{{objet.id}}">{{objet.name}}</a></td>
+            <td>{{objet.system.quantite}}</td>
+            <td>{{objet.system.poidsUnitaire}}</td>
+            <td>{{objet.system.prixQuartz}}</td>
+            <td class="item-controls"><a class="item-delete" data-item-id="{{objet.id}}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="item-add item-create" data-type="objet"><i class="fas fa-plus"></i> Ajouter un objet</a>
+      <p class="hint">
+        Poids total porté : {{poidsTotalObjets}} / {{poidsPorte}} indrammes (seuil "Porter", livre p.206, selon
+        la Chitine). Purement informatif pour l'instant : aucun malus n'est appliqué automatiquement en cas de
+        dépassement.
+      </p>
     </div>
 
     <div class="tab capacites" data-group="primary" data-tab="capacites">

@@ -57,6 +57,9 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     context.armes = this.actor.items.filter((i) => i.type === "arme");
     context.armures = this.actor.items.filter((i) => i.type === "armure");
     context.capacitesItems = this.actor.items.filter((i) => i.type === "capacite");
+    context.objets = this.actor.items.filter((i) => i.type === "objet");
+    context.poidsTotalObjets = this.actor.getPoidsTotalObjets();
+    context.poidsPorte = this.actor.getPoidsPorte();
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
     context.spheresListe = Object.entries(SPHERES).map(([key, sphere]) => ({ key, label: sphere.label }));
 
@@ -224,7 +227,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   async _onItemCreate(event) {
     event.preventDefault();
     const type = event.currentTarget.dataset.type;
-    const nomParDefaut = { arme: "Nouvelle arme", armure: "Nouvelle armure", capacite: "Nouvelle capacité" };
+    const nomParDefaut = { arme: "Nouvelle arme", armure: "Nouvelle armure", capacite: "Nouvelle capacité", objet: "Nouvel objet" };
     const itemData = { name: nomParDefaut[type] ?? "Nouvel objet", type };
     return this.actor.createEmbeddedDocuments("Item", [itemData]);
   }

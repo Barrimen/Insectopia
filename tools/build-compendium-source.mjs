@@ -102,6 +102,23 @@ const armes = [
     description: "Pinces surdimensionnées permettant de saisir un adversaire en plus d'infliger des dégâts égaux à la Chitine.",
   },
   {
+    name: "Morsure",
+    competenceCombat: "predateur",
+    modificateurAttaque: 0,
+    modificateurDegats: 0,
+    portee: "",
+    description:
+      "Les intres dotés de mandibules peuvent mordre leur adversaire, infligeant des dégâts équivalents à la Chitine de l'assaillant.",
+  },
+  {
+    name: "Défenses",
+    competenceCombat: "predateur",
+    modificateurAttaque: 0,
+    modificateurDegats: 1,
+    portee: "",
+    description: "Défenses naturelles de l'intre. Facteur de dégâts équivalent à la Chitine plus un.",
+  },
+  {
     name: "Découpeuse",
     competenceCombat: "melee",
     modificateurAttaque: 0,

@@ -1,0 +1,212 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="item-sheet-header">
+    <img
+      class="itemimg"
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      alt="Illustration de {{item.name}}"
+    />
+
+    <div class="item-header-fields">
+      <span class="item-type-label">Arme</span>
+
+      <input
+        class="itemname"
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="Nom de l’arme"
+        aria-label="Nom de l’arme"
+      />
+
+      <label class="item-equipped-toggle">
+        <input
+          type="checkbox"
+          name="system.equipee"
+          {{#if system.equipee}}checked{{/if}}
+        />
+        <span>Arme équipée</span>
+      </label>
+    </div>
+  </header>
+
+  <div class="item-body">
+    <section class="item-section" aria-labelledby="arme-utilisation-title">
+      <h2 id="arme-utilisation-title" class="item-section-title">
+        Utilisation
+      </h2>
+
+      <div class="item-fields-grid">
+        <div class="field">
+          <label for="arme-competence-combat">Compétence de combat</label>
+          <select
+            id="arme-competence-combat"
+            name="system.competenceCombat"
+          >
+            <option
+              value="melee"
+              {{#ife system.competenceCombat "melee"}}selected{{/ife}}
+            >
+              Mêlée
+            </option>
+            <option
+              value="tir"
+              {{#ife system.competenceCombat "tir"}}selected{{/ife}}
+            >
+              Tir
+            </option>
+            <option
+              value="predateur"
+              {{#ife system.competenceCombat "predateur"}}selected{{/ife}}
+            >
+              Prédateur
+            </option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="arme-modificateur-attaque">
+            Modificateur d’attaque
+          </label>
+          <input
+            id="arme-modificateur-attaque"
+            type="number"
+            name="system.modificateurAttaque"
+            value="{{system.modificateurAttaque}}"
+            step="1"
+          />
+          <p class="hint">
+            Bonus ou malus appliqué au jet d’attaque.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="item-section" aria-labelledby="arme-degats-title">
+      <h2 id="arme-degats-title" class="item-section-title">
+        Dégâts
+      </h2>
+
+      <div class="item-fields-grid">
+        <div class="field">
+          <label for="arme-modificateur-degats">
+            Modificateur de dégâts
+          </label>
+          <input
+            id="arme-modificateur-degats"
+            type="number"
+            name="system.modificateurDegats"
+            value="{{system.modificateurDegats}}"
+            step="1"
+          />
+          <p class="hint">
+            Valeur ajoutée à la Chitine de l’attaquant lors du calcul des
+            dégâts.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="arme-degats-fixes">
+            Dégâts fixes
+          </label>
+          <input
+            id="arme-degats-fixes"
+            type="number"
+            name="system.degatsFixes"
+            value="{{system.degatsFixes}}"
+            step="1"
+            placeholder="Aucun"
+          />
+          <p class="hint">
+            Laisser vide lorsque les dégâts reposent sur la Chitine et le
+            modificateur ci-contre.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="item-section" aria-labelledby="arme-portee-title">
+      <h2 id="arme-portee-title" class="item-section-title">
+        Portée et cadence
+      </h2>
+
+      <div class="item-fields-grid">
+        <div class="field">
+          <label for="arme-portee-texte">
+            Portée — description
+          </label>
+          <input
+            id="arme-portee-texte"
+            type="text"
+            name="system.portee"
+            value="{{system.portee}}"
+            placeholder="Ex. : contact, courte portée…"
+          />
+        </div>
+
+        <div class="field">
+          <label for="arme-portee-insettres">
+            Portée en insettres
+          </label>
+          <input
+            id="arme-portee-insettres"
+            type="number"
+            name="system.porteeInsettres"
+            value="{{system.porteeInsettres}}"
+            min="0"
+            step="1"
+          />
+        </div>
+
+        <div class="field">
+          <label for="arme-recharge-actions">
+            Recharge en actions
+          </label>
+          <input
+            id="arme-recharge-actions"
+            type="number"
+            name="system.rechargeActions"
+            value="{{system.rechargeActions}}"
+            min="0"
+            step="1"
+          />
+          <p class="hint">
+            Indiquer 0 lorsque l’arme ne nécessite pas de recharge.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="arme-prix-quartz">
+            Prix en Quartz
+          </label>
+          <input
+            id="arme-prix-quartz"
+            type="number"
+            name="system.prixQuartz"
+            value="{{system.prixQuartz}}"
+            min="0"
+            step="1"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="item-section item-section-description" aria-labelledby="arme-description-title">
+      <h2 id="arme-description-title" class="item-section-title">
+        Description
+      </h2>
+
+      <div class="field">
+        {{editor
+          descriptionhtml
+          target="system.description"
+          button=true
+          owner=owner
+          editable=editable
+          engine="prosemirror"
+        }}
+      </div>
+    </section>
+  </div>
+</form>

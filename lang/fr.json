@@ -53,7 +53,8 @@
       "item": {
         "arme": "Arme",
         "armure": "Armure",
-        "capacite": "Capacité"
+        "capacite": "Capacité",
+        "objet": "Objet"
       }
     }
   }
