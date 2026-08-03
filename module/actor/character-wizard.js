@@ -428,9 +428,7 @@ export default class CharacterWizard {
       dialog.render(true);
     });
   }
-      }).render(true);
-    });
-  }
+
 
   // --------------------------------------------------------------------
   // Étape 5 : répartition des points de compétence
