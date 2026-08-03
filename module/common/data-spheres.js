@@ -81,9 +81,9 @@ export const MOTS_POUVOIR_PAR_METIER = {
   },
   pretreanciensdieux: {
     alchimie: ["alteration", "connaissance"],
-    pensee: ["controle", "negation"], 
+    pensee: ["alteration", "negation"], 
     foudre: ["alteration", "connaissance", "evocation", "negation"],
-    souillure: ["altéraion","connaissance"],
+    souillure: ["alteration","connaissance"],
   },
   psyche: {
     pensee: ["alteration", "controle", "connaissance", "evocation", "negation"],
