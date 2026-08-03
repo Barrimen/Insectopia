@@ -189,29 +189,37 @@
           {{/each}}
         </div>
 
-        <!-- Rosace : les 6 caractéristiques principales autour d'un centre vide -->
-        <div class="rosace">
+        <!-- Rosace : les 6 caractéristiques principales autour d'un centre vide.
+             Géométrie calculée par trigonométrie (buildRosaceGeometry, côté JS) :
+             chaque <foreignObject> est positionné aux coordonnées exactes du
+             pavage hexagonal, pas devinées. Le contenu de chaque foreignObject
+             reste du HTML standard (input, <a data-action>...) donc 100%
+             interactif avec le système d'actions déclaratif d'ApplicationV2. -->
+        <svg class="rosace-svg" viewBox="{{rosaceViewBox}}" preserveAspectRatio="xMidYMid meet">
           {{#each caracteristiquesListe as |carac|}}
           {{#if (ne carac.key "caste")}}
-          <div class="carac-card carac-card-{{carac.key}} side-{{carac.side}}">
-            <div class="carac-hex">
+          <foreignObject x="{{carac.geo.x}}" y="{{carac.geo.y}}" width="{{carac.geo.w}}" height="{{carac.geo.h}}">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="carac-hex carac-hex-{{carac.key}} side-{{carac.side}}">
               <a class="caract-roll" data-action="caracRoll" data-carac="{{carac.key}}" title="Tirer {{localize carac.label}}">
                 <span class="carac-name">{{localize carac.label}}</span>
                 <input class="small-input carac-value" type="number" name="system.caracteristiques.{{carac.key}}.value" value="{{carac.value}}" />
               </a>
             </div>
-            {{#each carac.competencesListe as |comp index|}}
-            <div class="comp-hex comp-hex-{{index}}">
+          </foreignObject>
+
+          {{#each carac.competencesListe as |comp|}}
+          <foreignObject x="{{comp.geo.x}}" y="{{comp.geo.y}}" width="{{comp.geo.w}}" height="{{comp.geo.h}}">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="comp-hex comp-hex-{{../carac.key}} side-{{../carac.side}}">
               <a class="comp-roll" data-action="compRoll" data-carac="{{../carac.key}}" data-comp="{{comp.key}}" title="{{localize comp.label}}">
                 <input class="small-input" type="number" name="system.caracteristiques.{{../carac.key}}.competences.{{comp.key}}.value" value="{{comp.value}}" />
               </a>
               <span class="comp-label">{{localize comp.label}}</span>
             </div>
-            {{/each}}
-          </div>
+          </foreignObject>
+          {{/each}}
           {{/if}}
           {{/each}}
-        </div>
+        </svg>
       </div>
       <p class="hint">
         Cliquez sur une caractéristique ou une compétence pour ouvrir le dialogue de tirage de Blattes.
