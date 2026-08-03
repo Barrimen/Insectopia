@@ -1,7 +1,7 @@
 import { RACES } from "../../common/data-races.js";
 import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
-import { SPHERES } from "../../common/data-spheres.js";
+import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER } from "../../common/data-spheres.js";
 import { asArray } from "../../common/utils.js";
 
 export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
@@ -62,6 +62,22 @@ context.caracteristiquesListe = Object.entries(this.actor.system.caracteristique
     context.poidsPorte = this.actor.getPoidsPorte();
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
     context.spheresListe = Object.entries(SPHERES).map(([key, sphere]) => ({ key, label: sphere.label }));
+
+    // Tableau statique "Jeteur de sorts" (livre p.267, cf. la feuille papier
+    // p.2) : une ligne par Sphère connue (compétence de Caste taguée
+    // "sphere"), avec les Mots de pouvoir autorisés pour cette Sphère selon
+    // le métier du personnage. Vide si le métier n'est pas un métier divin
+    // reconnu, ou si aucune Sphère n'est encore taguée.
+    const motsParMetierSheet = MOTS_POUVOIR_PAR_METIER[this.actor.system.identite.metierKey];
+    context.jeteurDeSorts = motsParMetierSheet
+      ? asArray(this.actor.system.caracteristiques.caste.competences)
+          .filter((c) => c.sphere && SPHERES[c.sphere])
+          .map((c) => ({
+            sphereLabel: SPHERES[c.sphere].label,
+            sphereValue: c.value,
+            motsLabels: (motsParMetierSheet[c.sphere] || []).map((m) => MOTS_POUVOIR[m]).join(", ") || "—",
+          }))
+      : [];
 
     return context;
   }

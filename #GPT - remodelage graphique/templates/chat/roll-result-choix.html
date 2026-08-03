@@ -1,0 +1,78 @@
+<article class="chatroll chatroll-choice" data-actor-id="{{owner}}">
+  <header class="intro">
+    {{#if (ne actingCharImg "icons/svg/mystery-man.svg")}}
+    <div class="introImg">
+      <img
+        src="{{actingCharImg}}"
+        title="{{actingCharName}}"
+        alt="Portrait de {{actingCharName}}"
+      />
+    </div>
+    {{/if}}
+
+    <div class="introText">{{data.introText}}</div>
+  </header>
+
+  {{#if isDegats}}
+  <div class="difficultyline" aria-label="Calcul des dégâts">
+    <div>
+      <span class="chatroll-meta-label">Chitine attaquant</span>
+      {{data.chitineAttaque}}
+    </div>
+    <div>
+      <span class="chatroll-meta-label">Chitine défenseur</span>
+      {{data.chitineDefense}}
+    </div>
+    {{#if data.bonusBlattes}}
+    <div>
+      <span class="chatroll-meta-label">Bonus</span>
+      +{{data.bonusBlattes}} blatte
+    </div>
+    {{/if}}
+  </div>
+  {{else}}
+  <div class="difficultyline" aria-label="Paramètres du tirage">
+    {{#if data.difficulte includeZero=true}}
+    <div>
+      <span class="chatroll-meta-label">Difficulté</span>
+      {{data.difficulteLabel}} ({{data.difficulte}})
+    </div>
+    {{/if}}
+
+    {{#if data.opposantValue includeZero=true}}
+    <div>
+      <span class="chatroll-meta-label">Défense adverse</span>
+      {{data.opposantValue}}
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  <div class="choice-list" role="list">
+    {{#each choix}}
+    <a
+      class="choice-card choix-couleur {{#if @root.isAttack}}choix-attaque{{else}}choix-degats{{/if}}"
+      data-couleur="{{this.couleur}}"
+      role="listitem"
+    >
+      <span class="choice-count">{{this.count}}</span>
+      <span
+        class="blatte blatte-{{this.couleur}}"
+        aria-hidden="true"
+      ></span>
+
+      <span class="choice-content">
+        <strong>{{this.label}}</strong>
+        {{#if @root.isDegats}}
+        <span class="choice-impact">{{this.impacts}} impact(s)</span>
+        {{/if}}
+        <span class="choix-description">{{this.description}}</span>
+      </span>
+    </a>
+    {{/each}}
+  </div>
+
+  <div class="resultText">
+    Sélectionnez la couleur retenue comme résultat.
+  </div>
+</article>

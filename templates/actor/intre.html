@@ -116,17 +116,7 @@
                   <td>
                     <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
                   </td>
-                  <td>
-                    <select class="caste-comp-sphere" data-index="{{index}}">
-                      <option value="">— Sphère —</option>
-                      {{#each @root.spheresListe as |sphere|}}
-                      <option value="{{sphere.key}}" {{#if (eq comp.sphere sphere.key)}}selected{{/if}}>{{sphere.label}}</option>
-                      {{/each}}
-                    </select>
-                  </td>
-                  <td>
-                    <a class="caste-comp-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
-                  </td>
+                  <td><a class="caste-comp-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a></td>
                 </tr>
                 {{/each}}
                 <tr><td colspan="3"><a class="caste-comp-add"><i class="fas fa-plus"></i> Ajouter une compétence de Caste</a></td></tr>
@@ -282,6 +272,25 @@
     </div>
 
     <div class="tab capacites" data-group="primary" data-tab="capacites">
+      {{#if jeteurDeSorts.length}}
+      <h3>Jeteur de sorts</h3>
+      <table class="jeteur-sorts-table">
+        <thead>
+          <tr><th>Sphère magique</th><th>Score</th><th>Mots de pouvoir</th></tr>
+        </thead>
+        <tbody>
+          {{#each jeteurDeSorts as |ligne|}}
+          <tr>
+            <td>{{ligne.sphereLabel}}</td>
+            <td>{{ligne.sphereValue}}</td>
+            <td>{{ligne.motsLabels}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="sort-cast-open"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
+      <hr />
+      {{/if}}
       {{#each system.identite.capacites as |capacite index|}}
       <div class="capacite-line">
         <input type="text" name="system.identite.capacites.{{index}}.label" value="{{capacite.label}}" placeholder="Nom de la capacité" />

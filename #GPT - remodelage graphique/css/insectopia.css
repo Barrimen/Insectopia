@@ -936,3 +936,306 @@
     animation-iteration-count: 1 !important;
   }
 }
+/* ==========================================================================
+   UI completion — item sections, roll dialogs, chat choices and tracker
+   ========================================================================== */
+
+.insectopia.sheet.item .item-header-fields {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--insectopia-space-2);
+  min-width: 0;
+}
+
+.insectopia.sheet.item .item-type-label {
+  align-self: flex-start;
+  padding: 0.18rem 0.55rem;
+  color: var(--insectopia-color-panel);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--insectopia-color-petrol);
+  border-radius: 999px;
+}
+
+.insectopia.sheet.item .item-equipped-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--insectopia-space-1);
+  width: fit-content;
+  color: var(--insectopia-color-ink);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.insectopia.sheet.item .item-section {
+  padding: var(--insectopia-space-3);
+  margin-bottom: var(--insectopia-space-3);
+  background: rgb(255 255 255 / 28%);
+  border: 1px solid rgb(91 81 68 / 25%);
+  border-left: 3px solid var(--insectopia-color-cyan);
+  border-radius: var(--insectopia-radius-medium);
+}
+
+.insectopia.sheet.item .item-section:last-child {
+  margin-bottom: 0;
+}
+
+.insectopia.sheet.item .item-section-title {
+  margin: 0 0 var(--insectopia-space-3);
+  padding-bottom: var(--insectopia-space-1);
+  color: var(--insectopia-color-petrol);
+  font-family: var(--insectopia-font-display);
+  font-size: 1rem;
+  letter-spacing: 0.035em;
+  border-bottom: 1px solid rgb(91 81 68 / 25%);
+}
+
+.insectopia.sheet.item .item-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--insectopia-space-3);
+}
+
+.insectopia.sheet.item .item-fields-grid .field {
+  margin-bottom: 0;
+}
+
+.insectopia.sheet.item .item-section-description .editor {
+  min-height: 180px;
+}
+
+.insectopia.sheet.item .item-section-hint {
+  padding: var(--insectopia-space-2);
+  margin-top: var(--insectopia-space-3);
+  background: rgb(23 74 85 / 7%);
+  border-left: 3px solid var(--insectopia-color-petrol);
+}
+
+/* Roll dialog */
+
+.insectopia-roll-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--insectopia-space-3);
+}
+
+.insectopia-roll-dialog .roll-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: var(--insectopia-space-3);
+  padding: var(--insectopia-space-3);
+  background: linear-gradient(120deg, rgb(243 234 215 / 94%), rgb(216 200 168 / 72%));
+  border: 1px solid var(--insectopia-color-border-soft);
+  border-left: 4px solid var(--insectopia-color-cyan);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+.insectopia-roll-dialog .roll-dialog-portrait {
+  width: 66px;
+  height: 66px;
+  object-fit: cover;
+  border: 2px solid var(--insectopia-color-border);
+  clip-path: polygon(25% 0, 75% 0, 100% 18%, 100% 82%, 75% 100%, 25% 100%, 0 82%, 0 18%);
+}
+
+.insectopia-roll-dialog .roll-dialog-intro {
+  color: var(--insectopia-color-petrol);
+  font-family: var(--insectopia-font-display);
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.insectopia-roll-dialog .roll-dialog-score {
+  color: var(--insectopia-color-cyan);
+}
+
+.insectopia-roll-dialog .dialog-main {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--insectopia-space-3);
+}
+
+.insectopia-roll-dialog .dialog-main > .field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--insectopia-space-1);
+  min-width: 0;
+}
+
+.insectopia-roll-dialog .dialog-main > .field label {
+  color: var(--insectopia-color-petrol);
+  font-weight: 700;
+}
+
+.insectopia-roll-dialog .roll-dialog-hint,
+.insectopia-roll-dialog .roll-dialog-rule {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+/* Chat results */
+
+.chatroll .chatroll-meta-label {
+  display: block;
+  margin-bottom: 0.1rem;
+  color: #f0cc7c;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.chatroll .blattes-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: var(--insectopia-space-2);
+}
+
+.chatroll .blatte-result {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem var(--insectopia-space-1);
+  padding: var(--insectopia-space-2);
+  text-align: center;
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: var(--insectopia-radius-small);
+}
+
+.chatroll .blatte-result > span:last-child {
+  grid-column: 1 / -1;
+  color: #d5d1c6;
+  font-size: 0.72rem;
+}
+
+.chatroll button.rerollicon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--insectopia-space-1);
+  font: inherit;
+  background: transparent;
+}
+
+.chatroll .choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--insectopia-space-2);
+}
+
+.chatroll .choice-card {
+  display: grid;
+  grid-template-columns: 2rem auto 1fr;
+  align-items: center;
+  gap: var(--insectopia-space-2);
+  padding: var(--insectopia-space-2);
+  color: var(--insectopia-color-white);
+  background: rgb(255 255 255 / 5%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: var(--insectopia-radius-small);
+  cursor: pointer;
+  transition:
+    background-color var(--insectopia-transition-fast),
+    border-color var(--insectopia-transition-fast),
+    transform var(--insectopia-transition-fast);
+}
+
+.chatroll .choice-card:hover,
+.chatroll .choice-card:focus-visible {
+  color: var(--insectopia-color-white);
+  background: rgb(46 166 180 / 14%);
+  border-color: rgb(46 166 180 / 60%);
+  transform: translateY(-1px);
+}
+
+.chatroll .choice-count {
+  color: #f0cc7c;
+  font-family: var(--insectopia-font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.chatroll .choice-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.chatroll .choice-content strong {
+  color: #f0cc7c;
+}
+
+.chatroll .choice-impact {
+  color: var(--insectopia-color-white);
+  font-size: 0.78rem;
+}
+
+.chatroll .choix-description {
+  color: #d5d1c6;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+/* Combat tracker */
+
+#combat-tracker .insectopia-combat-tracker .combatant {
+  min-height: 58px;
+  border-left: 3px solid transparent;
+}
+
+#combat-tracker .insectopia-combat-tracker .combatant.active {
+  background: rgb(46 166 180 / 12%);
+  border-left-color: var(--insectopia-color-cyan);
+}
+
+#combat-tracker .insectopia-combat-tracker .blattes-initiative {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px;
+  min-width: 50px;
+}
+
+#combat-tracker .insectopia-combat-tracker .blatte-adjust {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#combat-tracker .insectopia-combat-tracker button.blatteup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.2rem;
+  padding: 0;
+  color: inherit;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 3px;
+}
+
+#combat-tracker .insectopia-combat-tracker button.blatteup:hover {
+  background: rgb(46 166 180 / 18%);
+  border-color: rgb(46 166 180 / 48%);
+}
+
+@media (max-width: 720px) {
+  .insectopia.sheet.item .item-fields-grid,
+  .insectopia-roll-dialog .dialog-main {
+    grid-template-columns: 1fr;
+  }
+
+  .insectopia-roll-dialog .roll-dialog-hint,
+  .insectopia-roll-dialog .roll-dialog-rule {
+    grid-column: auto;
+  }
+}
