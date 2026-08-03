@@ -125,6 +125,21 @@ export const RESULTAT_SORT = {
   rouge: { label: "Réussite critique", description: "Réussite ; +2 crans d'Influence au choix, non automatisé (livre p.270)." },
 };
 
+/**
+ * Résultats génériques d'un jet Opposition/Difficulté/Simple (livret
+ * p.24-25) : contrairement à Attaque/Dégâts/Sort, la couleur ne déclenche
+ * aucune suite automatisée — elle sert uniquement à qualifier le degré de
+ * réussite affiché dans le message de chat une fois choisie par le joueur
+ * (ou le Deus, en cas d'Opposition négative).
+ */
+export const RESULTAT_SIMPLE = {
+  noire: { label: "Échec critique" },
+  blanche: { label: "Échec" },
+  bleue: { label: "Réussite" },
+  verte: { label: "Réussite améliorée" },
+  rouge: { label: "Réussite critique" },
+};
+
 export const INSECTOPIA = {
   // Espace réservé pour les futures constantes de données (races, castes,
   // sphères de magie, mots de pouvoir, etc.) qui seront ajoutées au fil des

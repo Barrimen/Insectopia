@@ -1,4 +1,4 @@
-import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, RESULTAT_SORT, ORDRE_COULEURS_CROISSANT } from "./config.js";
+import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, RESULTAT_SORT, RESULTAT_SIMPLE, ORDRE_COULEURS_CROISSANT } from "./config.js";
 
 /**
  * Classe Blattes
@@ -307,6 +307,13 @@ export class Blattes {
       this.resultText = "Le Deus (ou votre adversaire) choisit la blatte qui détermine le résultat de votre action.";
     }
 
+    // Opposition/Difficulté avec plusieurs Blattes tirées (formulaValue > 1
+    // ou < -1) : on propose des boutons de choix cliquables (comme pour
+    // Attaque/Dégâts/Sort) plutôt qu'un simple tableau non actionnable.
+    // Le clic ne fait qu'afficher la couleur retenue dans le chat — pas de
+    // suite automatisée (pas de cible/arme connue à ce stade du jet).
+    const interactiveChoice = Math.abs(this.data.formulaValue) > 1 && this.rolltype !== ROLL_TYPE.CHANCE;
+
     const templateData = {
       owner: this.actor?.id,
       actingCharName: this.data.actorname,
@@ -314,6 +321,7 @@ export class Blattes {
       data: this.data,
       rerollButton,
       resultText: this.resultText,
+      interactiveChoice,
     };
 
     const html = await foundry.applications.handlebars.renderTemplate(
@@ -332,6 +340,10 @@ export class Blattes {
         competence: this.competence,
         data: this.data,
       });
+    }
+
+    if (interactiveChoice) {
+      this.chat.setFlag("world", "choixSimpleData", { actorId: this.actor?.id });
     }
 
     if (this.rolltype === ROLL_TYPE.INITIATIVE) return this.data;
@@ -560,5 +572,25 @@ export class Blattes {
       introTextOverride: `Effet du sort (${flagData.data.sphereLabel} — ${flagData.data.motPouvoirLabel}) : Puissance ${flagData.data.niveauPuissance} vs compétence d'opposition au choix du Deus (livre p.270).`,
     });
     return blattes.openDialog();
+  }
+
+  /**
+   * Le joueur/Deus a retenu `couleur` parmi plusieurs Blattes tirées sur un
+   * jet Opposition/Difficulté simple (livret p.24-25). Contrairement aux
+   * jets Attaque/Dégâts/Sort, ce choix ne déclenche aucune suite
+   * automatisée : ni cible, ni arme ne sont connues à ce stade du jet. Le
+   * résultat retenu est simplement affiché dans le message de chat, à
+   * charge du Deus d'en tirer les conséquences (dégâts, effet, etc.) selon
+   * le contexte de la scène.
+   */
+  static async resoudreChoixSimple(couleur, message) {
+    const flagData = message.getFlag("world", "choixSimpleData");
+    if (!flagData) return;
+
+    await message.update({
+      content: message.content.concat(
+        `<div class="resultText">Résultat retenu : <strong>${RESULTAT_SIMPLE[couleur].label}</strong></div>`
+      ),
+    });
   }
 }

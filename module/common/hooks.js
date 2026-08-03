@@ -40,6 +40,16 @@ export default function registerHooks() {
       });
     }
 
+    // Choix de la couleur retenue pour un jet Opposition/Difficulté simple
+    // (plusieurs Blattes tirées) : affiche uniquement le résultat retenu,
+    // au Deus de l'appliquer selon le contexte (hors combat : lecture
+    // directe ; en combat : à interpréter manuellement pour l'instant).
+    for (const btn of html.querySelectorAll(".choix-simple")) {
+      btn.addEventListener("click", async () => {
+        await Blattes.resoudreChoixSimple(btn.dataset.couleur, message);
+      });
+    }
+
     // Application des impacts (et de la mutilation éventuelle) à la
     // cible actuellement ciblée sur la scène (game.user.targets).
     for (const btn of html.querySelectorAll(".appliquer-degats")) {

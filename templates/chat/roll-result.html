@@ -23,31 +23,31 @@
             {{#if data.blattesParCouleur.rouge}}
             <tr>
                 <td class="chance-blatte-line">{{data.blattesParCouleur.rouge}}</td>
-                <td><span class="blatte blatte-rouge" title="Réussite critique"></span></td>
+                <td>{{#if interactiveChoice}}<a class="choix-couleur choix-simple" data-couleur="rouge"><span class="blatte blatte-rouge" title="Réussite critique"></span> Réussite critique</a>{{else}}<span class="blatte blatte-rouge" title="Réussite critique"></span>{{/if}}</td>
             </tr>
             {{/if}}
             {{#if data.blattesParCouleur.verte}}
             <tr>
                 <td class="chance-blatte-line">{{data.blattesParCouleur.verte}}</td>
-                <td><span class="blatte blatte-verte" title="Réussite améliorée"></span></td>
+                <td>{{#if interactiveChoice}}<a class="choix-couleur choix-simple" data-couleur="verte"><span class="blatte blatte-verte" title="Réussite améliorée"></span> Réussite améliorée</a>{{else}}<span class="blatte blatte-verte" title="Réussite améliorée"></span>{{/if}}</td>
             </tr>
             {{/if}}
             {{#if data.blattesParCouleur.bleue}}
             <tr>
                 <td class="chance-blatte-line">{{data.blattesParCouleur.bleue}}</td>
-                <td><span class="blatte blatte-bleue" title="Réussite"></span></td>
+                <td>{{#if interactiveChoice}}<a class="choix-couleur choix-simple" data-couleur="bleue"><span class="blatte blatte-bleue" title="Réussite"></span> Réussite</a>{{else}}<span class="blatte blatte-bleue" title="Réussite"></span>{{/if}}</td>
             </tr>
             {{/if}}
             {{#if data.blattesParCouleur.blanche}}
             <tr>
                 <td class="chance-blatte-line">{{data.blattesParCouleur.blanche}}</td>
-                <td><span class="blatte blatte-blanche" title="Échec"></span></td>
+                <td>{{#if interactiveChoice}}<a class="choix-couleur choix-simple" data-couleur="blanche"><span class="blatte blatte-blanche" title="Échec"></span> Échec</a>{{else}}<span class="blatte blatte-blanche" title="Échec"></span>{{/if}}</td>
             </tr>
             {{/if}}
             {{#if data.blattesParCouleur.noire}}
             <tr>
                 <td class="chance-blatte-line">{{data.blattesParCouleur.noire}}</td>
-                <td><span class="blatte blatte-noire" title="Échec critique"></span></td>
+                <td>{{#if interactiveChoice}}<a class="choix-couleur choix-simple" data-couleur="noire"><span class="blatte blatte-noire" title="Échec critique"></span> Échec critique</a>{{else}}<span class="blatte blatte-noire" title="Échec critique"></span>{{/if}}</td>
             </tr>
             {{/if}}
         </tbody>

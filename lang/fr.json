@@ -2,10 +2,10 @@
   "INSECTOPIA": {
     "dialog": {
       "introtext": {
-        "attack": "{{actorname}} attaque en utilisant {{competence}}",
-        "opposition": "{{actorname}} utilise {{competence}} en opposition",
-        "difficulte": "{{actorname}} tente une action avec {{competence}}",
-        "chance": "{{actorname}} tire ses Blattes de chance"
+        "attack": "{actorname} attaque en utilisant {competence}",
+        "opposition": "{actorname} utilise {competence} en opposition",
+        "difficulte": "{actorname} tente une action avec {competence}",
+        "chance": "{actorname} tire ses Blattes de chance"
       },
       "button": {
         "roll": "Piocher",
@@ -13,8 +13,8 @@
       }
     },
     "chatmessage": {
-      "difficulte": "Difficulté : {{difficulte}}",
-      "modifier": "Modificateur : {{modifier}}"
+      "difficulte": "Difficulté : {difficulte}",
+      "modifier": "Modificateur : {modifier}"
     },
     "settings": {
       "visibiliteJetsPNJ": {
