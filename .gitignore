@@ -1,0 +1,76 @@
+# ============================================================
+# Fichiers locaux et outils personnels
+# ============================================================
+*.ps1
+*.ps1xml
+*.psd1
+*.psm1
+
+# Variables d'environnement et secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# ============================================================
+# VS Code / IDE
+# ============================================================
+.vscode/
+.idea/
+*.code-workspace
+
+# ============================================================
+# Windows / macOS
+# ============================================================
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ============================================================
+# Node / outils de build
+# ============================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage/
+dist/
+build/
+.cache/
+.tmp/
+tmp/
+
+# ============================================================
+# Archives et sauvegardes locales
+# ============================================================
+*.zip
+*.7z
+*.rar
+*.bak
+*.backup
+*.tmp
+*~
+
+# ============================================================
+# Foundry VTT : bases LevelDB générées
+#
+# À conserver uniquement si packs-src/ est la source officielle
+# et que les compendiums peuvent être reconstruits.
+# ============================================================
+packs/**/*.ldb
+packs/**/*.log
+packs/**/CURRENT
+packs/**/LOCK
+packs/**/LOG
+packs/**/LOG.old
+packs/**/MANIFEST-*
+
+# Fichiers de verrouillage ou temporaires Foundry
+*.lock
+
+# ============================================================
+# Journaux génériques
+# ============================================================
+*.log
+logs/
