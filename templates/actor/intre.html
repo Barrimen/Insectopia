@@ -110,6 +110,7 @@
                 {{#each carac.competencesListe as |comp index|}}
                 <tr>
                   <td>
+                    <a class="comp-roll" data-carac="caste" data-comp="{{index}}" title="Lancer les Blattes"><i class="fas fa-dice"></i></a>
                     <input type="text" name="system.caracteristiques.caste.competences.{{index}}.label" value="{{comp.label}}" />
                   </td>
                   <td>

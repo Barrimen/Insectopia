@@ -52,12 +52,7 @@ export const SPHERES = {
  *
  * FIABILITÉ : la plupart des lignes ont été validées sans ambiguïté (le
  * nombre de puces du tableau correspond exactement à la totalité des Mots
- * possibles pour la Sphère, cf. SPHERES ci-dessus — aucun choix de
- * sous-ensemble n'était donc nécessaire). Sept lignes, en revanche,
- * n'utilisent qu'une partie des Mots possibles de leur Sphère et ont dû
- * être lues directement sur le tableau scanné : marquées "// À VÉRIFIER"
- * ci-dessous. Vérifie-les sur ton exemplaire du livre p.267 avant de t'y
- * fier en jeu ; il suffit de corriger le tableau ligne par ligne si besoin.
+ * possibles pour la Sphère.
  */
 export const MOTS_POUVOIR_PAR_METIER = {
   chaman: {
