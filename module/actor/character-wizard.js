@@ -274,6 +274,8 @@ export default class CharacterWizard {
         },
         default: "next",
         render: (html) => {
+          if (html.data("wizardInit")) return;
+          html.data("wizardInit", true);
           const majMetiers = () => {
             const casteKey = html.find("#wizard-caste")[0].value;
             const metiers = CASTES[casteKey].metiers;
@@ -356,11 +358,12 @@ export default class CharacterWizard {
       Il vous reste donc <b>${nbAChoisir}</b> compétence(s) de caste à choisir parmi la liste du récapitulatif p.229
       (le livre indique une restriction "selon la race", mais ne fournit pas de table exhaustive croisant race et
       compétence — le choix ci-dessous n'est donc pas filtré par race).</p>
+      <p>Reste à choisir : <b><span id="wizard-reste-caste">${nbAChoisir}</span></b></p>
       <div id="wizard-competences-supp"></div>
       <a id="wizard-add-comp"><i class="fas fa-plus"></i> Ajouter une compétence de caste</a>`;
 
     return new Promise((resolve) => {
-      new Dialog({
+      const dialog = new Dialog({
         title: "Création de personnage — 4. Compétences de caste",
         content,
         buttons: {
@@ -368,10 +371,11 @@ export default class CharacterWizard {
             icon: '<i class="fas fa-arrow-right"></i>',
             label: "Suivant",
             callback: async (html) => {
-              const noms = html
-                .find(".wizard-comp-supp-input")
+              const rows = html.find(".wizard-comp-supp-input");
+              if (rows.length !== nbAChoisir) return false; // bloque : ne ferme pas le dialogue
+              const noms = rows
                 .toArray()
-                .map((el) => el.value?.trim())
+                .map((el) => el.value)
                 .filter(Boolean);
               if (noms.length) {
                 const competences = foundry.utils.duplicate(this.actor.system.caracteristiques.caste.competences ?? []);
@@ -385,12 +389,34 @@ export default class CharacterWizard {
         },
         default: "next",
         render: (html) => {
+          // Le Dialog peut être re-rendu plusieurs fois par Foundry (ex : après un changement de taille de fenêtre) ;
+          // sans garde, ce callback ré-exécutait la boucle d'ajout de lignes à chaque passage, dupliquant les champs.
+          if (html.data("wizardInit")) return;
+          html.data("wizardInit", true);
+
           let count = 0;
+          const majReste = () => {
+            const restant = nbAChoisir - html.find(".wizard-comp-supp-input").length;
+            const span = html.find("#wizard-reste-caste");
+            span.text(restant);
+            span.css("color", restant === 0 ? "green" : "red");
+            html.find("#wizard-add-comp").toggle(restant > 0);
+            dialog.setPosition({ height: "auto" });
+          };
           const addRow = () => {
             count++;
-            html.find("#wizard-competences-supp").append(
-              `<div class="form-group"><label>Compétence #${count}</label><select class="wizard-comp-supp-input">${optionsCompetences}</select></div>`
+            const row = $(
+              `<div class="form-group" data-row="${count}"><label>Compétence #${count}</label>
+                <select class="wizard-comp-supp-input">${optionsCompetences}</select>
+                <a class="wizard-remove-comp"><i class="fas fa-trash"></i></a></div>`
             );
+            row.find(".wizard-remove-comp").click((e) => {
+              e.preventDefault();
+              row.remove();
+              majReste();
+            });
+            html.find("#wizard-competences-supp").append(row);
+            majReste();
           };
           html.find("#wizard-add-comp").click((e) => {
             e.preventDefault();
@@ -398,6 +424,10 @@ export default class CharacterWizard {
           });
           for (let i = 0; i < nbAChoisir; i++) addRow();
         },
+      });
+      dialog.render(true);
+    });
+  }
       }).render(true);
     });
   }
@@ -466,6 +496,8 @@ export default class CharacterWizard {
         },
         default: "next",
         render: (html) => {
+          if (html.data("wizardInit")) return;
+          html.data("wizardInit", true);
           const majReste = (caracKey) => {
             const budget = this.actor.system.caracteristiques[caracKey].value;
             let somme = 0;
