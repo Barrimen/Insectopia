@@ -1,9 +1,9 @@
-<form class="{{cssClass}} droppable" autocomplete="off">
+<div class="sheet-content droppable">
 
   <!-- ============================== EN-TÊTE ============================== -->
   <header class="sheet-header">
     <div class="header-portrait">
-      <img class="portraitimg" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+      <img class="portraitimg" src="{{actor.img}}" data-action="editImage" data-field="img" title="{{actor.name}}" />
     </div>
 
     <div class="header-fields">
@@ -23,16 +23,19 @@
           <option value="herbivore" {{#ife system.identite.regimealimentaire "herbivore"}}selected{{/ife}}>Herbivore</option>
           <option value="omnivore" {{#ife system.identite.regimealimentaire "omnivore"}}selected{{/ife}}>Omnivore</option>
         </select>
+      </div>
+
+      <div class="identite-line identite-line-secondary">
         <select name="system.identite.religion">
           <option value="animiste" {{#ife system.identite.religion "animiste"}}selected{{/ife}}>Animiste</option>
           <option value="cultiste" {{#ife system.identite.religion "cultiste"}}selected{{/ife}}>Cultiste</option>
           <option value="autre" {{#ife system.identite.religion "autre"}}selected{{/ife}}>Autre / aucune</option>
         </select>
+        <input name="system.identite.alignement" type="text" value="{{system.identite.alignement}}" placeholder="Alignement" />
+        <input name="system.identite.titre" type="text" value="{{system.identite.titre}}" placeholder="Titre" />
       </div>
 
       <div class="identite-line identite-line-secondary">
-        <input name="system.identite.alignement" type="text" value="{{system.identite.alignement}}" placeholder="Alignement" />
-        <input name="system.identite.titre" type="text" value="{{system.identite.titre}}" placeholder="Titre" />
         <input name="system.identite.sexe" type="text" value="{{system.identite.sexe}}" placeholder="Sexe" />
         <input name="system.identite.age" type="text" value="{{system.identite.age}}" placeholder="Âge" />
         <label class="quartz-field">
@@ -41,21 +44,24 @@
         </label>
       </div>
 
-      <div class="identite-line identite-line-actions">
+      <div class="identite-line">
         {{#unless creationTerminee}}
-        <a class="character-wizard-open"><i class="fas fa-hat-wizard"></i> Assistant de création</a>
+        <a class="character-wizard-open" data-action="wizardOpen"><i class="fas fa-hat-wizard"></i> Assistant de création de personnage</a>
         {{/unless}}
         {{#if isGm}}
-        <a class="character-wizard-gm-toggle" title="Réservé au Deus (MJ) : basculer le statut de création terminée">
+        <a class="character-wizard-gm-toggle" data-action="wizardGmToggle" title="Réservé au Deus (MJ) : basculer le statut de création terminée">
           <i class="fas fa-user-shield"></i> {{#if creationTerminee}}Rouvrir la création{{else}}Marquer terminée{{/if}}
         </a>
         {{/if}}
+      </div>
+
+      <div class="identite-line">
         <select name="raceSelect" id="raceSelect">
           {{#each racesListe as |race|}}
           <option value="{{race.key}}">{{race.label}}</option>
           {{/each}}
         </select>
-        <a class="race-apply" title="Appliquer la race (caractéristiques + capacités natives)"><i class="fas fa-check"></i> Appliquer</a>
+        <a class="race-apply" data-action="raceApply"><i class="fas fa-check"></i> Appliquer la race</a>
       </div>
     </div>
 
@@ -79,7 +85,7 @@
           </tr>
         </tbody>
       </table>
-      <a class="chance-roll"><i class="fas fa-sack"></i> Tirer les Blattes</a>
+      <a class="chance-roll" data-action="chanceRoll"><i class="fas fa-sack"></i> Tirer les Blattes</a>
 
       <div class="chancebox-title chancebox-title-secondary">Expérience</div>
       <input class="small-input experience-input" type="number" name="system.ressources.experience" value="{{system.ressources.experience}}" />
@@ -111,7 +117,7 @@
     <div class="status-item status-initiative">
       <span class="status-label">Initiative</span>
       <span class="status-value">{{system.combat.initiative}}</span>
-      <a class="init-roll" title="Tirer l'initiative"><i class="fas fa-sack"></i></a>
+      <a class="init-roll" data-action="initRoll" title="Tirer l'initiative"><i class="fas fa-sack"></i></a>
     </div>
     <div class="status-item status-vitesse">
       <span class="status-label">Vitesse</span>
@@ -135,7 +141,11 @@
     <div class="tab profil" data-group="primary" data-tab="profil">
       <div class="panel panel-notes">
         <h3>Description</h3>
-        {{editor descriptionhtml target="system.identite.description" button=true owner=owner editable=editable engine="prosemirror"}}
+        {{#if editable}}
+        <prose-mirror name="system.identite.description" button="true" editable="{{editable}}" toggled="false">{{{descriptionhtml}}}</prose-mirror>
+        {{else}}
+        {{{descriptionhtml}}}
+        {{/if}}
       </div>
       <p class="hint">
         Les champs d'identité complets (espèce, variété, caste, métier, religion, alignement, titre,
@@ -153,7 +163,7 @@
           {{#each caracteristiquesListe as |carac|}}
           {{#if (eq carac.key "caste")}}
           <div class="caste-hex-header">
-            <a class="caract-roll caste-big-hex" data-carac="caste" title="Tirer Caste">
+            <a class="caract-roll caste-big-hex" data-action="caracRoll" data-carac="caste" title="Tirer Caste">
               <span class="carac-name">Caste</span>
               <input class="small-input carac-value" type="number" name="system.caracteristiques.caste.value" value="{{carac.value}}" />
             </a>
@@ -161,7 +171,7 @@
           <div class="carac-competences-caste">
             {{#each carac.competencesListe as |comp index|}}
             <div class="comp-row comp-row-caste">
-              <a class="comp-roll" data-carac="caste" data-comp="{{index}}" title="Lancer les Blattes"><i class="fas fa-dice"></i></a>
+              <a class="comp-roll" data-action="compRoll" data-carac="caste" data-comp="{{index}}" title="Lancer les Blattes"><i class="fas fa-dice"></i></a>
               <input type="text" class="comp-caste-label" name="system.caracteristiques.caste.competences.{{index}}.label" value="{{comp.label}}" />
               <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
               <select class="caste-comp-sphere" data-index="{{index}}" title="Sphère de magie associée">
@@ -170,45 +180,38 @@
                 <option value="{{sphere.key}}" {{#ife comp.sphere sphere.key}}selected{{/ife}}>{{sphere.label}}</option>
                 {{/each}}
               </select>
-              <a class="caste-comp-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
+              <a class="caste-comp-remove" data-action="casteCompRemove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
             </div>
             {{/each}}
-            <a class="caste-comp-add"><i class="fas fa-plus"></i> Compétence de Caste</a>
+            <a class="caste-comp-add" data-action="casteCompAdd"><i class="fas fa-plus"></i> Compétence de Caste</a>
           </div>
           {{/if}}
           {{/each}}
         </div>
 
-        <!-- Rosace : les 6 caractéristiques principales autour d'un centre vide.
-             Géométrie calculée par trigonométrie (buildRosaceGeometry, côté JS) :
-             chaque <foreignObject> est positionné aux coordonnées exactes du
-             pavage hexagonal, pas devinées. Le contenu de chaque foreignObject
-             reste du HTML standard (input, <a>...) donc 100% interactif. -->
-        <svg class="rosace-svg" viewBox="{{rosaceViewBox}}" preserveAspectRatio="xMidYMid meet">
+        <!-- Rosace : les 6 caractéristiques principales autour d'un centre vide -->
+        <div class="rosace">
           {{#each caracteristiquesListe as |carac|}}
           {{#if (ne carac.key "caste")}}
-          <foreignObject x="{{carac.geo.x}}" y="{{carac.geo.y}}" width="{{carac.geo.w}}" height="{{carac.geo.h}}">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="carac-hex carac-hex-{{carac.key}} side-{{carac.side}}">
-              <a class="caract-roll" data-carac="{{carac.key}}" title="Tirer {{localize carac.label}}">
+          <div class="carac-card carac-card-{{carac.key}} side-{{carac.side}}">
+            <div class="carac-hex">
+              <a class="caract-roll" data-action="caracRoll" data-carac="{{carac.key}}" title="Tirer {{localize carac.label}}">
                 <span class="carac-name">{{localize carac.label}}</span>
                 <input class="small-input carac-value" type="number" name="system.caracteristiques.{{carac.key}}.value" value="{{carac.value}}" />
               </a>
             </div>
-          </foreignObject>
-
-          {{#each carac.competencesListe as |comp|}}
-          <foreignObject x="{{comp.geo.x}}" y="{{comp.geo.y}}" width="{{comp.geo.w}}" height="{{comp.geo.h}}">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="comp-hex comp-hex-{{../carac.key}} side-{{../carac.side}}">
-              <a class="comp-roll" data-carac="{{../carac.key}}" data-comp="{{comp.key}}" title="{{localize comp.label}}">
+            {{#each carac.competencesListe as |comp index|}}
+            <div class="comp-hex comp-hex-{{index}}">
+              <a class="comp-roll" data-action="compRoll" data-carac="{{../carac.key}}" data-comp="{{comp.key}}" title="{{localize comp.label}}">
                 <input class="small-input" type="number" name="system.caracteristiques.{{../carac.key}}.competences.{{comp.key}}.value" value="{{comp.value}}" />
               </a>
               <span class="comp-label">{{localize comp.label}}</span>
             </div>
-          </foreignObject>
-          {{/each}}
+            {{/each}}
+          </div>
           {{/if}}
           {{/each}}
-        </svg>
+        </div>
       </div>
       <p class="hint">
         Cliquez sur une caractéristique ou une compétence pour ouvrir le dialogue de tirage de Blattes.
@@ -224,9 +227,9 @@
         <div class="panel panel-actions">
           <h3>Actions de combat</h3>
           <div class="attack-buttons">
-            <a class="attack-roll" data-competence="melee"><i class="fas fa-sword"></i> Attaque Mêlée</a>
-            <a class="attack-roll" data-competence="tir"><i class="fas fa-bow-arrow"></i> Attaque à distance</a>
-            <a class="attack-roll" data-competence="predateur"><i class="fas fa-paw"></i> Attaque Prédateur</a>
+            <a class="attack-roll" data-action="attackRoll" data-competence="melee"><i class="fas fa-sword"></i> Attaque Mêlée</a>
+            <a class="attack-roll" data-action="attackRoll" data-competence="tir"><i class="fas fa-bow-arrow"></i> Attaque à distance</a>
+            <a class="attack-roll" data-action="attackRoll" data-competence="predateur"><i class="fas fa-paw"></i> Attaque Prédateur</a>
           </div>
           <p class="hint">
             Malus courant lié aux blessures internes : {{system.malusBlessuresInternes}} (appliqué
@@ -246,16 +249,16 @@
               {{#each armures as |armure|}}
               <tr>
                 <td><img class="item-icon" src="{{armure.img}}" /></td>
-                <td><a class="item-name item-edit" data-item-id="{{armure.id}}">{{armure.name}}</a></td>
+                <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{armure.id}}">{{armure.name}}</a></td>
                 <td>{{armure.system.bonusChitine}}</td>
                 <td>{{armure.system.malusEncombrement}}</td>
                 <td><input type="checkbox" class="item-equip-toggle" data-item-id="{{armure.id}}" {{#if armure.system.equipee}}checked{{/if}} /></td>
-                <td class="item-controls"><a class="item-delete" data-item-id="{{armure.id}}"><i class="fas fa-trash"></i></a></td>
+                <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{armure.id}}"><i class="fas fa-trash"></i></a></td>
               </tr>
               {{/each}}
             </tbody>
           </table>
-          <a class="item-add item-create" data-type="armure"><i class="fas fa-plus"></i> Ajouter une armure</a>
+          <a class="item-add item-create" data-action="itemCreate" data-type="armure"><i class="fas fa-plus"></i> Ajouter une armure</a>
         </div>
       </div>
 
@@ -268,17 +271,17 @@
               {{#each armes as |arme|}}
               <tr>
                 <td><img class="item-icon" src="{{arme.img}}" /></td>
-                <td><a class="item-name item-edit" data-item-id="{{arme.id}}">{{arme.name}}</a></td>
+                <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{arme.id}}">{{arme.name}}</a></td>
                 <td>{{arme.system.competenceCombat}}</td>
                 <td>{{arme.system.modificateurAttaque}}</td>
                 <td>{{arme.system.modificateurDegats}}</td>
                 <td><input type="checkbox" class="item-equip-toggle" data-item-id="{{arme.id}}" {{#if arme.system.equipee}}checked{{/if}} /></td>
-                <td class="item-controls"><a class="item-delete" data-item-id="{{arme.id}}"><i class="fas fa-trash"></i></a></td>
+                <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{arme.id}}"><i class="fas fa-trash"></i></a></td>
               </tr>
               {{/each}}
             </tbody>
           </table>
-          <a class="item-add item-create" data-type="arme"><i class="fas fa-plus"></i> Ajouter une arme</a>
+          <a class="item-add item-create" data-action="itemCreate" data-type="arme"><i class="fas fa-plus"></i> Ajouter une arme</a>
         </div>
 
         <div class="panel panel-armes-naturelles">
@@ -289,10 +292,10 @@
               {{#each armesNaturelles as |arme|}}
               <tr>
                 <td><img class="item-icon" src="{{arme.img}}" /></td>
-                <td><a class="item-name item-edit" data-item-id="{{arme.id}}">{{arme.name}}</a></td>
+                <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{arme.id}}">{{arme.name}}</a></td>
                 <td>{{arme.system.modificateurAttaque}}</td>
                 <td>{{arme.system.modificateurDegats}}</td>
-                <td class="item-controls"><a class="item-delete" data-item-id="{{arme.id}}"><i class="fas fa-trash"></i></a></td>
+                <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{arme.id}}"><i class="fas fa-trash"></i></a></td>
               </tr>
               {{/each}}
             </tbody>
@@ -301,7 +304,7 @@
             Cochez "Arme naturelle" dans la fiche d'une arme (griffes, mandibules, dard...) pour
             qu'elle apparaisse ici plutôt que dans la liste des armes portées.
           </p>
-          <a class="item-add item-create" data-type="arme"><i class="fas fa-plus"></i> Ajouter une arme naturelle</a>
+          <a class="item-add item-create" data-action="itemCreate" data-type="arme"><i class="fas fa-plus"></i> Ajouter une arme naturelle</a>
         </div>
       </div>
 
@@ -320,16 +323,16 @@
           {{#each objets as |objet|}}
           <tr>
             <td><img class="item-icon" src="{{objet.img}}" /></td>
-            <td><a class="item-name item-edit" data-item-id="{{objet.id}}">{{objet.name}}</a></td>
+            <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{objet.id}}">{{objet.name}}</a></td>
             <td>{{objet.system.quantite}}</td>
             <td>{{objet.system.poidsUnitaire}}</td>
             <td>{{objet.system.prixQuartz}}</td>
-            <td class="item-controls"><a class="item-delete" data-item-id="{{objet.id}}"><i class="fas fa-trash"></i></a></td>
+            <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{objet.id}}"><i class="fas fa-trash"></i></a></td>
           </tr>
           {{/each}}
         </tbody>
       </table>
-      <a class="item-add item-create" data-type="objet"><i class="fas fa-plus"></i> Ajouter un objet</a>
+      <a class="item-add item-create" data-action="itemCreate" data-type="objet"><i class="fas fa-plus"></i> Ajouter un objet</a>
       <p class="hint">
         Poids total porté : {{poidsTotalObjets}} / {{poidsPorte}} indrammes (seuil "Porter", livre p.206,
         selon la Chitine). Purement informatif : aucun malus n'est appliqué automatiquement.
@@ -348,7 +351,7 @@
           {{/each}}
         </tbody>
       </table>
-      <a class="sort-cast-open"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
+      <a class="sort-cast-open" data-action="sortCastOpen"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
       <hr />
       {{/if}}
 
@@ -359,7 +362,7 @@
           {{#each capacitesItems as |capacite|}}
           <tr>
             <td><img class="item-icon" src="{{capacite.img}}" /></td>
-            <td><a class="item-name item-edit" data-item-id="{{capacite.id}}">{{capacite.name}}</a></td>
+            <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{capacite.id}}">{{capacite.name}}</a></td>
             <td>{{capacite.system.categorie}}</td>
             <td>
               {{#if capacite.system.bonus.actif}}
@@ -367,22 +370,22 @@
                 {{#if (gt capacite.system.bonus.valeur 0)}}+{{/if}}{{capacite.system.bonus.valeur}}
               {{else}}—{{/if}}
             </td>
-            <td class="item-controls"><a class="item-delete" data-item-id="{{capacite.id}}"><i class="fas fa-trash"></i></a></td>
+            <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{capacite.id}}"><i class="fas fa-trash"></i></a></td>
           </tr>
           {{/each}}
         </tbody>
       </table>
-      <a class="item-add item-create" data-type="capacite"><i class="fas fa-plus"></i> Ajouter une capacité</a>
+      <a class="item-add item-create" data-action="itemCreate" data-type="capacite"><i class="fas fa-plus"></i> Ajouter une capacité</a>
 
       <h3>Traits &amp; particularités (texte libre)</h3>
       {{#each system.identite.capacites as |capacite index|}}
       <div class="capacite-line">
         <input type="text" name="system.identite.capacites.{{index}}.label" value="{{capacite.label}}" placeholder="Nom de la capacité" />
         <textarea name="system.identite.capacites.{{index}}.description" placeholder="Description">{{capacite.description}}</textarea>
-        <a class="capacite-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
+        <a class="capacite-remove" data-action="capaciteRemove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
       </div>
       {{/each}}
-      <a class="capacite-add"><i class="fas fa-plus"></i> Ajouter une capacité (raciale ou de caste)</a>
+      <a class="capacite-add" data-action="capaciteAdd"><i class="fas fa-plus"></i> Ajouter une capacité (raciale ou de caste)</a>
     </div>
 
     <!-- ------------------------------ RÉCIT --------------------------------- -->
@@ -390,7 +393,11 @@
       <div class="recit-columns">
         <div class="panel">
           <h3>Historique</h3>
-          {{editor historiquehtml target="system.identite.historique" button=true owner=owner editable=editable engine="prosemirror"}}
+          {{#if editable}}
+          <prose-mirror name="system.identite.historique" button="true" editable="{{editable}}" toggled="false">{{{historiquehtml}}}</prose-mirror>
+          {{else}}
+          {{{historiquehtml}}}
+          {{/if}}
         </div>
 
         <div class="panel">
@@ -414,14 +421,14 @@
                 <input type="radio" name="system.ressources.contacts.{{index}}.relation" value="ennemi" {{#ife contact.relation "ennemi"}}checked{{/ife}} />
               </td>
               <td><input type="text" name="system.ressources.contacts.{{index}}.description" value="{{contact.description}}" placeholder="Description" /></td>
-              <td><a class="contact-remove" data-index="{{index}}"><i class="fas fa-trash"></i></a></td>
+              <td><a class="contact-remove" data-action="contactRemove" data-index="{{index}}"><i class="fas fa-trash"></i></a></td>
             </tr>
             {{/each}}
           </tbody>
         </table>
-        <a class="contact-add"><i class="fas fa-plus"></i> Ajouter un contact</a>
+        <a class="contact-add" data-action="contactAdd"><i class="fas fa-plus"></i> Ajouter un contact</a>
       </div>
     </div>
 
   </section>
-</form>
+</div>
