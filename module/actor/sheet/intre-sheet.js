@@ -4,6 +4,15 @@ import { ouvrirDialogueLancerSort } from "../../common/magic.js";
 import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER } from "../../common/data-spheres.js";
 import { asArray } from "../../common/utils.js";
 
+const CARAC_SIDE = {
+  antenne: "left",
+  esprit: "right",
+  mandibule: "left",
+  aile: "right",
+  chitine: "left",
+  temperature: "right",
+};
+
 export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   constructor(...args) {
     super(...args);
@@ -13,8 +22,8 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      height: 820,
-      width: 640,
+      height: 840,
+      width: 1040,
       resizable: true,
       template: "systems/insectopia/templates/actor/intre.html",
       classes: ["insectopia", "sheet", "actor", "intre"],
@@ -47,6 +56,7 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
     // simple en tableau côté template.
 context.caracteristiquesListe = Object.entries(this.actor.system.caracteristiques).filter(([key]) => key).map(([key, carac]) => ({
       key,
+      side: CARAC_SIDE[key] || "left",
       ...carac,
       competencesListe:
         key === "caste"
@@ -54,12 +64,28 @@ context.caracteristiquesListe = Object.entries(this.actor.system.caracteristique
           : Object.entries(carac.competences).map(([ckey, comp]) => ({ key: ckey, ...comp })),
     }));
 
-    context.armes = this.actor.items.filter((i) => i.type === "arme");
+    const toutesArmes = this.actor.items.filter((i) => i.type === "arme");
+    context.armes = toutesArmes.filter((i) => !i.system.naturelle);
+    context.armesNaturelles = toutesArmes.filter((i) => i.system.naturelle);
     context.armures = this.actor.items.filter((i) => i.type === "armure");
     context.capacitesItems = this.actor.items.filter((i) => i.type === "capacite");
     context.objets = this.actor.items.filter((i) => i.type === "objet");
     context.poidsTotalObjets = this.actor.getPoidsTotalObjets();
     context.poidsPorte = this.actor.getPoidsPorte();
+
+    // Total d'Armure affiché en synthèse (somme des bonus/malus des
+    // armures équipées) — purement informatif, cf. livre p.28 : "Carapace
+    // = Chitine + protections".
+    const armuresEquipees = context.armures.filter((a) => a.system.equipee);
+    context.armureTotal = {
+      protection: armuresEquipees.reduce((total, a) => total + (a.system.bonusChitine || 0), 0),
+      malus: armuresEquipees.reduce(
+        (total, a) => total + (a.system.malusEncombrement || 0) + (a.system.malusAile || 0),
+        0
+      ),
+    };
+
+    context.contacts = asArray(this.actor.system.ressources?.contacts);
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
     context.spheresListe = Object.entries(SPHERES).map(([key, sphere]) => ({ key, label: sphere.label }));
 
@@ -102,6 +128,9 @@ context.caracteristiquesListe = Object.entries(this.actor.system.caracteristique
 
     html.find(".capacite-add").click(this._onCapaciteAdd.bind(this));
     html.find(".capacite-remove").click(this._onCapaciteRemove.bind(this));
+
+    html.find(".contact-add").click(this._onContactAdd.bind(this));
+    html.find(".contact-remove").click(this._onContactRemove.bind(this));
 
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
@@ -237,6 +266,22 @@ context.caracteristiquesListe = Object.entries(this.actor.system.caracteristique
     const capacites = foundry.utils.duplicate(this.actor.system.identite.capacites);
     capacites.splice(index, 1);
     await this.actor.update({ "system.identite.capacites": capacites });
+  }
+
+  /** Ajoute un contact (livre de base, fiche p.2 : Allié / Ennemi / neutre). */
+  async _onContactAdd(event) {
+    event.preventDefault();
+    const contacts = foundry.utils.duplicate(asArray(this.actor.system.ressources?.contacts));
+    contacts.push({ nom: "Nouveau contact", relation: "neutre", description: "" });
+    await this.actor.update({ "system.ressources.contacts": contacts });
+  }
+
+  async _onContactRemove(event) {
+    event.preventDefault();
+    const index = parseInt(event.currentTarget.dataset.index);
+    const contacts = foundry.utils.duplicate(asArray(this.actor.system.ressources?.contacts));
+    contacts.splice(index, 1);
+    await this.actor.update({ "system.ressources.contacts": contacts });
   }
 
   /** Crée un nouvel Item embarqué du type indiqué (data-type: arme|armure|capacite). */

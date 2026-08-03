@@ -37,6 +37,14 @@
       <label><input type="checkbox" name="system.equipee" {{#if system.equipee}}checked{{/if}} /> Équipée</label>
     </div>
 
+    <div class="field checkbox">
+      <label><input type="checkbox" name="system.naturelle" {{#if system.naturelle}}checked{{/if}} /> Arme naturelle</label>
+      <p class="hint">
+        Cochez pour les griffes, mandibules, dard, etc. Ces armes apparaissent dans le bloc
+        "Armes naturelles" de la fiche plutôt que dans la liste des armes portées.
+      </p>
+    </div>
+
     <div class="field">
       <label>Description</label>
       {{editor descriptionhtml target="system.description" button=true owner=true editable=editable engine="prosemirror"}}

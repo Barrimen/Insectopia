@@ -62,14 +62,29 @@
       "identite": {
         "identite": {
           "race": "",
+          "variete": "",
           "casteNom": "",
           "metier": "",
           "religion": "animiste",
           "regimealimentaire": "omnivore",
           "couleur": "",
+          "alignement": "",
+          "titre": "",
+          "sexe": "",
+          "age": "",
           "historique": "",
           "description": "",
           "capacites": []
+        }
+      },
+      "ressources": {
+        "ressources": {
+          "quartz": 0,
+          "experience": 0,
+          "contacts": [],
+          "localisation": {
+            "notes": ""
+          }
         }
       },
       "chance": {
@@ -95,7 +110,7 @@
       }
     },
     "intre": {
-      "templates": ["caracteristiques", "identite", "chance", "combat"],
+      "templates": ["caracteristiques", "identite", "chance", "combat", "ressources"],
       "notes": ""
     }
   },
@@ -116,7 +131,8 @@
       "porteeInsettres": 0,
       "rechargeActions": 0,
       "prixQuartz": 0,
-      "equipee": false
+      "equipee": false,
+      "naturelle": false
     },
     "armure": {
       "templates": ["base"],

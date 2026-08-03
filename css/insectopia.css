@@ -335,3 +335,826 @@
 .dialog .dialog-main > div label {
   font-size: 0.85em;
 }
+
+/* ======================================================================
+   REFONTE GRAPHIQUE — Fiche Intre (v1)
+   Palette et principes issus du cahier de direction artistique interne :
+   base ivoire/parchemin, accents inspirés des couvertures, motif
+   hexagonal comme structure identitaire, panneaux à pans coupés.
+   ====================================================================== */
+
+:root {
+  --ins-bg: #E7D9BC;
+  --ins-panel-bg: #F3EAD7;
+  --ins-panel-bg-alt: #D8C8A8;
+  --ins-text: #252522;
+  --ins-text-secondary: #5B554A;
+  --ins-border: #5B5144;
+  --ins-border-light: #9D8F78;
+  --ins-accent-petrole: #174A55;
+  --ins-accent-cyan: #2EA6B4;
+  --ins-accent-vert: #567A48;
+  --ins-accent-ambre: #C48632;
+  --ins-accent-rouge: #9E342B;
+  --ins-accent-violet: #4B3C56;
+}
+
+.insectopia.sheet.actor {
+  background: var(--ins-bg);
+  color: var(--ins-text);
+  font-family: "Signika", "Trebuchet MS", sans-serif;
+}
+
+.insectopia.sheet.actor .window-content {
+  background: var(--ins-bg);
+}
+
+/* --- En-tête ---------------------------------------------------------- */
+
+.insectopia .sheet-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  padding: 0.75em;
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.insectopia .header-portrait .portraitimg {
+  width: 112px;
+  height: 128px;
+  object-fit: cover;
+  border: 2px solid var(--ins-border);
+  border-radius: 6px;
+  background: var(--ins-panel-bg-alt);
+}
+
+.insectopia .header-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.insectopia .charname {
+  font-size: 1.4em;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ins-border-light);
+  color: var(--ins-text);
+}
+
+.insectopia .identite-badges {
+  display: flex;
+  gap: 0.4em;
+}
+
+.insectopia .badge-input {
+  flex: 1;
+  background: var(--ins-accent-petrole);
+  color: #F3EAD7;
+  border: 1px solid var(--ins-border);
+  border-radius: 3px;
+  padding: 0.15em 0.5em;
+  font-size: 0.85em;
+  text-align: center;
+}
+
+.insectopia .identite-line {
+  display: flex;
+  gap: 0.4em;
+  align-items: center;
+}
+
+.insectopia .identite-line-secondary input,
+.insectopia .identite-line-secondary select {
+  flex: 1;
+  font-size: 0.8em;
+  background: var(--ins-panel-bg-alt);
+  border: 1px solid var(--ins-border-light);
+  border-radius: 3px;
+  color: var(--ins-text);
+  padding: 0.1em 0.4em;
+}
+
+.insectopia .quartz-field {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  color: var(--ins-accent-ambre);
+  font-weight: bold;
+}
+
+.insectopia .quartz-field .small-input {
+  width: 3.5em;
+}
+
+.insectopia .chancebox {
+  width: 190px;
+  background: var(--ins-panel-bg-alt);
+  border: 1px solid var(--ins-border);
+  clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px);
+  padding: 0.5em;
+  text-align: center;
+}
+
+.insectopia .chancebox-title {
+  font-weight: bold;
+  color: var(--ins-accent-petrole);
+  margin-bottom: 0.25em;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+}
+
+.insectopia .chancebox-title-secondary {
+  margin-top: 0.5em;
+  border-top: 1px solid var(--ins-border-light);
+  padding-top: 0.4em;
+}
+
+.insectopia .blatte {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  border: 1px solid var(--ins-border);
+}
+.insectopia .blatte-rouge { background: var(--ins-accent-rouge); }
+.insectopia .blatte-verte { background: var(--ins-accent-vert); }
+.insectopia .blatte-bleue { background: var(--ins-accent-cyan); }
+.insectopia .blatte-blanche { background: #F3EAD7; }
+.insectopia .blatte-noire { background: #1B2529; }
+
+.insectopia .chance-roll {
+  display: inline-block;
+  margin-top: 0.4em;
+  padding: 0.3em 0.8em;
+  background: var(--ins-accent-petrole);
+  color: #F3EAD7;
+  border-radius: 3px;
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+}
+.insectopia .chance-roll:hover { background: var(--ins-accent-cyan); }
+
+.insectopia .experience-input { width: 100%; margin-top: 0.2em; }
+
+/* --- Barre de synthèse -------------------------------------------------- */
+
+.insectopia .status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  padding: 0.5em 0.75em;
+  background: var(--ins-accent-petrole);
+  color: #F3EAD7;
+  border-bottom: 2px solid var(--ins-border);
+}
+
+.insectopia .status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+  padding: 0.2em 0.5em;
+}
+
+.insectopia .status-label {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+}
+
+.insectopia .status-item .small-input {
+  width: 3em;
+  background: #F3EAD7;
+  color: var(--ins-text);
+  border: none;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.insectopia .status-souillure .small-input { background: #4B3C56; color: #F3EAD7; }
+.insectopia .status-blessures .small-input { background: #9E342B; color: #F3EAD7; }
+
+.insectopia .status-max { font-size: 0.8em; opacity: 0.75; }
+.insectopia .status-value { font-weight: bold; }
+
+.insectopia .init-roll {
+  color: var(--ins-accent-ambre);
+  cursor: pointer;
+}
+
+/* --- Onglets ------------------------------------------------------------ */
+
+.insectopia .sheet-tabs {
+  display: flex;
+  background: var(--ins-panel-bg-alt);
+  border-bottom: 1px solid var(--ins-border);
+}
+
+.insectopia .sheet-tabs .item {
+  flex: 1;
+  text-align: center;
+  padding: 0.5em;
+  color: var(--ins-text-secondary);
+  border-right: 1px solid var(--ins-border-light);
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+
+.insectopia .sheet-tabs .item.active {
+  background: var(--ins-panel-bg);
+  color: var(--ins-accent-petrole);
+  font-weight: bold;
+}
+
+.insectopia .sheet-body {
+  padding: 0.75em;
+  overflow-y: auto;
+}
+
+/* --- Panneaux génériques -------------------------------------------------- */
+
+.insectopia .panel {
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border-light);
+  border-radius: 4px;
+  padding: 0.6em 0.8em;
+  margin-bottom: 0.75em;
+}
+
+.insectopia .panel h3 {
+  margin: 0 0 0.5em 0;
+  color: var(--ins-accent-petrole);
+  border-bottom: 1px solid var(--ins-border-light);
+  padding-bottom: 0.2em;
+}
+
+.insectopia .combat-columns,
+.insectopia .recit-columns {
+  display: flex;
+  gap: 0.75em;
+  flex-wrap: wrap;
+}
+
+.insectopia .combat-columns > .panel,
+.insectopia .recit-columns > .panel {
+  flex: 1;
+  min-width: 260px;
+}
+
+/* --- Rosace hexagonale des 6 caractéristiques ---------------------------- */
+
+.insectopia .aptitudes-layout {
+  display: flex;
+  gap: 1em;
+  align-items: flex-start;
+}
+
+.insectopia .panel-caste {
+  width: 220px;
+  flex: 0 0 auto;
+}
+
+.insectopia .caste-hex-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5em;
+}
+
+.insectopia .caste-big-hex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 96px;
+  background: var(--ins-accent-petrole);
+  color: #F3EAD7;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+.insectopia .caste-big-hex:hover { background: var(--ins-accent-cyan); }
+
+.insectopia .comp-row-caste {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.2em 0;
+  border-bottom: 1px solid rgba(157, 143, 120, 0.3);
+}
+.insectopia .comp-row-caste .comp-caste-label { flex: 1; min-width: 0; }
+.insectopia .comp-row-caste .small-input {
+  width: 34px;
+  height: 30px;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  background: var(--ins-panel-bg-alt);
+  border: 1px solid var(--ins-border);
+  text-align: center;
+  font-weight: bold;
+  padding: 0;
+}
+.insectopia .caste-comp-sphere { font-size: 0.7em; max-width: 60px; }
+
+/* La rosace : conteneur à ratio fixe, chaque carac-card est ancrée en
+   position absolute (left/top en %) sur le centre de son grand hexagone.
+   Les 2 hexagones de compétence sont ancrés en absolute par rapport à la
+   carte, décalés vers l'extérieur (gauche pour les caracs "side-left",
+   droite pour "side-right"), au-dessus et en-dessous du grand hexagone —
+   exactement la disposition de la fiche officielle. */
+
+.insectopia .rosace {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 640 / 520;
+  margin: 0 auto;
+}
+
+.insectopia .carac-card {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.insectopia .carac-card-antenne { left: 33%; top: 16%; }
+.insectopia .carac-card-esprit { left: 67%; top: 16%; }
+.insectopia .carac-card-mandibule { left: 17%; top: 50%; }
+.insectopia .carac-card-aile { left: 83%; top: 50%; }
+.insectopia .carac-card-chitine { left: 33%; top: 84%; }
+.insectopia .carac-card-temperature { left: 67%; top: 84%; }
+
+.insectopia .carac-hex {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+
+.insectopia .carac-hex .caract-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 148px;
+  height: 128px;
+  background: var(--ins-accent-petrole);
+  color: #F3EAD7;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+
+.insectopia .carac-hex .caract-roll:hover { background: var(--ins-accent-cyan); }
+
+.insectopia .carac-name {
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.insectopia .carac-value {
+  width: 2.6em;
+  text-align: center;
+  background: transparent;
+  color: #F3EAD7;
+  border: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Pastille de couleur (décorative, fixe par caractéristique — cf. fiche
+   officielle : bleu pour les caracs "mentales", rouge pour les
+   "physiques"). Petit rond posé sur le bord intérieur du grand hexagone. */
+.insectopia .carac-hex::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
+}
+.insectopia .carac-card-antenne .carac-hex::after,
+.insectopia .carac-card-mandibule .carac-hex::after,
+.insectopia .carac-card-chitine .carac-hex::after {
+  right: -6px;
+}
+.insectopia .carac-card-esprit .carac-hex::after,
+.insectopia .carac-card-aile .carac-hex::after,
+.insectopia .carac-card-temperature .carac-hex::after {
+  left: -6px;
+}
+.insectopia .carac-card-antenne .carac-hex::after,
+.insectopia .carac-card-esprit .carac-hex::after,
+.insectopia .carac-card-mandibule .carac-hex::after,
+.insectopia .carac-card-aile .carac-hex::after {
+  background: var(--ins-accent-cyan);
+}
+.insectopia .carac-card-chitine .carac-hex::after,
+.insectopia .carac-card-temperature .carac-hex::after {
+  background: var(--ins-accent-rouge);
+}
+
+/* Hexagones de compétence : ancrés à la carte, décalés vers l'extérieur,
+   un au-dessus (index 0) et un en-dessous (index 1) du grand hexagone. */
+
+.insectopia .comp-hex {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.insectopia .comp-hex-0 { transform: translate(-50%, calc(-50% - 46px)); }
+.insectopia .comp-hex-1 { transform: translate(-50%, calc(-50% + 46px)); }
+
+.insectopia .side-left .comp-hex { left: -95px; }
+.insectopia .side-right .comp-hex { left: 95px; }
+
+.insectopia .comp-hex .comp-roll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insectopia .comp-hex .small-input {
+  width: 78px;
+  height: 68px;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border);
+  color: var(--ins-text);
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 0;
+}
+
+.insectopia .comp-hex .small-input:focus {
+  background: #FFFFFF;
+  outline: 1px solid var(--ins-accent-cyan);
+}
+
+.insectopia .comp-label {
+  font-size: 0.75em;
+  color: var(--ins-text-secondary);
+  white-space: nowrap;
+  margin-top: 0.1em;
+}
+
+/* Pastille grise (compétences "physiques" en argent, cf. fiche) sauf pour
+   Chrysalide/Résistance/Activité/Métabolisme qui sont vertes. */
+.insectopia .comp-hex .small-input {
+  position: relative;
+}
+.insectopia .comp-hex::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #B9C0C6;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.insectopia .side-left .comp-hex::before { right: -84px; }
+.insectopia .side-right .comp-hex::before { left: -84px; }
+.insectopia .carac-card-chitine .comp-hex::before,
+.insectopia .carac-card-temperature .comp-hex::before {
+  background: var(--ins-accent-vert);
+}
+
+/* --- Armure / armes naturelles ------------------------------------------- */
+
+.insectopia .armure-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+  font-size: 0.9em;
+}
+
+.insectopia .panel-armure .armure-total strong { color: var(--ins-accent-ambre); }
+
+.insectopia .panel-localisation textarea {
+  width: 100%;
+  min-height: 3em;
+  background: var(--ins-panel-bg-alt);
+  border: 1px solid var(--ins-border-light);
+}
+
+/* --- Listes d'objets ------------------------------------------------------ */
+
+.insectopia .items-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85em;
+}
+
+.insectopia .items-list th {
+  text-align: left;
+  color: var(--ins-accent-petrole);
+  border-bottom: 1px solid var(--ins-border-light);
+}
+
+.insectopia .items-list td {
+  padding: 0.2em 0.3em;
+  border-bottom: 1px solid rgba(157, 143, 120, 0.3);
+}
+
+.insectopia .item-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.insectopia .item-add {
+  display: inline-block;
+  margin-top: 0.4em;
+  color: var(--ins-accent-petrole);
+}
+
+/* --- Contacts -------------------------------------------------------------- */
+
+.insectopia .contacts-table {
+  width: 100%;
+  font-size: 0.85em;
+}
+
+.insectopia .contacts-table input[type="text"] {
+  width: 100%;
+}
+
+.insectopia .contact-relation-cell {
+  text-align: center;
+}
+
+/* --- Notes libres ----------------------------------------------------------- */
+
+.insectopia .notes-libres {
+  width: 100%;
+  min-height: 8em;
+}
+
+/* --- Réactif ----------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .insectopia .aptitudes-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+  .insectopia .panel-caste { width: 100%; max-width: 320px; }
+  .insectopia .sheet-header {
+    flex-direction: column;
+  }
+  .insectopia .chancebox { width: 100%; }
+}
+
+@media (max-width: 620px) {
+  .insectopia .status-bar {
+    flex-direction: column;
+  }
+}
+
+/* ======================================================================
+   REFONTE GRAPHIQUE — Fiches d'objets, dialogues de tirage, cartes de chat
+   Même palette que la fiche Actor. Ces surfaces (Dialog, ChatMessage) ne
+   sont pas dans le DOM de la fiche Actor, d'où l'usage de :root ci-dessus
+   pour que les variables --ins-* soient disponibles ici aussi.
+   ====================================================================== */
+
+/* --- Fiches d'objets (arme / armure / capacité / objet) ------------------ */
+
+.insectopia.sheet.item {
+  background: var(--ins-bg);
+  color: var(--ins-text);
+}
+
+.insectopia.sheet.item .window-content {
+  background: var(--ins-bg);
+}
+
+.insectopia.sheet.item .item-sheet-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0.6em;
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.insectopia.sheet.item .item-sheet-header .itemimg {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border: 2px solid var(--ins-border);
+  border-radius: 6px;
+  background: var(--ins-panel-bg-alt);
+}
+
+.insectopia.sheet.item .item-sheet-header .itemname {
+  flex: 1;
+  font-size: 1.2em;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ins-border-light);
+  color: var(--ins-text);
+}
+
+.insectopia.sheet.item .item-body {
+  padding: 0.75em;
+}
+
+.insectopia.sheet.item .item-body .field {
+  margin-bottom: 0.6em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.insectopia.sheet.item .item-body .field label {
+  font-size: 0.85em;
+  color: var(--ins-accent-petrole);
+  font-weight: bold;
+}
+
+.insectopia.sheet.item .item-body .field input,
+.insectopia.sheet.item .item-body .field select,
+.insectopia.sheet.item .item-body .field textarea {
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border-light);
+  border-radius: 3px;
+  color: var(--ins-text);
+  padding: 0.25em 0.4em;
+}
+
+.insectopia.sheet.item .item-body .field.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.insectopia.sheet.item .item-body .field.checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--ins-text);
+  font-weight: normal;
+}
+
+.insectopia.sheet.item .item-body .hint {
+  font-size: 0.78em;
+  font-style: italic;
+  color: var(--ins-text-secondary);
+  margin: 0.2em 0 0.6em 0;
+}
+
+/* --- Dialogue de tirage de Blattes ---------------------------------------- */
+
+.dialog .window-content {
+  background: var(--ins-bg);
+}
+
+.dialog .intro {
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border-light);
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.dialog .introImg img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--ins-border);
+}
+
+.dialog .introtext {
+  color: var(--ins-text);
+  font-weight: bold;
+  padding-left: 0.5em;
+}
+
+.dialog .dialog-main > div {
+  background: var(--ins-panel-bg-alt);
+  border: 1px solid var(--ins-border-light);
+  border-radius: 4px;
+  padding: 0.5em;
+}
+
+.dialog .dialog-main label {
+  color: var(--ins-accent-petrole);
+  font-weight: bold;
+}
+
+.dialog .hint {
+  color: var(--ins-text-secondary);
+}
+
+.dialog .dialog-buttons .roll {
+  background: var(--ins-accent-petrole) !important;
+  color: #F3EAD7 !important;
+}
+
+/* --- Cartes de résultat de tirage (chat) ---------------------------------- */
+
+.chatroll {
+  background: var(--ins-panel-bg);
+  border: 1px solid var(--ins-border);
+  border-radius: 4px;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  padding: 0.5em;
+  color: var(--ins-text);
+}
+
+.chatroll .intro {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--ins-border-light);
+  padding-bottom: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.chatroll .introImg img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--ins-border);
+}
+
+.chatroll .introText {
+  font-weight: bold;
+  color: var(--ins-accent-petrole);
+  padding-left: 0.5em;
+}
+
+.chatroll .difficultyline {
+  font-size: 0.8em;
+  color: var(--ins-text-secondary);
+  background: var(--ins-panel-bg-alt);
+  border-radius: 3px;
+  padding: 0.2em;
+}
+
+.chatroll .blattesresult {
+  width: 100%;
+  margin: 0.4em 0;
+}
+
+.chatroll .chance-blatte-line {
+  text-align: right;
+  padding-right: 0.4em;
+  color: var(--ins-text-secondary);
+  font-size: 0.85em;
+}
+
+.chatroll .choix-couleur {
+  color: var(--ins-accent-petrole);
+  font-weight: bold;
+}
+.chatroll .choix-couleur:hover {
+  color: var(--ins-accent-cyan);
+}
+
+.chatroll .resultText {
+  background: var(--ins-accent-petrole);
+  color: #F3EAD7;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.chatroll .resultText strong {
+  color: var(--ins-accent-ambre);
+}
+
+.chatroll .degats-actions a {
+  display: inline-block;
+  margin-top: 0.4em;
+  background: var(--ins-accent-rouge);
+  color: #F3EAD7;
+  border-radius: 3px;
+  padding: 0.2em 0.6em;
+}
+
+.chatroll .rerollicon i {
+  color: var(--ins-accent-ambre);
+}
+
+/* --- Tracker de combat (sidebar Foundry) ----------------------------------- */
+
+#combat .combat-tracker .blattes-initiative .blatte-small {
+  width: 10px;
+  height: 10px;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
