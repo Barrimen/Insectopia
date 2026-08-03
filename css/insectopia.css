@@ -1,75 +1,13 @@
 .insectopia.sheet.actor {
   font-family: sans-serif;
 }
-.insectopia.sheet.actor .sheet-header {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0.5em;
-  padding-bottom: 0.5em;
-  border-bottom: 2px solid #444;
-}
-.insectopia.sheet.actor .sheet-header .portraitimg {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  border: none;
-}
-.insectopia.sheet.actor .sheet-header .header-fields {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-}
-.insectopia.sheet.actor .sheet-header .header-fields .charname {
-  font-size: 1.4em;
-  font-weight: bold;
-}
-.insectopia.sheet.actor .sheet-header .header-fields .identite-line {
-  display: flex;
-  flex-direction: row;
-  gap: 0.4em;
-}
-.insectopia.sheet.actor .sheet-header .header-fields .identite-line input,
-.insectopia.sheet.actor .sheet-header .header-fields .identite-line select {
-  flex: 1;
-}
-.insectopia.sheet.actor .sheet-header .chancebox {
-  border: 1px solid #666;
-  border-radius: 4px;
-  padding: 0.3em;
-  text-align: center;
-}
-.insectopia.sheet.actor .sheet-header .chancebox .chancebox-title {
-  font-weight: bold;
-  font-size: 0.85em;
-}
-.insectopia.sheet.actor .sheet-header .chancebox .small-input {
-  width: 2.2em;
-  text-align: center;
-}
-.insectopia.sheet.actor .sheet-header .chancebox a.chance-roll {
-  display: block;
-  font-size: 0.8em;
-  margin-top: 0.3em;
-  cursor: pointer;
-}
-.insectopia.sheet.actor .sheet-tabs {
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid #666;
-}
-.insectopia.sheet.actor .sheet-tabs .item {
-  padding: 0.4em 0.8em;
-  cursor: pointer;
-}
-.insectopia.sheet.actor .sheet-tabs .item.active {
-  border-bottom: 2px solid #c0392b;
-  font-weight: bold;
-}
-.insectopia.sheet.actor .sheet-body {
-  padding: 0.5em;
-}
+/* Les règles d'origine pour .sheet-header / .chancebox / .sheet-tabs /
+   .sheet-body ont été retirées d'ici : leur sélecteur à haute spécificité
+   (.insectopia.sheet.actor ...) l'emportait silencieusement sur la refonte
+   graphique plus bas dans ce fichier (portrait forcé à 90×90, bordure grise
+   sur l'en-tête, soulignement rouge sur l'onglet actif, padding réduit du
+   corps de feuille...) sans qu'aucune erreur ne soit visible. Cf. le bloc
+   "REFONTE GRAPHIQUE" plus bas, qui définit maintenant ces éléments. */
 .insectopia.sheet.actor .caracteristiques-table,
 .insectopia.sheet.actor .combat-table {
   width: 100%;
@@ -659,40 +597,35 @@
 }
 .insectopia .caste-comp-sphere { font-size: 0.7em; max-width: 60px; }
 
-/* La rosace : conteneur à ratio fixe, chaque carac-card est ancrée en
-   position absolute (left/top en %) sur le centre de son grand hexagone.
-   Les 2 hexagones de compétence sont ancrés en absolute par rapport à la
-   carte, décalés vers l'extérieur (gauche pour les caracs "side-left",
-   droite pour "side-right"), au-dessus et en-dessous du grand hexagone —
-   exactement la disposition de la fiche officielle. */
+/* La rosace : un unique <svg viewBox="0 0 640 560"> dans lequel chaque
+   grand hexagone et chaque petit hexagone de compétence est un
+   <foreignObject> positionné à des coordonnées calculées par trigonométrie
+   (buildRosaceGeometry, module/actor/sheet/intre-sheet.js). Le viewBox
+   garantit un redimensionnement proportionnel propre, sans recalcul CSS. */
 
-.insectopia .rosace {
-  position: relative;
-  flex: 1;
+.insectopia .rosace-svg {
   width: 100%;
-  max-width: 640px;
-  aspect-ratio: 640 / 520;
+  max-width: 720px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  display: block;
   margin: 0 auto;
+  overflow: visible;
 }
 
-.insectopia .carac-card {
-  position: absolute;
-  width: 0;
-  height: 0;
+.insectopia .rosace-svg foreignObject {
+  overflow: visible;
 }
 
-.insectopia .carac-card-antenne { left: 33%; top: 16%; }
-.insectopia .carac-card-esprit { left: 67%; top: 16%; }
-.insectopia .carac-card-mandibule { left: 17%; top: 50%; }
-.insectopia .carac-card-aile { left: 83%; top: 50%; }
-.insectopia .carac-card-chitine { left: 33%; top: 84%; }
-.insectopia .carac-card-temperature { left: 67%; top: 84%; }
-
-.insectopia .carac-hex {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translate(-50%, -50%);
+.insectopia .carac-hex,
+.insectopia .comp-hex {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .insectopia .carac-hex .caract-roll {
@@ -700,8 +633,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 148px;
-  height: 128px;
+  width: 100%;
+  height: 100%;
   background: var(--ins-accent-petrole);
   color: #F3EAD7;
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
@@ -738,54 +671,34 @@
   top: 50%;
   transform: translateY(-50%);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
+  z-index: 1;
 }
-.insectopia .carac-card-antenne .carac-hex::after,
-.insectopia .carac-card-mandibule .carac-hex::after,
-.insectopia .carac-card-chitine .carac-hex::after {
-  right: -6px;
-}
-.insectopia .carac-card-esprit .carac-hex::after,
-.insectopia .carac-card-aile .carac-hex::after,
-.insectopia .carac-card-temperature .carac-hex::after {
-  left: -6px;
-}
-.insectopia .carac-card-antenne .carac-hex::after,
-.insectopia .carac-card-esprit .carac-hex::after,
-.insectopia .carac-card-mandibule .carac-hex::after,
-.insectopia .carac-card-aile .carac-hex::after {
+.insectopia .carac-hex.side-left::after { right: 4px; }
+.insectopia .carac-hex.side-right::after { left: 4px; }
+.insectopia .carac-hex-antenne::after,
+.insectopia .carac-hex-esprit::after,
+.insectopia .carac-hex-mandibule::after,
+.insectopia .carac-hex-aile::after {
   background: var(--ins-accent-cyan);
 }
-.insectopia .carac-card-chitine .carac-hex::after,
-.insectopia .carac-card-temperature .carac-hex::after {
+.insectopia .carac-hex-chitine::after,
+.insectopia .carac-hex-temperature::after {
   background: var(--ins-accent-rouge);
 }
 
-/* Hexagones de compétence : ancrés à la carte, décalés vers l'extérieur,
-   un au-dessus (index 0) et un en-dessous (index 1) du grand hexagone. */
-
-.insectopia .comp-hex {
-  position: absolute;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.insectopia .comp-hex-0 { transform: translate(-50%, calc(-50% - 46px)); }
-.insectopia .comp-hex-1 { transform: translate(-50%, calc(-50% + 46px)); }
-
-.insectopia .side-left .comp-hex { left: -95px; }
-.insectopia .side-right .comp-hex { left: 95px; }
+/* Hexagones de compétence */
 
 .insectopia .comp-hex .comp-roll {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .insectopia .comp-hex .small-input {
-  width: 78px;
-  height: 68px;
+  width: 100%;
+  aspect-ratio: 1 / 0.87;
+  max-height: 100%;
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border);
@@ -802,7 +715,7 @@
 }
 
 .insectopia .comp-label {
-  font-size: 0.75em;
+  font-size: 0.72em;
   color: var(--ins-text-secondary);
   white-space: nowrap;
   margin-top: 0.1em;
@@ -810,9 +723,6 @@
 
 /* Pastille grise (compétences "physiques" en argent, cf. fiche) sauf pour
    Chrysalide/Résistance/Activité/Métabolisme qui sont vertes. */
-.insectopia .comp-hex .small-input {
-  position: relative;
-}
 .insectopia .comp-hex::before {
   content: "";
   position: absolute;
@@ -821,13 +731,13 @@
   border-radius: 50%;
   background: #B9C0C6;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  top: 50%;
-  transform: translateY(-50%);
+  top: 38%;
+  z-index: 1;
 }
-.insectopia .side-left .comp-hex::before { right: -84px; }
-.insectopia .side-right .comp-hex::before { left: -84px; }
-.insectopia .carac-card-chitine .comp-hex::before,
-.insectopia .carac-card-temperature .comp-hex::before {
+.insectopia .comp-hex.side-left::before { right: 2px; }
+.insectopia .comp-hex.side-right::before { left: 2px; }
+.insectopia .comp-hex-chitine::before,
+.insectopia .comp-hex-temperature::before {
   background: var(--ins-accent-vert);
 }
 

@@ -13,6 +13,119 @@ const CARAC_SIDE = {
   temperature: "right",
 };
 
+// Angle (en degrés, convention mathématique : 0° = droite, sens
+// anti-horaire) de chaque caractéristique autour du centre vide de la
+// rosace. Avec cette disposition (multiples de 60°), les hexagones
+// diagonaux (Antenne/Esprit/Chitine/Temperature) touchent le centre par
+// une arête et les hexagones horizontaux (Mandibule/Aile) par un sommet
+// — exactement la géométrie d'un pavage hexagonal réel, cf. livre p.27
+// pour la disposition des caractéristiques sur la fiche officielle.
+const CARAC_ANGLE = {
+  aile: 0,
+  esprit: 60,
+  antenne: 120,
+  mandibule: 180,
+  chitine: 240,
+  temperature: 300,
+};
+
+/**
+ * Calcule la géométrie exacte de la rosace hexagonale des 6
+ * caractéristiques (SVG). Deux principes géométriques :
+ *
+ * 1. Les 6 grands hexagones sont placés à des angles multiples de 60°
+ *    autour du centre vide, à une distance = distance de contact
+ *    (arête-à-arête pour les diagonaux, sommet-à-sommet pour les
+ *    horizontaux) MULTIPLIÉE par un facteur d'écartement > 1, pour les
+ *    désolidariser les uns des autres (cf. retour du 04/08 : "la
+ *    proximité désolidarise et diminue leur taille").
+ * 2. Les 2 hexagones de compétence d'une caractéristique ne sont plus
+ *    décalés horizontalement à plat : ils sont placés SUR LE MÊME CERCLE
+ *    (rayon plus grand), à ± un angle delta autour de l'angle propre de
+ *    la caractéristique — donc dans son prolongement radial, "dans son
+ *    angle", comme sur la fiche officielle et le croquis fourni. Lequel
+ *    des deux est "en haut" est déterminé en comparant les Y résultants
+ *    (robuste quel que soit le cadran), pas codé en dur par index.
+ *
+ * @returns {{viewBox: string, caracs: Record<string, object>}}
+ */
+function buildRosaceGeometry() {
+  const rBig = 65; // rayon des grands hexagones (-1/6 par rapport à la v1 : 78 -> 65)
+  const rSmall = 84; // rayon des hexagones de compétence (x2 par rapport à la v1 : 42 -> 84)
+  const cx = 400;
+  const cy = 360;
+  const spacing = 1.55; // facteur d'écartement entre grands hexagones (> 1 = désolidarisé)
+  const deltaCompAngle = 13; // écart angulaire (°) des 2 compétences autour de l'angle de la caract.
+  // spacing/deltaCompAngle validés par simulation (aucune collision de
+  // bounding box entre hexagones de caractéristiques voisines, marge de
+  // sécurité incluse — cf. tests numériques du 04/08).
+
+  const R_diagonale = rBig * Math.sqrt(3) * spacing; // Antenne/Esprit/Chitine/Temperature
+  const R_horizontale = rBig * 2 * spacing; // Mandibule/Aile
+  // Rayon du cercle où sont placées les compétences : juste au-delà du
+  // bord extérieur du grand hexagone parent.
+  const R_comp_extra = rBig + rSmall;
+
+  const bigWidth = rBig * 2;
+  const bigHeight = rBig * Math.sqrt(3);
+  const smallWidth = rSmall * 2;
+  const smallHeight = rSmall * Math.sqrt(3);
+
+  const toXY = (angleDeg, distance) => {
+    const angleRad = (angleDeg * Math.PI) / 180;
+    return { x: cx + distance * Math.cos(angleRad), y: cy - distance * Math.sin(angleRad) };
+  };
+
+  const caracs = {};
+  let maxExtent = 0;
+
+  for (const [key, angleDeg] of Object.entries(CARAC_ANGLE)) {
+    const isHorizontale = key === "mandibule" || key === "aile";
+    const R_carac = isHorizontale ? R_horizontale : R_diagonale;
+    const center = toXY(angleDeg, R_carac);
+    const R_comp = R_carac + R_comp_extra;
+
+    // Les deux positions candidates pour les compétences, triées par Y
+    // croissant : la plus haute à l'écran devient la première compétence
+    // (dans l'ordre du modèle de données, ex. Phéromone avant Tir).
+    const candidateA = toXY(angleDeg - deltaCompAngle, R_comp);
+    const candidateB = toXY(angleDeg + deltaCompAngle, R_comp);
+    const sortedComps = [candidateA, candidateB].sort((a, b) => a.y - b.y);
+
+    caracs[key] = {
+      cx: center.x,
+      cy: center.y,
+      x: center.x - bigWidth / 2,
+      y: center.y - bigHeight / 2,
+      w: bigWidth,
+      h: bigHeight,
+      comps: sortedComps.map((pt) => ({
+        x: pt.x - smallWidth / 2,
+        y: pt.y - smallHeight / 2,
+        w: smallWidth,
+        h: smallHeight,
+      })),
+    };
+
+    for (const pt of [
+      { x: center.x - bigWidth / 2, y: center.y - bigHeight / 2 },
+      { x: center.x + bigWidth / 2, y: center.y + bigHeight / 2 },
+      ...sortedComps.map((p) => ({ x: p.x - smallWidth / 2, y: p.y - smallHeight / 2 })),
+      ...sortedComps.map((p) => ({ x: p.x + smallWidth / 2, y: p.y + smallHeight / 2 })),
+    ]) {
+      maxExtent = Math.max(maxExtent, Math.abs(pt.x - cx), Math.abs(pt.y - cy));
+    }
+  }
+
+  // viewBox recalculé pour englober toute la rosace avec une marge, quels
+  // que soient les paramètres ci-dessus (évite tout rognage si on retouche
+  // rBig/rSmall/spacing plus tard).
+  const half = maxExtent + 20;
+  const viewBox = `${cx - half} ${cy - half} ${half * 2} ${half * 2}`;
+
+  return { viewBox, caracs };
+}
+
 export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
   constructor(...args) {
     super(...args);
@@ -54,15 +167,28 @@ export default class IntreActorSheet extends foundry.appv1.sheets.ActorSheet {
 
     // Liste à plat des caractéristiques + compétences, pour un affichage
     // simple en tableau côté template.
-context.caracteristiquesListe = Object.entries(this.actor.system.caracteristiques).filter(([key]) => key).map(([key, carac]) => ({
-      key,
-      side: CARAC_SIDE[key] || "left",
-      ...carac,
-      competencesListe:
+    const rosaceGeometry = buildRosaceGeometry();
+    context.rosaceViewBox = rosaceGeometry.viewBox;
+
+    context.caracteristiquesListe = Object.entries(this.actor.system.caracteristiques).filter(([key]) => key).map(([key, carac]) => {
+      const geo = rosaceGeometry.caracs[key];
+      const competencesListe =
         key === "caste"
           ? asArray(carac.competences) // tableau libre pour Caste
-          : Object.entries(carac.competences).map(([ckey, comp]) => ({ key: ckey, ...comp })),
-    }));
+          : Object.entries(carac.competences).map(([ckey, comp], index) => ({
+              key: ckey,
+              ...comp,
+              geo: geo?.comps?.[index],
+            }));
+
+      return {
+        key,
+        side: CARAC_SIDE[key] || "left",
+        geo,
+        ...carac,
+        competencesListe,
+      };
+    });
 
     const toutesArmes = this.actor.items.filter((i) => i.type === "arme");
     context.armes = toutesArmes.filter((i) => !i.system.naturelle);
