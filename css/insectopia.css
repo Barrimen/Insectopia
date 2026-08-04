@@ -301,15 +301,25 @@
   background: var(--ins-bg);
   color: var(--ins-text);
   font-family: "Signika", "Trebuchet MS", sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .insectopia.sheet.actor .window-content {
   background: var(--ins-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
 }
 
 /* --- En-tête ---------------------------------------------------------- */
 
 .insectopia .sheet-header {
+  flex: 0 0 auto;
   display: flex;
   align-items: flex-start;
   gap: 1em;
@@ -442,6 +452,7 @@
 /* --- Barre de synthèse -------------------------------------------------- */
 
 .insectopia .status-bar {
+  flex: 0 0 auto;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
@@ -490,6 +501,7 @@
 /* --- Onglets ------------------------------------------------------------ */
 
 .insectopia .sheet-tabs {
+  flex: 0 0 auto;
   display: flex;
   background: var(--ins-panel-bg-alt);
   border-bottom: 1px solid var(--ins-border);
@@ -511,6 +523,8 @@
 }
 
 .insectopia .sheet-body {
+  flex: 1 1 auto;
+  min-height: 0;
   padding: 0.75em;
   overflow-y: auto;
 }
@@ -554,7 +568,7 @@
 }
 
 .insectopia .panel-caste {
-  width: 220px;
+  width: 280px;
   flex: 0 0 auto;
 }
 
@@ -569,25 +583,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 110px;
-  height: 96px;
-  background: var(--ins-accent-petrole);
-  color: #F3EAD7;
+  width: 130px;
+  height: 113px;
+  background: var(--ins-panel-bg);
+  border: 2px solid var(--ins-border);
+  color: var(--ins-text);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
 }
-.insectopia .caste-big-hex:hover { background: var(--ins-accent-cyan); }
+.insectopia .caste-big-hex:hover {
+  background: var(--ins-panel-bg-alt);
+  border-color: var(--ins-accent-petrole);
+}
 
 .insectopia .comp-row-caste {
   display: flex;
   align-items: center;
   gap: 0.3em;
-  padding: 0.2em 0;
+  padding: 0.25em 0;
   border-bottom: 1px solid rgba(157, 143, 120, 0.3);
 }
-.insectopia .comp-row-caste .comp-caste-label { flex: 1; min-width: 0; }
+.insectopia .comp-row-caste .comp-caste-label {
+  flex: 1 1 auto;
+  min-width: 90px;
+}
 .insectopia .comp-row-caste .small-input {
-  width: 34px;
-  height: 30px;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 28px;
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   background: var(--ins-panel-bg-alt);
   border: 1px solid var(--ins-border);
@@ -595,7 +617,12 @@
   font-weight: bold;
   padding: 0;
 }
-.insectopia .caste-comp-sphere { font-size: 0.7em; max-width: 60px; }
+.insectopia .caste-comp-sphere {
+  flex: 0 0 auto;
+  font-size: 0.65em;
+  width: 48px;
+  padding: 0;
+}
 
 /* La rosace : un unique <svg viewBox="0 0 640 560"> dans lequel chaque
    grand hexagone et chaque petit hexagone de compétence est un
@@ -635,24 +662,30 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: var(--ins-accent-petrole);
-  color: #F3EAD7;
+  background: var(--ins-panel-bg);
+  border: 2px solid var(--ins-border);
+  color: var(--ins-text);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
 }
 
-.insectopia .carac-hex .caract-roll:hover { background: var(--ins-accent-cyan); }
+.insectopia .carac-hex .caract-roll:hover {
+  background: var(--ins-panel-bg-alt);
+  border-color: var(--ins-accent-petrole);
+}
 
 .insectopia .carac-name {
   font-size: 0.85em;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  color: var(--ins-accent-petrole);
+  font-weight: bold;
 }
 
 .insectopia .carac-value {
   width: 2.6em;
   text-align: center;
   background: transparent;
-  color: #F3EAD7;
+  color: var(--ins-text);
   border: none;
   font-size: 1.5em;
   font-weight: bold;
@@ -722,20 +755,28 @@
 }
 
 /* Pastille grise (compétences "physiques" en argent, cf. fiche) sauf pour
-   Chrysalide/Résistance/Activité/Métabolisme qui sont vertes. */
+   Chrysalide/Résistance/Activité/Métabolisme qui sont vertes. Orientée
+   vers l'extérieur du grand hexagone parent : placée à un rayon fixe du
+   centre de l'hexagone de compétence, dans la direction exacte de son
+   hexagone de caractéristique (angle calculé en JS, cf. --dot-angle sur
+   l'élément, retour du 04/08 : "pointer en direction de leur hexagone").
+   La technique rotate() puis translate() place le point à distance fixe
+   dans une direction dynamique, sans dépendre du côté gauche/droite. */
 .insectopia .comp-hex::before {
   content: "";
   position: absolute;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  margin-top: -5px;
+  top: 50%;
+  left: 50%;
   border-radius: 50%;
   background: #B9C0C6;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  top: 38%;
+  transform: rotate(var(--dot-angle, 0deg)) translateX(90px);
   z-index: 1;
 }
-.insectopia .comp-hex.side-left::before { right: 2px; }
-.insectopia .comp-hex.side-right::before { left: 2px; }
 .insectopia .comp-hex-chitine::before,
 .insectopia .comp-hex-temperature::before {
   background: var(--ins-accent-vert);

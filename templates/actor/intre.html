@@ -130,8 +130,8 @@
     <a class="item" data-tab="profil">Profil</a>
     <a class="item" data-tab="caracteristiques">Aptitudes</a>
     <a class="item" data-tab="combat">Combat</a>
-    <a class="item" data-tab="objets">Inventaire</a>
     <a class="item" data-tab="capacites">Traits &amp; Magie</a>
+    <a class="item" data-tab="objets">Inventaire</a>
     <a class="item" data-tab="notes">Récit</a>
   </nav>
 
@@ -209,7 +209,7 @@
 
           {{#each carac.competencesListe as |comp|}}
           <foreignObject x="{{comp.geo.x}}" y="{{comp.geo.y}}" width="{{comp.geo.w}}" height="{{comp.geo.h}}">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="comp-hex comp-hex-{{../carac.key}} side-{{../carac.side}}">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="comp-hex comp-hex-{{../carac.key}} side-{{../carac.side}}" style="--dot-angle: {{comp.geo.dotAngle}}deg;">
               <a class="comp-roll" data-action="compRoll" data-carac="{{../carac.key}}" data-comp="{{comp.key}}" title="{{localize comp.label}}">
                 <input class="small-input" type="number" name="system.caracteristiques.{{../carac.key}}.competences.{{comp.key}}.value" value="{{comp.value}}" />
               </a>

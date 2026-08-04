@@ -56,11 +56,11 @@ function buildRosaceGeometry() {
   const cx = 400;
   const cy = 360;
   const spacing = 1.55; // facteur d'écartement entre grands hexagones (> 1 = désolidarisé)
-  const deltaCompAngle = 13; // écart angulaire (°) des 2 compétences autour de l'angle de la caract.
+  const deltaCompAngle = 10; // écart angulaire (°) des 2 compétences autour de l'angle de la caract.
 
   const R_diagonale = rBig * Math.sqrt(3) * spacing; // Antenne/Esprit/Chitine/Temperature
   const R_horizontale = rBig * 2 * spacing; // Mandibule/Aile
-  const R_comp_extra = rBig + rSmall;
+  const R_comp_extra = (rBig + rSmall) * 0.62; // rapproché du 04/08 (était 1.0, cf. retour "rapprocher les compétences")
 
   const bigWidth = rBig * 2;
   const bigHeight = rBig * Math.sqrt(3);
@@ -92,12 +92,22 @@ function buildRosaceGeometry() {
       y: center.y - bigHeight / 2,
       w: bigWidth,
       h: bigHeight,
-      comps: sortedComps.map((pt) => ({
-        x: pt.x - smallWidth / 2,
-        y: pt.y - smallHeight / 2,
-        w: smallWidth,
-        h: smallHeight,
-      })),
+      comps: sortedComps.map((pt) => {
+        // Angle (convention CSS rotate : sens horaire, 0° = droite) du
+        // centre de la compétence vers le centre de sa caractéristique
+        // parente — utilisé pour orienter la pastille de couleur vers
+        // l'extérieur, en pointant vers son hexagone (retour du 04/08).
+        const dx = center.x - pt.x;
+        const dy = center.y - pt.y;
+        const dotAngle = (Math.atan2(dy, dx) * 180) / Math.PI;
+        return {
+          x: pt.x - smallWidth / 2,
+          y: pt.y - smallHeight / 2,
+          w: smallWidth,
+          h: smallHeight,
+          dotAngle,
+        };
+      }),
     };
 
     for (const pt of [
