@@ -312,24 +312,39 @@
   overflow: hidden;
 }
 
-/* Foundry V13 (ApplicationV2) utilise la classe racine .application — pas
-   .window-app, qui était l'ancienne classe d'ApplicationV1. La version
-   précédente de cette règle ciblait donc une classe qui n'existe plus dans
-   le DOM, et ne s'appliquait jamais (silencieusement, sans erreur). On
-   cible ici le vrai ancêtre, à chaque niveau plausible de la chaîne. */
-.application:has(.insectopia.sheet.actor) {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.application:has(.insectopia.sheet.actor) > .window-content,
-.application:has(.insectopia.sheet.actor) .window-content {
+/* Structure réelle confirmée par inspection DOM le 04/08 :
+   <form class="application sheet insectopia actor intre" style="height:839px">
+     <header class="window-header">...</header>
+     <div class="window-content"> ... notre gabarit ... </div>
+   </form>
+   Les classes .application et .insectopia.sheet.actor sont sur LE MÊME
+   élément (pas deux éléments distincts englobant l'un l'autre) : les
+   tentatives précédentes avec :has() ne pouvaient donc jamais matcher, un
+   élément n'ayant pas de lui-même comme descendant. .window-content est un
+   simple enfant direct — pas besoin de :has(), un sélecteur d'enfant direct
+   suffit et est plus fiable. */
+.insectopia.sheet.actor > .window-content {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
   padding: 0;
+}
+
+/* Couche trouvée par diagnostic console le 04/08 : le PART Handlebars
+   ("form" dans PARTS) a sa propre racine <div class="sheet-content
+   droppable"> — un enfant de .window-content que je n'avais pas identifié.
+   Sans flex+min-height:0 ici aussi, elle prenait sa hauteur naturelle
+   (débordant de .window-content de ~17px) au lieu de se limiter à
+   l'espace disponible, empêchant tout scroll plus bas dans la chaîne. */
+.insectopia .sheet-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* --- En-tête ---------------------------------------------------------- */
@@ -543,6 +558,7 @@
   min-height: 0;
   padding: 0.75em;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* --- Panneaux génériques -------------------------------------------------- */
@@ -581,6 +597,7 @@
   display: flex;
   gap: 1em;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .insectopia .panel-caste {
@@ -651,6 +668,7 @@
 .insectopia .rosace-svg {
   width: 100%;
   max-width: 720px;
+  min-width: 0;
   height: auto;
   aspect-ratio: 1 / 1;
   display: block;

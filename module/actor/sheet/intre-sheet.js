@@ -286,13 +286,32 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     const form = this.element;
     if (!form) return;
 
-    const windowContent = form.closest(".window-content") ?? form.parentElement;
+    // .window-content est un ENFANT du form (avec .window-header comme
+    // frère), pas un ancêtre : structure confirmée par inspection directe
+    // du DOM (voir échanges du 04/08). querySelector() descend, closest()
+    // remonte — c'est bien querySelector() qu'il faut ici.
+    const windowContent = form.querySelector(":scope > .window-content");
     if (windowContent) {
       windowContent.style.display = "flex";
       windowContent.style.flexDirection = "column";
+      windowContent.style.flex = "1 1 auto";
       windowContent.style.minHeight = "0";
       windowContent.style.overflow = "hidden";
       windowContent.style.padding = "0";
+    }
+
+    // Couche identifiée par diagnostic console le 04/08 : la racine du PART
+    // Handlebars (<div class="sheet-content droppable">) est un enfant de
+    // .window-content qui n'était traité nulle part, et débordait de sa
+    // hauteur disponible faute de flex+min-height:0.
+    const sheetContent = windowContent?.querySelector(":scope > .sheet-content");
+    if (sheetContent) {
+      sheetContent.style.display = "flex";
+      sheetContent.style.flexDirection = "column";
+      sheetContent.style.flex = "1 1 auto";
+      sheetContent.style.minHeight = "0";
+      sheetContent.style.height = "100%";
+      sheetContent.style.overflow = "hidden";
     }
 
     form.style.flex = "1 1 auto";
