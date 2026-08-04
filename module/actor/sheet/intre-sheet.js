@@ -52,7 +52,7 @@ const CARAC_ANGLE = {
  */
 function buildRosaceGeometry() {
   const rBig = 65; // rayon des grands hexagones
-  const rSmall = 84; // rayon des hexagones de compétence
+  const rSmall = 34; // rayon des hexagones de compétence (était 84 : plus grand que rBig, cause du chevauchement massif signalé le 04/08)
   const cx = 400;
   const cy = 360;
   const spacing = 1.55; // facteur d'écartement entre grands hexagones (> 1 = désolidarisé)

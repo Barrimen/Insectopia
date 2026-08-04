@@ -301,10 +301,17 @@
 /* --- Technique bordure d'hexagone ----------------------------------------
    border + clip-path sur un même élément produit un contour tronqué sur
    les côtés obliques (le border-box est découpé après tracé de la bordure,
-   qui n'est donc jamais un hexagone complet). On utilise à la place un
-   ::before légèrement plus grand, en couleur de bordure et de même forme,
-   posé derrière l'élément (lui-même sans "border"). Chaque sélecteur définit
-   sa propre épaisseur via --hex-border-w. Ne fonctionne pas sur un <input>
+   qui n'est donc jamais un hexagone complet). Technique en 2 calques :
+   l'élément lui-même DEVIENT la couleur de bordure (fond plein, découpé en
+   hexagone), et un ::before légèrement plus petit, en couleur de
+   remplissage, vient se poser par-dessus (un pseudo-élément se peint
+   toujours après le fond de son propre élément, donc naturellement
+   au-dessus, sans avoir besoin de z-index négatif — c'est justement ce
+   z-index négatif qui causait le bug du 04/08 : la bordure recouvrait le
+   remplissage au lieu de rester dessous, rendant les Blattes de Chance
+   invisibles et les hexagones tout sombres). Chaque sélecteur définit sa
+   propre épaisseur via --hex-border-w et sa couleur de fond via --hex-fill
+   (au lieu de "background" directement). Ne fonctionne pas sur un <input>
    (élément remplacé, pas de ::before) : pour ces cas, la technique est
    appliquée au wrapper qui entoure l'input (cf. .comp-roll, .hex-input-wrap). */
 .insectopia .blatte,
@@ -313,8 +320,8 @@
 .insectopia .comp-hex .comp-roll,
 .insectopia .hex-input-wrap {
   position: relative;
-  z-index: 0;
   clip-path: var(--hex-clip);
+  background: var(--ins-border);
 }
 .insectopia .blatte::before,
 .insectopia .caste-big-hex::before,
@@ -323,10 +330,9 @@
 .insectopia .hex-input-wrap::before {
   content: "";
   position: absolute;
-  inset: calc(var(--hex-border-w, 1px) * -1);
+  inset: var(--hex-border-w, 1px);
   clip-path: var(--hex-clip);
-  background: var(--ins-border);
-  z-index: -1;
+  background: var(--hex-fill, var(--ins-panel-bg));
 }
 
 .insectopia.sheet.actor {
@@ -508,11 +514,11 @@
   height: 16px;
   --hex-border-w: 1px;
 }
-.insectopia .blatte-rouge { background: var(--ins-accent-rouge); }
-.insectopia .blatte-verte { background: var(--ins-accent-vert); }
-.insectopia .blatte-bleue { background: var(--ins-accent-cyan); }
-.insectopia .blatte-blanche { background: #F3EAD7; }
-.insectopia .blatte-noire { background: #1B2529; }
+.insectopia .blatte-rouge { --hex-fill: var(--ins-accent-rouge); }
+.insectopia .blatte-verte { --hex-fill: var(--ins-accent-vert); }
+.insectopia .blatte-bleue { --hex-fill: var(--ins-accent-cyan); }
+.insectopia .blatte-blanche { --hex-fill: #F3EAD7; }
+.insectopia .blatte-noire { --hex-fill: #1B2529; }
 
 .insectopia .chance-roll {
   display: inline-block;
@@ -667,15 +673,15 @@
   justify-content: center;
   width: 130px;
   height: 113px;
-  background: var(--ins-panel-bg);
+  --hex-fill: var(--ins-panel-bg);
   color: var(--ins-text);
   --hex-border-w: 2px;
 }
 .insectopia .caste-big-hex:hover {
-  background: var(--ins-panel-bg-alt);
+  background: var(--ins-accent-cuivre);
 }
 .insectopia .caste-big-hex:hover::before {
-  background: var(--ins-accent-cuivre);
+  background: var(--ins-panel-bg-alt);
 }
 
 .insectopia .comp-row-caste {
@@ -694,11 +700,12 @@
   width: 32px;
   height: 28px;
   --hex-border-w: 1px;
+  --hex-fill: var(--ins-panel-bg-alt);
 }
 .insectopia .comp-row-caste .small-input {
   width: 100%;
   height: 100%;
-  background: var(--ins-panel-bg-alt);
+  background: transparent;
   border: none;
   text-align: center;
   font-weight: bold;
@@ -750,16 +757,16 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: var(--ins-panel-bg);
+  --hex-fill: var(--ins-panel-bg);
   color: var(--ins-text);
   --hex-border-w: 2px;
 }
 
 .insectopia .carac-hex .caract-roll:hover {
-  background: var(--ins-panel-bg-alt);
+  background: var(--ins-accent-cuivre);
 }
 .insectopia .carac-hex .caract-roll:hover::before {
-  background: var(--ins-accent-cuivre);
+  background: var(--ins-panel-bg-alt);
 }
 
 .insectopia .carac-name {
@@ -821,8 +828,10 @@
 }
 
 .insectopia .comp-hex .small-input {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: var(--hex-border-w, 1px);
+  width: auto;
+  height: auto;
   clip-path: var(--hex-clip);
   background: var(--ins-panel-bg);
   border: none;
@@ -842,7 +851,7 @@
   background: var(--ins-panel-bg-alt);
   cursor: pointer;
 }
-.insectopia .comp-hex:hover .comp-roll::before {
+.insectopia .comp-hex:hover .comp-roll {
   background: var(--ins-accent-cuivre);
 }
 
