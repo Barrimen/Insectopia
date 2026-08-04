@@ -173,7 +173,9 @@
             <div class="comp-row comp-row-caste">
               <a class="comp-roll" data-action="compRoll" data-carac="caste" data-comp="{{index}}" title="Lancer les Blattes"><i class="fas fa-dice"></i></a>
               <input type="text" class="comp-caste-label" name="system.caracteristiques.caste.competences.{{index}}.label" value="{{comp.label}}" />
-              <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
+              <span class="hex-input-wrap">
+                <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
+              </span> 
               <select class="caste-comp-sphere" data-index="{{index}}" title="Sphère de magie associée">
                 <option value="">—</option>
                 {{#each @root.spheresListe as |sphere|}}

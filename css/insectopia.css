@@ -289,16 +289,54 @@
   --ins-text-secondary: #5B554A;
   --ins-border: #5B5144;
   --ins-border-light: #9D8F78;
-  --ins-accent-petrole: #174A55;
+  --ins-accent-cuivre: #B5651D;
   --ins-accent-cyan: #2EA6B4;
   --ins-accent-vert: #567A48;
   --ins-accent-ambre: #C48632;
   --ins-accent-rouge: #9E342B;
   --ins-accent-violet: #4B3C56;
+  --hex-clip: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+
+/* --- Technique bordure d'hexagone ----------------------------------------
+   border + clip-path sur un même élément produit un contour tronqué sur
+   les côtés obliques (le border-box est découpé après tracé de la bordure,
+   qui n'est donc jamais un hexagone complet). On utilise à la place un
+   ::before légèrement plus grand, en couleur de bordure et de même forme,
+   posé derrière l'élément (lui-même sans "border"). Chaque sélecteur définit
+   sa propre épaisseur via --hex-border-w. Ne fonctionne pas sur un <input>
+   (élément remplacé, pas de ::before) : pour ces cas, la technique est
+   appliquée au wrapper qui entoure l'input (cf. .comp-roll, .hex-input-wrap). */
+.insectopia .blatte,
+.insectopia .caste-big-hex,
+.insectopia .carac-hex .caract-roll,
+.insectopia .comp-hex .comp-roll,
+.insectopia .hex-input-wrap {
+  position: relative;
+  z-index: 0;
+  clip-path: var(--hex-clip);
+}
+.insectopia .blatte::before,
+.insectopia .caste-big-hex::before,
+.insectopia .carac-hex .caract-roll::before,
+.insectopia .comp-hex .comp-roll::before,
+.insectopia .hex-input-wrap::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--hex-border-w, 1px) * -1);
+  clip-path: var(--hex-clip);
+  background: var(--ins-border);
+  z-index: -1;
 }
 
 .insectopia.sheet.actor {
-  background: var(--ins-bg);
+  /* Fond "aménagé" : nid d'hexagones en filigrane (tuile SVG vectorielle,
+     donc nette à tout niveau de zoom) posé sur la couleur de base, plutôt
+     qu'un aplat beige uniforme. Motif généré (pas une image bitmap) :
+     léger, redimensionnable, pas de dépendance à un fichier externe. */
+  background-color: var(--ins-bg);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2258.89%22%20height%3D%2251.00%22%20viewBox%3D%220%200%2058.89%2051.00%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%239D8F78%22%20stroke-width%3D%221%22%20opacity%3D%220.16%22%3E%3Cpath%20d%3D%22M0.00%2C-68.00%20L0.00%2C-34.00%20L-29.44%2C-17.00%20L-58.89%2C-34.00%20L-58.89%2C-68.00%20L-29.44%2C-85.00%20Z%22/%3E%3Cpath%20d%3D%22M58.89%2C-68.00%20L58.89%2C-34.00%20L29.44%2C-17.00%20L-0.00%2C-34.00%20L0.00%2C-68.00%20L29.44%2C-85.00%20Z%22/%3E%3Cpath%20d%3D%22M117.78%2C-68.00%20L117.78%2C-34.00%20L88.33%2C-17.00%20L58.89%2C-34.00%20L58.89%2C-68.00%20L88.33%2C-85.00%20Z%22/%3E%3Cpath%20d%3D%22M176.67%2C-68.00%20L176.67%2C-34.00%20L147.22%2C-17.00%20L117.78%2C-34.00%20L117.78%2C-68.00%20L147.22%2C-85.00%20Z%22/%3E%3Cpath%20d%3D%22M-29.44%2C-17.00%20L-29.44%2C17.00%20L-58.89%2C34.00%20L-88.33%2C17.00%20L-88.33%2C-17.00%20L-58.89%2C-34.00%20Z%22/%3E%3Cpath%20d%3D%22M29.44%2C-17.00%20L29.44%2C17.00%20L0.00%2C34.00%20L-29.44%2C17.00%20L-29.44%2C-17.00%20L-0.00%2C-34.00%20Z%22/%3E%3Cpath%20d%3D%22M88.33%2C-17.00%20L88.33%2C17.00%20L58.89%2C34.00%20L29.44%2C17.00%20L29.44%2C-17.00%20L58.89%2C-34.00%20Z%22/%3E%3Cpath%20d%3D%22M147.22%2C-17.00%20L147.22%2C17.00%20L117.78%2C34.00%20L88.33%2C17.00%20L88.33%2C-17.00%20L117.78%2C-34.00%20Z%22/%3E%3Cpath%20d%3D%22M0.00%2C34.00%20L0.00%2C68.00%20L-29.44%2C85.00%20L-58.89%2C68.00%20L-58.89%2C34.00%20L-29.44%2C17.00%20Z%22/%3E%3Cpath%20d%3D%22M58.89%2C34.00%20L58.89%2C68.00%20L29.44%2C85.00%20L-0.00%2C68.00%20L0.00%2C34.00%20L29.44%2C17.00%20Z%22/%3E%3Cpath%20d%3D%22M117.78%2C34.00%20L117.78%2C68.00%20L88.33%2C85.00%20L58.89%2C68.00%20L58.89%2C34.00%20L88.33%2C17.00%20Z%22/%3E%3Cpath%20d%3D%22M176.67%2C34.00%20L176.67%2C68.00%20L147.22%2C85.00%20L117.78%2C68.00%20L117.78%2C34.00%20L147.22%2C17.00%20Z%22/%3E%3Cpath%20d%3D%22M-29.44%2C85.00%20L-29.44%2C119.00%20L-58.89%2C136.00%20L-88.33%2C119.00%20L-88.33%2C85.00%20L-58.89%2C68.00%20Z%22/%3E%3Cpath%20d%3D%22M29.44%2C85.00%20L29.44%2C119.00%20L0.00%2C136.00%20L-29.44%2C119.00%20L-29.44%2C85.00%20L-0.00%2C68.00%20Z%22/%3E%3Cpath%20d%3D%22M88.33%2C85.00%20L88.33%2C119.00%20L58.89%2C136.00%20L29.44%2C119.00%20L29.44%2C85.00%20L58.89%2C68.00%20Z%22/%3E%3Cpath%20d%3D%22M147.22%2C85.00%20L147.22%2C119.00%20L117.78%2C136.00%20L88.33%2C119.00%20L88.33%2C85.00%20L117.78%2C68.00%20Z%22/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
   color: var(--ins-text);
   font-family: "Signika", "Trebuchet MS", sans-serif;
   height: 100%;
@@ -392,7 +430,7 @@
 
 .insectopia .badge-input {
   flex: 1;
-  background: var(--ins-accent-petrole);
+  background: var(--ins-accent-cuivre);
   color: #F3EAD7;
   border: 1px solid var(--ins-border);
   border-radius: 3px;
@@ -431,7 +469,7 @@
 }
 
 .insectopia .chancebox {
-  width: 190px;
+  width: 260px;
   background: var(--ins-panel-bg-alt);
   border: 1px solid var(--ins-border);
   clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px);
@@ -439,9 +477,19 @@
   text-align: center;
 }
 
+.insectopia .chancebox table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.insectopia .chancebox .small-input {
+  width: 34px;
+  max-width: 100%;
+}
+
 .insectopia .chancebox-title {
   font-weight: bold;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   margin-bottom: 0.25em;
   text-transform: uppercase;
   font-size: 0.85em;
@@ -458,8 +506,7 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-  border: 1px solid var(--ins-border);
+  --hex-border-w: 1px;
 }
 .insectopia .blatte-rouge { background: var(--ins-accent-rouge); }
 .insectopia .blatte-verte { background: var(--ins-accent-vert); }
@@ -471,7 +518,7 @@
   display: inline-block;
   margin-top: 0.4em;
   padding: 0.3em 0.8em;
-  background: var(--ins-accent-petrole);
+  background: var(--ins-accent-cuivre);
   color: #F3EAD7;
   border-radius: 3px;
   clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
@@ -488,7 +535,7 @@
   flex-wrap: wrap;
   gap: 0.5em;
   padding: 0.5em 0.75em;
-  background: var(--ins-accent-petrole);
+  background: var(--ins-accent-cuivre);
   color: #F3EAD7;
   border-bottom: 2px solid var(--ins-border);
 }
@@ -549,7 +596,7 @@
 
 .insectopia .sheet-tabs .item.active {
   background: var(--ins-panel-bg);
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   font-weight: bold;
 }
 
@@ -573,7 +620,7 @@
 
 .insectopia .panel h3 {
   margin: 0 0 0.5em 0;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   border-bottom: 1px solid var(--ins-border-light);
   padding-bottom: 0.2em;
 }
@@ -621,13 +668,14 @@
   width: 130px;
   height: 113px;
   background: var(--ins-panel-bg);
-  border: 2px solid var(--ins-border);
   color: var(--ins-text);
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  --hex-border-w: 2px;
 }
 .insectopia .caste-big-hex:hover {
   background: var(--ins-panel-bg-alt);
-  border-color: var(--ins-accent-petrole);
+}
+.insectopia .caste-big-hex:hover::before {
+  background: var(--ins-accent-cuivre);
 }
 
 .insectopia .comp-row-caste {
@@ -641,13 +689,17 @@
   flex: 1 1 auto;
   min-width: 90px;
 }
-.insectopia .comp-row-caste .small-input {
+.insectopia .comp-row-caste .hex-input-wrap {
   flex: 0 0 auto;
   width: 32px;
   height: 28px;
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  --hex-border-w: 1px;
+}
+.insectopia .comp-row-caste .small-input {
+  width: 100%;
+  height: 100%;
   background: var(--ins-panel-bg-alt);
-  border: 1px solid var(--ins-border);
+  border: none;
   text-align: center;
   font-weight: bold;
   padding: 0;
@@ -699,21 +751,22 @@
   width: 100%;
   height: 100%;
   background: var(--ins-panel-bg);
-  border: 2px solid var(--ins-border);
   color: var(--ins-text);
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  --hex-border-w: 2px;
 }
 
 .insectopia .carac-hex .caract-roll:hover {
   background: var(--ins-panel-bg-alt);
-  border-color: var(--ins-accent-petrole);
+}
+.insectopia .carac-hex .caract-roll:hover::before {
+  background: var(--ins-accent-cuivre);
 }
 
 .insectopia .carac-name {
   font-size: 0.85em;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   font-weight: bold;
 }
 
@@ -762,15 +815,17 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  aspect-ratio: 1 / 0.87;
+  max-height: 100%;
+  --hex-border-w: 1px;
 }
 
 .insectopia .comp-hex .small-input {
   width: 100%;
-  aspect-ratio: 1 / 0.87;
-  max-height: 100%;
-  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  height: 100%;
+  clip-path: var(--hex-clip);
   background: var(--ins-panel-bg);
-  border: 1px solid var(--ins-border);
+  border: none;
   color: var(--ins-text);
   text-align: center;
   font-weight: bold;
@@ -785,8 +840,10 @@
 
 .insectopia .comp-hex:hover .small-input {
   background: var(--ins-panel-bg-alt);
-  border-color: var(--ins-accent-petrole);
   cursor: pointer;
+}
+.insectopia .comp-hex:hover .comp-roll::before {
+  background: var(--ins-accent-cuivre);
 }
 
 .insectopia .comp-label {
@@ -852,7 +909,7 @@
 
 .insectopia .items-list th {
   text-align: left;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   border-bottom: 1px solid var(--ins-border-light);
 }
 
@@ -871,7 +928,7 @@
 .insectopia .item-add {
   display: inline-block;
   margin-top: 0.4em;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
 }
 
 /* --- Contacts -------------------------------------------------------------- */
@@ -976,7 +1033,7 @@
 
 .insectopia.sheet.item .item-body .field label {
   font-size: 0.85em;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   font-weight: bold;
 }
 
@@ -1046,7 +1103,7 @@
 }
 
 .dialog .dialog-main label {
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   font-weight: bold;
 }
 
@@ -1055,7 +1112,7 @@
 }
 
 .dialog .dialog-buttons .roll {
-  background: var(--ins-accent-petrole) !important;
+  background: var(--ins-accent-cuivre) !important;
   color: #F3EAD7 !important;
 }
 
@@ -1088,7 +1145,7 @@
 
 .chatroll .introText {
   font-weight: bold;
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   padding-left: 0.5em;
 }
 
@@ -1113,7 +1170,7 @@
 }
 
 .chatroll .choix-couleur {
-  color: var(--ins-accent-petrole);
+  color: var(--ins-accent-cuivre);
   font-weight: bold;
 }
 .chatroll .choix-couleur:hover {
@@ -1121,7 +1178,7 @@
 }
 
 .chatroll .resultText {
-  background: var(--ins-accent-petrole);
+  background: var(--ins-accent-cuivre);
   color: #F3EAD7;
   border-radius: 3px;
   font-weight: bold;
