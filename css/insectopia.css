@@ -302,16 +302,29 @@
   color: var(--ins-text);
   font-family: "Signika", "Trebuchet MS", sans-serif;
   height: 100%;
+  min-height: 0; /* indispensable : sans ça, un flex-item enfant d'un
+    flex-container Foundry ne se laisse pas rétrécir sous la taille de son
+    contenu, et tout overflow-y:auto plus bas dans la chaîne reste sans
+    effet (piège classique de flexbox imbriqué). Cf. retour du 04/08 :
+    la précédente correction posait bien overflow-y:auto sur .sheet-body,
+    mais sans min-height:0 à CE niveau, la fiche entière grandissait pour
+    contenir tout son contenu au lieu de se limiter à la fenêtre. */
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.insectopia.sheet.actor .window-content {
-  background: var(--ins-bg);
+/* Foundry place notre <form> à l'intérieur de son propre .window-content
+   (et non l'inverse) : on cible donc l'ancêtre réel via :has(), plus fiable
+   que de deviner la structure exacte du cœur de Foundry. */
+.window-app:has(> .window-content > .insectopia.sheet.actor),
+.window-app:has(.window-content .insectopia.sheet.actor) {
+  overflow: hidden;
+}
+.window-app .window-content:has(.insectopia.sheet.actor) {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 0;
   overflow: hidden;
   padding: 0;
 }
@@ -747,6 +760,12 @@
   outline: 1px solid var(--ins-accent-cyan);
 }
 
+.insectopia .comp-hex:hover .small-input {
+  background: var(--ins-panel-bg-alt);
+  border-color: var(--ins-accent-petrole);
+  cursor: pointer;
+}
+
 .insectopia .comp-label {
   font-size: 0.72em;
   color: var(--ins-text-secondary);
@@ -774,7 +793,7 @@
   border-radius: 50%;
   background: #B9C0C6;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  transform: rotate(var(--dot-angle, 0deg)) translateX(90px);
+  transform: rotate(var(--dot-angle, 0deg)) translateX(60px);
   z-index: 1;
 }
 .insectopia .comp-hex-chitine::before,
