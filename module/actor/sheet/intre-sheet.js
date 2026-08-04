@@ -269,6 +269,44 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     super._onRender(context, options);
     this.#activateTabs();
     this.#activateChangeListeners();
+    this.#fixScrollableLayout();
+  }
+
+  /**
+   * Filet de sécurité pour le scroll interne de la fiche : on a eu, à
+   * plusieurs reprises, des règles CSS ciblant le mauvais nom de classe
+   * pour l'ancêtre Foundry (`.window-app`, qui n'existe plus depuis le
+   * passage à ApplicationV2 — la classe réelle est `.application`). Plutôt
+   * que de deviner encore une fois la structure exacte du DOM, on la
+   * lit directement ici et on force les styles nécessaires en JS, ce qui
+   * ne dépend d'aucune hypothèse sur les noms de classes internes de
+   * Foundry.
+   */
+  #fixScrollableLayout() {
+    const form = this.element;
+    if (!form) return;
+
+    const windowContent = form.closest(".window-content") ?? form.parentElement;
+    if (windowContent) {
+      windowContent.style.display = "flex";
+      windowContent.style.flexDirection = "column";
+      windowContent.style.minHeight = "0";
+      windowContent.style.overflow = "hidden";
+      windowContent.style.padding = "0";
+    }
+
+    form.style.flex = "1 1 auto";
+    form.style.minHeight = "0";
+    form.style.display = "flex";
+    form.style.flexDirection = "column";
+    form.style.overflow = "hidden";
+
+    const body = form.querySelector(".sheet-body");
+    if (body) {
+      body.style.flex = "1 1 auto";
+      body.style.minHeight = "0";
+      body.style.overflowY = "auto";
+    }
   }
 
   /**

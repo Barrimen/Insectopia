@@ -302,28 +302,31 @@
   color: var(--ins-text);
   font-family: "Signika", "Trebuchet MS", sans-serif;
   height: 100%;
+  flex: 1 1 auto;
   min-height: 0; /* indispensable : sans ça, un flex-item enfant d'un
     flex-container Foundry ne se laisse pas rétrécir sous la taille de son
     contenu, et tout overflow-y:auto plus bas dans la chaîne reste sans
-    effet (piège classique de flexbox imbriqué). Cf. retour du 04/08 :
-    la précédente correction posait bien overflow-y:auto sur .sheet-body,
-    mais sans min-height:0 à CE niveau, la fiche entière grandissait pour
-    contenir tout son contenu au lieu de se limiter à la fenêtre. */
+    effet (piège classique de flexbox imbriqué). */
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-/* Foundry place notre <form> à l'intérieur de son propre .window-content
-   (et non l'inverse) : on cible donc l'ancêtre réel via :has(), plus fiable
-   que de deviner la structure exacte du cœur de Foundry. */
-.window-app:has(> .window-content > .insectopia.sheet.actor),
-.window-app:has(.window-content .insectopia.sheet.actor) {
-  overflow: hidden;
-}
-.window-app .window-content:has(.insectopia.sheet.actor) {
+/* Foundry V13 (ApplicationV2) utilise la classe racine .application — pas
+   .window-app, qui était l'ancienne classe d'ApplicationV1. La version
+   précédente de cette règle ciblait donc une classe qui n'existe plus dans
+   le DOM, et ne s'appliquait jamais (silencieusement, sans erreur). On
+   cible ici le vrai ancêtre, à chaque niveau plausible de la chaîne. */
+.application:has(.insectopia.sheet.actor) {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+.application:has(.insectopia.sheet.actor) > .window-content,
+.application:has(.insectopia.sheet.actor) .window-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
   padding: 0;
