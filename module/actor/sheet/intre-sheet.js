@@ -106,6 +106,7 @@ function buildRosaceGeometry() {
           w: smallWidth,
           h: smallHeight,
           dotAngle,
+          dotRadius: rSmall * 0.55, // rayon de la pastille = proportionnel à la vraie taille du hexagone (auparavant 60px fixe, hérité de l'ancien rSmall=84 : trop loin depuis le passage à rSmall=34, la pastille débordait sur le hexagone voisin)
         };
       }),
     };

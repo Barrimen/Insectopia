@@ -296,6 +296,55 @@
   --ins-accent-rouge: #9E342B;
   --ins-accent-violet: #4B3C56;
   --hex-clip: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+
+  /* --- Échelle d'espacement ------------------------------------------
+     Base 0.05em, nom = valeur × 100 (--ins-space-8 = 0.4em). Reprend
+     fidèlement les valeurs déjà en usage dans la feuille (aucun
+     arrondi) — objectif de cette passe : centraliser, pas redessiner. */
+  --ins-space-2: 0.1em;
+  --ins-space-3: 0.15em;
+  --ins-space-4: 0.2em;
+  --ins-space-5: 0.25em;
+  --ins-space-6: 0.3em;
+  --ins-space-7: 0.35em;
+  --ins-space-8: 0.4em;
+  --ins-space-10: 0.5em;
+  --ins-space-12: 0.6em;
+  --ins-space-15: 0.75em;
+  --ins-space-16: 0.8em;
+  --ins-space-20: 1em;
+
+  /* --- Échelle typographique -------------------------------------------
+     Nom = valeur em × 100 (--ins-fs-85 = 0.85em). Même principe : fidèle
+     à l'existant, pas de nouvelle hiérarchie inventée. */
+  --ins-fs-65: 0.65em;
+  --ins-fs-72: 0.72em;
+  --ins-fs-75: 0.75em;
+  --ins-fs-78: 0.78em;
+  --ins-fs-80: 0.8em;
+  --ins-fs-85: 0.85em;
+  --ins-fs-90: 0.9em;
+  --ins-fs-110: 1.1em;
+  --ins-fs-120: 1.2em;
+  --ins-fs-140: 1.4em;
+  --ins-fs-150: 1.5em;
+
+  /* --- Rayons d'angle --------------------------------------------------- */
+  --ins-radius-2: 2px;
+  --ins-radius-3: 3px;
+  --ins-radius-4: 4px;
+  --ins-radius-6: 6px;
+  --ins-radius-circle: 50%;
+
+  /* --- Repères de rupture (référence uniquement) -------------------------
+     Les custom properties ne sont pas utilisables dans une condition
+     @container/@media (limitation CSS standard, pas un oubli) — ces
+     valeurs restent donc en dur dans les règles plus bas, mais sont
+     documentées ici pour qu'une seule source de vérité existe visuellement.
+     Depuis le passage aux container queries, elles vivent dans des
+     @container (repli @media conservé pour les moteurs plus anciens). */
+  /* --ins-bp-tablet: 900px; */
+  /* --ins-bp-mobile: 620px; */
 }
 
 /* --- Technique bordure d'hexagone ----------------------------------------
@@ -314,20 +363,33 @@
    (au lieu de "background" directement). Ne fonctionne pas sur un <input>
    (élément remplacé, pas de ::before) : pour ces cas, la technique est
    appliquée au wrapper qui entoure l'input (cf. .comp-roll, .hex-input-wrap). */
+/* --- Technique bordure d'hexagone ----------------------------------------
+   Deux approches selon le cas :
+   1) Élément sans contenu texte propre (.blatte, simple pastille de
+      couleur) : un ::before suffit, posé "par-dessus" le fond de son
+      parent (aucun texte à recouvrir, donc pas de souci d'ordre d'empilement).
+   2) Élément contenant du texte/input réel (grand hexagone de caract.,
+      Caste, compétence de caste) : le ::before ne convient PAS — un
+      pseudo-élément en position:absolute devient un "descendant positionné"
+      qui se peint APRÈS le contenu statique normal du même parent (texte,
+      input), donc PAR-DESSUS lui, le rendant invisible (bug du 04/08 :
+      "score de Caste disparu"). Dans ces cas, on utilise deux vrais
+      éléments imbriqués : l'extérieur = couleur de bordure (son propre
+      fond, toujours peint en tout premier, sans exception), l'intérieur
+      = couleur de remplissage (son propre fond aussi, donc son propre
+      texte se peint naturellement par-dessus lui, dans le bon ordre).
+   border + clip-path sur un même élément est de toute façon à éviter :
+   ça produit un contour tronqué sur les côtés obliques. */
 .insectopia .blatte,
-.insectopia .caste-big-hex,
-.insectopia .carac-hex .caract-roll,
 .insectopia .comp-hex .comp-roll,
-.insectopia .hex-input-wrap {
+.insectopia .comp-row-caste .hex-input-wrap,
+.insectopia .caste-hex-header,
+.insectopia .carac-hex {
   position: relative;
   clip-path: var(--hex-clip);
   background: var(--ins-border);
 }
-.insectopia .blatte::before,
-.insectopia .caste-big-hex::before,
-.insectopia .carac-hex .caract-roll::before,
-.insectopia .comp-hex .comp-roll::before,
-.insectopia .hex-input-wrap::before {
+.insectopia .blatte::before {
   content: "";
   position: absolute;
   inset: var(--hex-border-w, 1px);
@@ -397,8 +459,8 @@
   flex: 0 0 auto;
   display: flex;
   align-items: flex-start;
-  gap: 1em;
-  padding: 0.75em;
+  gap: var(--ins-space-20);
+  padding: var(--ins-space-15);
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
@@ -409,7 +471,7 @@
   height: 128px;
   object-fit: cover;
   border: 2px solid var(--ins-border);
-  border-radius: 6px;
+  border-radius: var(--ins-radius-6);
   background: var(--ins-panel-bg-alt);
 }
 
@@ -417,11 +479,11 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.35em;
+  gap: var(--ins-space-7);
 }
 
 .insectopia .charname {
-  font-size: 1.4em;
+  font-size: var(--ins-fs-140);
   font-weight: bold;
   background: transparent;
   border: none;
@@ -431,7 +493,7 @@
 
 .insectopia .identite-badges {
   display: flex;
-  gap: 0.4em;
+  gap: var(--ins-space-8);
 }
 
 .insectopia .badge-input {
@@ -439,33 +501,33 @@
   background: var(--ins-accent-cuivre);
   color: #F3EAD7;
   border: 1px solid var(--ins-border);
-  border-radius: 3px;
-  padding: 0.15em 0.5em;
-  font-size: 0.85em;
+  border-radius: var(--ins-radius-3);
+  padding: var(--ins-space-3) var(--ins-space-10);
+  font-size: var(--ins-fs-85);
   text-align: center;
 }
 
 .insectopia .identite-line {
   display: flex;
-  gap: 0.4em;
+  gap: var(--ins-space-8);
   align-items: center;
 }
 
 .insectopia .identite-line-secondary input,
 .insectopia .identite-line-secondary select {
   flex: 1;
-  font-size: 0.8em;
+  font-size: var(--ins-fs-80);
   background: var(--ins-panel-bg-alt);
   border: 1px solid var(--ins-border-light);
-  border-radius: 3px;
+  border-radius: var(--ins-radius-3);
   color: var(--ins-text);
-  padding: 0.1em 0.4em;
+  padding: var(--ins-space-2) var(--ins-space-8);
 }
 
 .insectopia .quartz-field {
   display: flex;
   align-items: center;
-  gap: 0.3em;
+  gap: var(--ins-space-6);
   color: var(--ins-accent-ambre);
   font-weight: bold;
 }
@@ -479,7 +541,7 @@
   background: var(--ins-panel-bg-alt);
   border: 1px solid var(--ins-border);
   clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px);
-  padding: 0.5em;
+  padding: var(--ins-space-10);
   text-align: center;
 }
 
@@ -491,21 +553,43 @@
 .insectopia .chancebox .small-input {
   width: 34px;
   max-width: 100%;
+  background: var(--ins-panel-bg);
+  color: var(--ins-text);
+  border: 1px solid var(--ins-border-light);
+  border-radius: var(--ins-radius-3);
+  padding: var(--ins-space-3) 0;
+  font-weight: bold;
+  text-align: center;
+  /* Les flèches natives d'un <input type="number"> prennent de la place
+     et écrasaient le chiffre dans une case aussi étroite (34px) — on les
+     masque, la valeur reste modifiable au clavier ou via les Blattes. */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.insectopia .chancebox .small-input::-webkit-inner-spin-button,
+.insectopia .chancebox .small-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.insectopia .chancebox .small-input:focus {
+  background: #FFFFFF;
+  outline: 1px solid var(--ins-accent-cyan);
+  border-color: var(--ins-accent-cyan);
 }
 
 .insectopia .chancebox-title {
   font-weight: bold;
   color: var(--ins-accent-cuivre);
-  margin-bottom: 0.25em;
+  margin-bottom: var(--ins-space-5);
   text-transform: uppercase;
-  font-size: 0.85em;
+  font-size: var(--ins-fs-85);
   letter-spacing: 0.05em;
 }
 
 .insectopia .chancebox-title-secondary {
-  margin-top: 0.5em;
+  margin-top: var(--ins-space-10);
   border-top: 1px solid var(--ins-border-light);
-  padding-top: 0.4em;
+  padding-top: var(--ins-space-8);
 }
 
 .insectopia .blatte {
@@ -522,16 +606,16 @@
 
 .insectopia .chance-roll {
   display: inline-block;
-  margin-top: 0.4em;
-  padding: 0.3em 0.8em;
+  margin-top: var(--ins-space-8);
+  padding: var(--ins-space-6) var(--ins-space-16);
   background: var(--ins-accent-cuivre);
   color: #F3EAD7;
-  border-radius: 3px;
+  border-radius: var(--ins-radius-3);
   clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
 }
 .insectopia .chance-roll:hover { background: var(--ins-accent-cyan); }
 
-.insectopia .experience-input { width: 100%; margin-top: 0.2em; }
+.insectopia .experience-input { width: 100%; margin-top: var(--ins-space-4); }
 
 /* --- Barre de synthèse -------------------------------------------------- */
 
@@ -539,8 +623,8 @@
   flex: 0 0 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em;
-  padding: 0.5em 0.75em;
+  gap: var(--ins-space-10);
+  padding: var(--ins-space-10) var(--ins-space-15);
   background: var(--ins-accent-cuivre);
   color: #F3EAD7;
   border-bottom: 2px solid var(--ins-border);
@@ -549,14 +633,14 @@
 .insectopia .status-item {
   display: flex;
   align-items: center;
-  gap: 0.35em;
+  gap: var(--ins-space-7);
   background: rgba(0, 0, 0, 0.15);
-  border-radius: 3px;
-  padding: 0.2em 0.5em;
+  border-radius: var(--ins-radius-3);
+  padding: var(--ins-space-4) var(--ins-space-10);
 }
 
 .insectopia .status-label {
-  font-size: 0.75em;
+  font-size: var(--ins-fs-75);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   opacity: 0.85;
@@ -567,14 +651,14 @@
   background: #F3EAD7;
   color: var(--ins-text);
   border: none;
-  border-radius: 2px;
+  border-radius: var(--ins-radius-2);
   text-align: center;
 }
 
 .insectopia .status-souillure .small-input { background: #4B3C56; color: #F3EAD7; }
 .insectopia .status-blessures .small-input { background: #9E342B; color: #F3EAD7; }
 
-.insectopia .status-max { font-size: 0.8em; opacity: 0.75; }
+.insectopia .status-max { font-size: var(--ins-fs-80); opacity: 0.75; }
 .insectopia .status-value { font-weight: bold; }
 
 .insectopia .init-roll {
@@ -594,7 +678,7 @@
 .insectopia .sheet-tabs .item {
   flex: 1;
   text-align: center;
-  padding: 0.5em;
+  padding: var(--ins-space-10);
   color: var(--ins-text-secondary);
   border-right: 1px solid var(--ins-border-light);
   clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
@@ -609,7 +693,7 @@
 .insectopia .sheet-body {
   flex: 1 1 auto;
   min-height: 0;
-  padding: 0.75em;
+  padding: var(--ins-space-15);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -619,22 +703,22 @@
 .insectopia .panel {
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border-light);
-  border-radius: 4px;
-  padding: 0.6em 0.8em;
-  margin-bottom: 0.75em;
+  border-radius: var(--ins-radius-4);
+  padding: var(--ins-space-12) var(--ins-space-16);
+  margin-bottom: var(--ins-space-15);
 }
 
 .insectopia .panel h3 {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 var(--ins-space-10) 0;
   color: var(--ins-accent-cuivre);
   border-bottom: 1px solid var(--ins-border-light);
-  padding-bottom: 0.2em;
+  padding-bottom: var(--ins-space-4);
 }
 
 .insectopia .combat-columns,
 .insectopia .recit-columns {
   display: flex;
-  gap: 0.75em;
+  gap: var(--ins-space-15);
   flex-wrap: wrap;
 }
 
@@ -648,7 +732,7 @@
 
 .insectopia .aptitudes-layout {
   display: flex;
-  gap: 1em;
+  gap: var(--ins-space-20);
   align-items: flex-start;
   min-width: 0;
 }
@@ -663,32 +747,37 @@
 .insectopia .caste-hex-header {
   display: flex;
   justify-content: center;
-  margin-bottom: 0.5em;
+  margin-bottom: var(--ins-space-10);
+  width: 130px;
+  height: 113px;
+  margin-left: auto;
+  margin-right: auto;
+  --hex-border-w: 2px;
+}
+.insectopia .caste-hex-header:hover {
+  background: var(--ins-accent-cuivre);
 }
 
 .insectopia .caste-big-hex {
+  position: absolute;
+  inset: var(--hex-border-w, 2px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 130px;
-  height: 113px;
-  --hex-fill: var(--ins-panel-bg);
+  clip-path: var(--hex-clip);
+  background: var(--ins-panel-bg);
   color: var(--ins-text);
-  --hex-border-w: 2px;
 }
-.insectopia .caste-big-hex:hover {
-  background: var(--ins-accent-cuivre);
-}
-.insectopia .caste-big-hex:hover::before {
+.insectopia .caste-hex-header:hover .caste-big-hex {
   background: var(--ins-panel-bg-alt);
 }
 
 .insectopia .comp-row-caste {
   display: flex;
   align-items: center;
-  gap: 0.3em;
-  padding: 0.25em 0;
+  gap: var(--ins-space-6);
+  padding: var(--ins-space-5) 0;
   border-bottom: 1px solid rgba(157, 143, 120, 0.3);
 }
 .insectopia .comp-row-caste .comp-caste-label {
@@ -696,16 +785,19 @@
   min-width: 90px;
 }
 .insectopia .comp-row-caste .hex-input-wrap {
+  position: relative;
   flex: 0 0 auto;
   width: 32px;
   height: 28px;
   --hex-border-w: 1px;
-  --hex-fill: var(--ins-panel-bg-alt);
 }
 .insectopia .comp-row-caste .small-input {
-  width: 100%;
-  height: 100%;
-  background: transparent;
+  position: absolute;
+  inset: var(--hex-border-w, 1px);
+  width: auto;
+  height: auto;
+  clip-path: var(--hex-clip);
+  background: var(--ins-panel-bg-alt);
   border: none;
   text-align: center;
   font-weight: bold;
@@ -713,7 +805,7 @@
 }
 .insectopia .caste-comp-sphere {
   flex: 0 0 auto;
-  font-size: 0.65em;
+  font-size: var(--ins-fs-65);
   width: 48px;
   padding: 0;
 }
@@ -751,26 +843,27 @@
 }
 
 .insectopia .carac-hex .caract-roll {
+  position: absolute;
+  inset: var(--hex-border-w, 2px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  --hex-fill: var(--ins-panel-bg);
+  clip-path: var(--hex-clip);
+  background: var(--ins-panel-bg);
   color: var(--ins-text);
   --hex-border-w: 2px;
 }
 
-.insectopia .carac-hex .caract-roll:hover {
-  background: var(--ins-accent-cuivre);
-}
-.insectopia .carac-hex .caract-roll:hover::before {
+.insectopia .carac-hex:hover .caract-roll {
   background: var(--ins-panel-bg-alt);
+}
+.insectopia .carac-hex:hover {
+  background: var(--ins-accent-cuivre);
 }
 
 .insectopia .carac-name {
-  font-size: 0.85em;
+  font-size: var(--ins-fs-85);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: var(--ins-accent-cuivre);
@@ -783,7 +876,7 @@
   background: transparent;
   color: var(--ins-text);
   border: none;
-  font-size: 1.5em;
+  font-size: var(--ins-fs-150);
   font-weight: bold;
 }
 
@@ -795,7 +888,7 @@
   position: absolute;
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: var(--ins-radius-circle);
   border: 1px solid rgba(0, 0, 0, 0.4);
   top: 50%;
   transform: translateY(-50%);
@@ -822,8 +915,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  aspect-ratio: 1 / 0.87;
-  max-height: 100%;
+  height: 100%;
   --hex-border-w: 1px;
 }
 
@@ -838,7 +930,7 @@
   color: var(--ins-text);
   text-align: center;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: var(--ins-fs-110);
   padding: 0;
 }
 
@@ -856,10 +948,10 @@
 }
 
 .insectopia .comp-label {
-  font-size: 0.72em;
+  font-size: var(--ins-fs-72);
   color: var(--ins-text-secondary);
   white-space: nowrap;
-  margin-top: 0.1em;
+  margin-top: var(--ins-space-2);
 }
 
 /* Pastille grise (compétences "physiques" en argent, cf. fiche) sauf pour
@@ -879,10 +971,10 @@
   margin-top: -5px;
   top: 50%;
   left: 50%;
-  border-radius: 50%;
+  border-radius: var(--ins-radius-circle);
   background: #B9C0C6;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  transform: rotate(var(--dot-angle, 0deg)) translateX(60px);
+  transform: rotate(var(--dot-angle, 0deg)) translateX(var(--dot-radius, 45px));
   z-index: 1;
 }
 .insectopia .comp-hex-chitine::before,
@@ -895,8 +987,8 @@
 .insectopia .armure-total {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5em;
-  font-size: 0.9em;
+  margin-bottom: var(--ins-space-10);
+  font-size: var(--ins-fs-90);
 }
 
 .insectopia .panel-armure .armure-total strong { color: var(--ins-accent-ambre); }
@@ -913,7 +1005,7 @@
 .insectopia .items-list {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85em;
+  font-size: var(--ins-fs-85);
 }
 
 .insectopia .items-list th {
@@ -923,7 +1015,7 @@
 }
 
 .insectopia .items-list td {
-  padding: 0.2em 0.3em;
+  padding: var(--ins-space-4) var(--ins-space-6);
   border-bottom: 1px solid rgba(157, 143, 120, 0.3);
 }
 
@@ -931,12 +1023,12 @@
   width: 24px;
   height: 24px;
   object-fit: cover;
-  border-radius: 3px;
+  border-radius: var(--ins-radius-3);
 }
 
 .insectopia .item-add {
   display: inline-block;
-  margin-top: 0.4em;
+  margin-top: var(--ins-space-8);
   color: var(--ins-accent-cuivre);
 }
 
@@ -944,7 +1036,7 @@
 
 .insectopia .contacts-table {
   width: 100%;
-  font-size: 0.85em;
+  font-size: var(--ins-fs-85);
 }
 
 .insectopia .contacts-table input[type="text"] {
@@ -964,7 +1056,19 @@
 
 /* --- Réactif ----------------------------------------------------------------- */
 
-@media (max-width: 900px) {
+/* Container queries plutôt que @media : une fenêtre de fiche Foundry est
+   redimensionnable indépendamment de la fenêtre du navigateur/de l'app —
+   @media répondait à la largeur du NAVIGATEUR, pas à celle, réelle, de la
+   fenêtre de fiche (qui peut être étroite dans un grand navigateur, ou
+   l'inverse). .sheet-content est le bon conteneur : parent direct de
+   .sheet-header, .sheet-tabs et .sheet-body, donc les trois peuvent
+   réagir à sa largeur réelle. */
+.insectopia .sheet-content {
+  container-type: inline-size;
+  container-name: sheet;
+}
+
+@container sheet (max-width: 900px) {
   .insectopia .aptitudes-layout {
     flex-direction: column;
     align-items: center;
@@ -976,9 +1080,35 @@
   .insectopia .chancebox { width: 100%; }
 }
 
-@media (max-width: 620px) {
+@container sheet (max-width: 620px) {
   .insectopia .status-bar {
     flex-direction: column;
+  }
+}
+
+/* Repli pour un navigateur/moteur qui ne supporterait pas les container
+   queries (avant Chromium 105 / Firefox 110 / Safari 16) — peu probable
+   dans l'app Electron de Foundry mais possible en accès navigateur. Scopé
+   par @supports pour ne jamais s'appliquer EN PLUS des container queries
+   (les deux mécanismes réagiraient à des largeurs différentes et se
+   marcheraient dessus). */
+@supports not (container-type: inline-size) {
+  @media (max-width: 900px) {
+    .insectopia .aptitudes-layout {
+      flex-direction: column;
+      align-items: center;
+    }
+    .insectopia .panel-caste { width: 100%; max-width: 320px; }
+    .insectopia .sheet-header {
+      flex-direction: column;
+    }
+    .insectopia .chancebox { width: 100%; }
+  }
+
+  @media (max-width: 620px) {
+    .insectopia .status-bar {
+      flex-direction: column;
+    }
   }
 }
 
@@ -1003,8 +1133,8 @@
 .insectopia.sheet.item .item-sheet-header {
   display: flex;
   align-items: center;
-  gap: 0.75em;
-  padding: 0.6em;
+  gap: var(--ins-space-15);
+  padding: var(--ins-space-12);
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
@@ -1015,13 +1145,13 @@
   height: 56px;
   object-fit: cover;
   border: 2px solid var(--ins-border);
-  border-radius: 6px;
+  border-radius: var(--ins-radius-6);
   background: var(--ins-panel-bg-alt);
 }
 
 .insectopia.sheet.item .item-sheet-header .itemname {
   flex: 1;
-  font-size: 1.2em;
+  font-size: var(--ins-fs-120);
   font-weight: bold;
   background: transparent;
   border: none;
@@ -1030,18 +1160,18 @@
 }
 
 .insectopia.sheet.item .item-body {
-  padding: 0.75em;
+  padding: var(--ins-space-15);
 }
 
 .insectopia.sheet.item .item-body .field {
-  margin-bottom: 0.6em;
+  margin-bottom: var(--ins-space-12);
   display: flex;
   flex-direction: column;
-  gap: 0.2em;
+  gap: var(--ins-space-4);
 }
 
 .insectopia.sheet.item .item-body .field label {
-  font-size: 0.85em;
+  font-size: var(--ins-fs-85);
   color: var(--ins-accent-cuivre);
   font-weight: bold;
 }
@@ -1051,9 +1181,9 @@
 .insectopia.sheet.item .item-body .field textarea {
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border-light);
-  border-radius: 3px;
+  border-radius: var(--ins-radius-3);
   color: var(--ins-text);
-  padding: 0.25em 0.4em;
+  padding: var(--ins-space-5) var(--ins-space-8);
 }
 
 .insectopia.sheet.item .item-body .field.checkbox {
@@ -1064,16 +1194,16 @@
 .insectopia.sheet.item .item-body .field.checkbox label {
   display: flex;
   align-items: center;
-  gap: 0.4em;
+  gap: var(--ins-space-8);
   color: var(--ins-text);
   font-weight: normal;
 }
 
 .insectopia.sheet.item .item-body .hint {
-  font-size: 0.78em;
+  font-size: var(--ins-fs-78);
   font-style: italic;
   color: var(--ins-text-secondary);
-  margin: 0.2em 0 0.6em 0;
+  margin: var(--ins-space-4) 0 var(--ins-space-12) 0;
 }
 
 /* --- Dialogue de tirage de Blattes ---------------------------------------- */
@@ -1085,30 +1215,30 @@
 .dialog .intro {
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border-light);
-  border-radius: 4px;
-  padding: 0.5em;
-  margin-bottom: 0.5em;
+  border-radius: var(--ins-radius-4);
+  padding: var(--ins-space-10);
+  margin-bottom: var(--ins-space-10);
 }
 
 .dialog .introImg img {
   width: 48px;
   height: 48px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: var(--ins-radius-4);
   border: 1px solid var(--ins-border);
 }
 
 .dialog .introtext {
   color: var(--ins-text);
   font-weight: bold;
-  padding-left: 0.5em;
+  padding-left: var(--ins-space-10);
 }
 
 .dialog .dialog-main > div {
   background: var(--ins-panel-bg-alt);
   border: 1px solid var(--ins-border-light);
-  border-radius: 4px;
-  padding: 0.5em;
+  border-radius: var(--ins-radius-4);
+  padding: var(--ins-space-10);
 }
 
 .dialog .dialog-main label {
@@ -1130,9 +1260,9 @@
 .chatroll {
   background: var(--ins-panel-bg);
   border: 1px solid var(--ins-border);
-  border-radius: 4px;
+  border-radius: var(--ins-radius-4);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-  padding: 0.5em;
+  padding: var(--ins-space-10);
   color: var(--ins-text);
 }
 
@@ -1140,42 +1270,42 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--ins-border-light);
-  padding-bottom: 0.4em;
-  margin-bottom: 0.4em;
+  padding-bottom: var(--ins-space-8);
+  margin-bottom: var(--ins-space-8);
 }
 
 .chatroll .introImg img {
   width: 40px;
   height: 40px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: var(--ins-radius-4);
   border: 1px solid var(--ins-border);
 }
 
 .chatroll .introText {
   font-weight: bold;
   color: var(--ins-accent-cuivre);
-  padding-left: 0.5em;
+  padding-left: var(--ins-space-10);
 }
 
 .chatroll .difficultyline {
-  font-size: 0.8em;
+  font-size: var(--ins-fs-80);
   color: var(--ins-text-secondary);
   background: var(--ins-panel-bg-alt);
-  border-radius: 3px;
-  padding: 0.2em;
+  border-radius: var(--ins-radius-3);
+  padding: var(--ins-space-4);
 }
 
 .chatroll .blattesresult {
   width: 100%;
-  margin: 0.4em 0;
+  margin: var(--ins-space-8) 0;
 }
 
 .chatroll .chance-blatte-line {
   text-align: right;
-  padding-right: 0.4em;
+  padding-right: var(--ins-space-8);
   color: var(--ins-text-secondary);
-  font-size: 0.85em;
+  font-size: var(--ins-fs-85);
 }
 
 .chatroll .choix-couleur {
@@ -1189,7 +1319,7 @@
 .chatroll .resultText {
   background: var(--ins-accent-cuivre);
   color: #F3EAD7;
-  border-radius: 3px;
+  border-radius: var(--ins-radius-3);
   font-weight: bold;
 }
 
@@ -1199,11 +1329,11 @@
 
 .chatroll .degats-actions a {
   display: inline-block;
-  margin-top: 0.4em;
+  margin-top: var(--ins-space-8);
   background: var(--ins-accent-rouge);
   color: #F3EAD7;
-  border-radius: 3px;
-  padding: 0.2em 0.6em;
+  border-radius: var(--ins-radius-3);
+  padding: var(--ins-space-4) var(--ins-space-12);
 }
 
 .chatroll .rerollicon i {
