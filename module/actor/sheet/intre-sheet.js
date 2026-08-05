@@ -355,7 +355,7 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
       });
     });
 
-    activer(this._ongletActif || "caracteristiques");
+    activer(this._ongletActif || "fiche");
   }
 
   /**

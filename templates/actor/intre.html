@@ -127,39 +127,18 @@
 
   <!-- =============================== ONGLETS ============================== -->
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="profil">Profil</a>
-    <a class="item" data-tab="caracteristiques">Aptitudes</a>
-    <a class="item" data-tab="combat">Combat</a>
-    <a class="item" data-tab="capacites">Traits &amp; Magie</a>
-    <a class="item" data-tab="objets">Inventaire</a>
-    <a class="item" data-tab="notes">Récit</a>
+    <a class="item" data-tab="fiche">Fiche</a>
+    <a class="item" data-tab="details">Détails</a>
   </nav>
 
   <section class="sheet-body">
 
-    <!-- ------------------------------ PROFIL ------------------------------ -->
-    <div class="tab profil" data-group="primary" data-tab="profil">
-      <div class="panel panel-notes">
-        <h3>Description</h3>
-        {{#if editable}}
-        <prose-mirror name="system.identite.description" button="true" editable="{{editable}}" toggled="false">{{{descriptionhtml}}}</prose-mirror>
-        {{else}}
-        {{{descriptionhtml}}}
-        {{/if}}
-      </div>
-      <p class="hint">
-        Les champs d'identité complets (espèce, variété, caste, métier, religion, alignement, titre,
-        sexe, âge, couleur, régime alimentaire) se modifient dans l'en-tête, toujours visible en haut
-        de la feuille.
-      </p>
-    </div>
-
-    <!-- --------------------------- APTITUDES ------------------------------ -->
-    <div class="tab caracteristiques" data-group="primary" data-tab="caracteristiques">
-      <div class="aptitudes-layout">
+    <!-- =============================== FICHE ================================ -->
+    <div class="tab fiche" data-group="primary" data-tab="fiche">
+      <div class="fiche-grid">
 
         <!-- Caste : panneau séparé, hors rosace, comme sur la fiche officielle -->
-        <div class="panel panel-caste">
+        <div class="fiche-caste panel panel-caste">
           {{#each caracteristiquesListe as |carac|}}
           {{#if (eq carac.key "caste")}}
           <div class="caste-hex-header">
@@ -175,7 +154,7 @@
               <input type="text" class="comp-caste-label" name="system.caracteristiques.caste.competences.{{index}}.label" value="{{comp.label}}" />
               <span class="hex-input-wrap">
                 <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
-              </span> 
+              </span>
               <select class="caste-comp-sphere" data-index="{{index}}" title="Sphère de magie associée">
                 <option value="">—</option>
                 {{#each @root.spheresListe as |sphere|}}
@@ -191,6 +170,9 @@
           {{/each}}
         </div>
 
+        <!-- Rosace : les 6 caractéristiques principales autour d'un centre vide.
+             Géométrie calculée par trigonométrie (buildRosaceGeometry, côté JS). -->
+        <div class="fiche-rosace">
         <!-- Rosace : les 6 caractéristiques principales autour d'un centre vide.
              Géométrie calculée par trigonométrie (buildRosaceGeometry, côté JS) :
              chaque <foreignObject> est positionné aux coordonnées exactes du
@@ -211,7 +193,7 @@
 
           {{#each carac.competencesListe as |comp|}}
           <foreignObject x="{{comp.geo.x}}" y="{{comp.geo.y}}" width="{{comp.geo.w}}" height="{{comp.geo.h}}">
-            <div xmlns="http://www.w3.org/1999/xhtml" class="comp-hex comp-hex-{{../carac.key}} side-{{../carac.side}}" style="--dot-angle: {{comp.geo.dotAngle}}deg;">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="comp-hex comp-hex-{{../carac.key}} side-{{../carac.side}}" style="--dot-angle: {{comp.geo.dotAngle}}deg; --dot-radius: {{comp.geo.dotRadius}}px;">
               <a class="comp-roll" data-action="compRoll" data-carac="{{../carac.key}}" data-comp="{{comp.key}}" title="{{localize comp.label}}">
                 <input class="small-input" type="number" name="system.caracteristiques.{{../carac.key}}.competences.{{comp.key}}.value" value="{{comp.value}}" />
               </a>
@@ -222,16 +204,64 @@
           {{/if}}
           {{/each}}
         </svg>
-      </div>
       <p class="hint">
         Cliquez sur une caractéristique ou une compétence pour ouvrir le dialogue de tirage de Blattes.
         Les compétences de Caste dépendent du métier du personnage.
       </p>
-    </div>
+        </div>
 
+        <!-- Capacités & Magie : jeteur de sorts (action de jeu active, comme le
+             Combat), capacités spéciales à bonus automatisé, traits libres. -->
+        <div class="fiche-capacites panel">
+      {{#if jeteurDeSorts.length}}
+      <h3>Jeteur de sorts</h3>
+      <table class="jeteur-sorts-table">
+        <thead><tr><th>Sphère magique</th><th>Score</th><th>Mots de pouvoir</th></tr></thead>
+        <tbody>
+          {{#each jeteurDeSorts as |ligne|}}
+          <tr><td>{{ligne.sphereLabel}}</td><td>{{ligne.sphereValue}}</td><td>{{ligne.motsLabels}}</td></tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="sort-cast-open" data-action="sortCastOpen"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
+      <hr />
+      {{/if}}
 
-    <!-- ----------------------------- COMBAT -------------------------------- -->
-    <div class="tab combat" data-group="primary" data-tab="combat">
+      <h3>Capacités spéciales (avec bonus automatisé)</h3>
+      <table class="items-list">
+        <thead><tr><th></th><th>Nom</th><th>Catégorie</th><th>Bonus</th><th></th></tr></thead>
+        <tbody>
+          {{#each capacitesItems as |capacite|}}
+          <tr>
+            <td><img class="item-icon" src="{{capacite.img}}" /></td>
+            <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{capacite.id}}">{{capacite.name}}</a></td>
+            <td>{{capacite.system.categorie}}</td>
+            <td>
+              {{#if capacite.system.bonus.actif}}
+                {{localize capacite.system.bonus.caracKey}}{{#if capacite.system.bonus.compKey}}.{{capacite.system.bonus.compKey}}{{/if}}
+                {{#if (gt capacite.system.bonus.valeur 0)}}+{{/if}}{{capacite.system.bonus.valeur}}
+              {{else}}—{{/if}}
+            </td>
+            <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{capacite.id}}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <a class="item-add item-create" data-action="itemCreate" data-type="capacite"><i class="fas fa-plus"></i> Ajouter une capacité</a>
+
+      <h3>Traits &amp; particularités (texte libre)</h3>
+      {{#each system.identite.capacites as |capacite index|}}
+      <div class="capacite-line">
+        <input type="text" name="system.identite.capacites.{{index}}.label" value="{{capacite.label}}" placeholder="Nom de la capacité" />
+        <textarea name="system.identite.capacites.{{index}}.description" placeholder="Description">{{capacite.description}}</textarea>
+        <a class="capacite-remove" data-action="capaciteRemove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
+      </div>
+      {{/each}}
+      <a class="capacite-add" data-action="capaciteAdd"><i class="fas fa-plus"></i> Ajouter une capacité (raciale ou de caste)</a>
+        </div>
+
+        <!-- Combat -->
+        <div class="fiche-combat">
 
       <div class="combat-columns">
         <div class="panel panel-actions">
@@ -322,10 +352,29 @@
         <h3>Localisation</h3>
         <textarea name="system.ressources.localisation.notes" placeholder="Notes de localisation des blessures (zone interactive prévue en V2)">{{system.ressources.localisation.notes}}</textarea>
       </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- --------------------------- INVENTAIRE ------------------------------ -->
-    <div class="tab objets" data-group="primary" data-tab="objets">
+    <!-- =============================== DÉTAILS =============================== -->
+    <div class="tab details" data-group="primary" data-tab="details">
+      <div class="panel panel-notes">
+        <h3>Description</h3>
+        {{#if editable}}
+        <prose-mirror name="system.identite.description" button="true" editable="{{editable}}" toggled="false">{{{descriptionhtml}}}</prose-mirror>
+        {{else}}
+        {{{descriptionhtml}}}
+        {{/if}}
+      </div>
+      <p class="hint">
+        Les champs d'identité complets (espèce, variété, caste, métier, religion, alignement, titre,
+        sexe, âge, couleur, régime alimentaire) se modifient dans l'en-tête, toujours visible en haut
+        de la feuille.
+      </p>
+
+      <div class="panel panel-objets">
+        <h3>Objets</h3>
       <h3>Objets</h3>
       <table class="items-list">
         <thead><tr><th></th><th>Nom</th><th>Qté</th><th>Poids unit.</th><th>Prix</th><th></th></tr></thead>
@@ -347,59 +396,8 @@
         Poids total porté : {{poidsTotalObjets}} / {{poidsPorte}} indrammes (seuil "Porter", livre p.206,
         selon la Chitine). Purement informatif : aucun malus n'est appliqué automatiquement.
       </p>
-    </div>
-
-    <!-- ------------------------- TRAITS & MAGIE ----------------------------- -->
-    <div class="tab capacites" data-group="primary" data-tab="capacites">
-      {{#if jeteurDeSorts.length}}
-      <h3>Jeteur de sorts</h3>
-      <table class="jeteur-sorts-table">
-        <thead><tr><th>Sphère magique</th><th>Score</th><th>Mots de pouvoir</th></tr></thead>
-        <tbody>
-          {{#each jeteurDeSorts as |ligne|}}
-          <tr><td>{{ligne.sphereLabel}}</td><td>{{ligne.sphereValue}}</td><td>{{ligne.motsLabels}}</td></tr>
-          {{/each}}
-        </tbody>
-      </table>
-      <a class="sort-cast-open" data-action="sortCastOpen"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
-      <hr />
-      {{/if}}
-
-      <h3>Capacités spéciales (avec bonus automatisé)</h3>
-      <table class="items-list">
-        <thead><tr><th></th><th>Nom</th><th>Catégorie</th><th>Bonus</th><th></th></tr></thead>
-        <tbody>
-          {{#each capacitesItems as |capacite|}}
-          <tr>
-            <td><img class="item-icon" src="{{capacite.img}}" /></td>
-            <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{capacite.id}}">{{capacite.name}}</a></td>
-            <td>{{capacite.system.categorie}}</td>
-            <td>
-              {{#if capacite.system.bonus.actif}}
-                {{localize capacite.system.bonus.caracKey}}{{#if capacite.system.bonus.compKey}}.{{capacite.system.bonus.compKey}}{{/if}}
-                {{#if (gt capacite.system.bonus.valeur 0)}}+{{/if}}{{capacite.system.bonus.valeur}}
-              {{else}}—{{/if}}
-            </td>
-            <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{capacite.id}}"><i class="fas fa-trash"></i></a></td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-      <a class="item-add item-create" data-action="itemCreate" data-type="capacite"><i class="fas fa-plus"></i> Ajouter une capacité</a>
-
-      <h3>Traits &amp; particularités (texte libre)</h3>
-      {{#each system.identite.capacites as |capacite index|}}
-      <div class="capacite-line">
-        <input type="text" name="system.identite.capacites.{{index}}.label" value="{{capacite.label}}" placeholder="Nom de la capacité" />
-        <textarea name="system.identite.capacites.{{index}}.description" placeholder="Description">{{capacite.description}}</textarea>
-        <a class="capacite-remove" data-action="capaciteRemove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
       </div>
-      {{/each}}
-      <a class="capacite-add" data-action="capaciteAdd"><i class="fas fa-plus"></i> Ajouter une capacité (raciale ou de caste)</a>
-    </div>
 
-    <!-- ------------------------------ RÉCIT --------------------------------- -->
-    <div class="tab notes" data-group="primary" data-tab="notes">
       <div class="recit-columns">
         <div class="panel">
           <h3>Historique</h3>

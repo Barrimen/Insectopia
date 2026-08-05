@@ -730,18 +730,25 @@
 
 /* --- Rosace hexagonale des 6 caractéristiques ---------------------------- */
 
-.insectopia .aptitudes-layout {
-  display: flex;
+/* --- Grille de l'onglet Fiche (Caste / Rosace / Capacités & Magie / Combat) */
+
+.insectopia .fiche-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(420px, 1.6fr) minmax(260px, 0.85fr);
+  grid-template-areas:
+    "caste rosace capacites"
+    "combat combat combat";
   gap: var(--ins-space-20);
-  align-items: flex-start;
+  align-items: start;
   min-width: 0;
 }
+.insectopia .fiche-caste { grid-area: caste; }
+.insectopia .fiche-rosace { grid-area: rosace; min-width: 0; }
+.insectopia .fiche-capacites { grid-area: capacites; }
+.insectopia .fiche-combat { grid-area: combat; }
 
 .insectopia .panel-caste {
-  width: fit-content;
-  min-width: 280px;
-  max-width: 380px;
-  flex: 0 0 auto;
+  width: 100%;
 }
 
 .insectopia .caste-hex-header {
@@ -1069,11 +1076,15 @@
 }
 
 @container sheet (max-width: 900px) {
-  .insectopia .aptitudes-layout {
-    flex-direction: column;
-    align-items: center;
+  .insectopia .fiche-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "rosace"
+      "caste"
+      "capacites"
+      "combat";
   }
-  .insectopia .panel-caste { width: 100%; max-width: 320px; }
+  .insectopia .fiche-caste { max-width: 320px; margin: 0 auto; }
   .insectopia .sheet-header {
     flex-direction: column;
   }
@@ -1094,11 +1105,15 @@
    marcheraient dessus). */
 @supports not (container-type: inline-size) {
   @media (max-width: 900px) {
-    .insectopia .aptitudes-layout {
-      flex-direction: column;
-      align-items: center;
+    .insectopia .fiche-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "rosace"
+        "caste"
+        "capacites"
+        "combat";
     }
-    .insectopia .panel-caste { width: 100%; max-width: 320px; }
+    .insectopia .fiche-caste { max-width: 320px; margin: 0 auto; }
     .insectopia .sheet-header {
       flex-direction: column;
     }
