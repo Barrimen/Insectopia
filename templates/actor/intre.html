@@ -225,6 +225,15 @@
       </table>
       <a class="sort-cast-open" data-action="sortCastOpen"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
       <hr />
+      {{else if estMetierDivin}}
+      <h3>Jeteur de sorts</h3>
+      <p class="hint">
+        Ce métier permet de jeter des sorts, mais aucune Sphère de magie n'est encore associée à une
+        compétence de Caste. Choisissez-la dans le menu déroulant à côté de la compétence "Sphère de
+        magie" correspondante, à gauche — le tableau des Mots de pouvoir apparaîtra ici une fois la
+        Sphère sélectionnée.
+      </p>
+      <hr />
       {{/if}}
 
       <h3>Capacités spéciales (avec bonus automatisé)</h3>
@@ -374,29 +383,91 @@
       </p>
 
       <div class="panel panel-objets">
-        <h3>Objets</h3>
-      <h3>Objets</h3>
-      <table class="items-list">
-        <thead><tr><th></th><th>Nom</th><th>Qté</th><th>Poids unit.</th><th>Prix</th><th></th></tr></thead>
-        <tbody>
-          {{#each objets as |objet|}}
-          <tr>
-            <td><img class="item-icon" src="{{objet.img}}" /></td>
-            <td><a class="item-name item-edit" data-action="itemEdit" data-item-id="{{objet.id}}">{{objet.name}}</a></td>
-            <td>{{objet.system.quantite}}</td>
-            <td>{{objet.system.poidsUnitaire}}</td>
-            <td>{{objet.system.prixQuartz}}</td>
-            <td class="item-controls"><a class="item-delete" data-action="itemDelete" data-item-id="{{objet.id}}"><i class="fas fa-trash"></i></a></td>
-          </tr>
+        <h3>Inventaire</h3>
+        <p class="hint">
+          Armes et armures apparaissent ici comme dans l'onglet Combat — ce sont les mêmes objets,
+          juste deux vues dessus. Leurs champs diffèrent des objets simples (pas de quantité/poids,
+          mais un prix, un état "équipée", et leurs statistiques de combat).
+        </p>
+
+        {{#if armes.length}}
+        <h4 class="item-list-subhead">Armes</h4>
+        <div class="item-list">
+          {{#each armes as |arme|}}
+          <article class="item-row item-row-equippable">
+            <img class="item-icon" src="{{arme.img}}" alt="" />
+            <div class="item-main">
+              <a class="item-name item-edit" data-action="itemEdit" data-item-id="{{arme.id}}">{{arme.name}}</a>
+            </div>
+            <div class="item-stats">
+              <span class="item-stat"><span class="item-stat-label">Att.</span>{{arme.system.modificateurAttaque}}</span>
+              <span class="item-stat"><span class="item-stat-label">Dég.</span>{{arme.system.modificateurDegats}}</span>
+              <span class="item-stat"><span class="item-stat-label">Prix</span>{{arme.system.prixQuartz}}</span>
+            </div>
+            <label class="item-equip" title="Équipée">
+              <input type="checkbox" class="item-equip-toggle" data-item-id="{{arme.id}}" {{#if arme.system.equipee}}checked{{/if}} />
+            </label>
+            <div class="item-actions">
+              <a class="item-delete" data-action="itemDelete" data-item-id="{{arme.id}}" title="Supprimer {{arme.name}}" aria-label="Supprimer {{arme.name}}"><i class="fas fa-trash" aria-hidden="true"></i></a>
+            </div>
+          </article>
           {{/each}}
-        </tbody>
-      </table>
+        </div>
+        {{/if}}
+
+        {{#if armures.length}}
+        <h4 class="item-list-subhead">Armures</h4>
+        <div class="item-list">
+          {{#each armures as |armure|}}
+          <article class="item-row item-row-equippable">
+            <img class="item-icon" src="{{armure.img}}" alt="" />
+            <div class="item-main">
+              <a class="item-name item-edit" data-action="itemEdit" data-item-id="{{armure.id}}">{{armure.name}}</a>
+            </div>
+            <div class="item-stats">
+              <span class="item-stat"><span class="item-stat-label">Chitine</span>{{armure.system.bonusChitine}}</span>
+              <span class="item-stat"><span class="item-stat-label">Malus</span>{{armure.system.malusEncombrement}}</span>
+              <span class="item-stat"><span class="item-stat-label">Prix</span>{{armure.system.prixQuartz}}</span>
+            </div>
+            <label class="item-equip" title="Équipée">
+              <input type="checkbox" class="item-equip-toggle" data-item-id="{{armure.id}}" {{#if armure.system.equipee}}checked{{/if}} />
+            </label>
+            <div class="item-actions">
+              <a class="item-delete" data-action="itemDelete" data-item-id="{{armure.id}}" title="Supprimer {{armure.name}}" aria-label="Supprimer {{armure.name}}"><i class="fas fa-trash" aria-hidden="true"></i></a>
+            </div>
+          </article>
+          {{/each}}
+        </div>
+        {{/if}}
+
+        <h4 class="item-list-subhead">Objets</h4>
+        <div class="item-list">
+          {{#each objets as |objet|}}
+          <article class="item-row">
+            <img class="item-icon" src="{{objet.img}}" alt="" />
+            <div class="item-main">
+              <a class="item-name item-edit" data-action="itemEdit" data-item-id="{{objet.id}}">{{objet.name}}</a>
+            </div>
+            <div class="item-stats">
+              <span class="item-stat"><span class="item-stat-label">Qté</span>{{objet.system.quantite}}</span>
+              <span class="item-stat"><span class="item-stat-label">Poids</span>{{objet.system.poidsUnitaire}}</span>
+              <span class="item-stat"><span class="item-stat-label">Prix</span>{{objet.system.prixQuartz}}</span>
+            </div>
+            <div class="item-actions">
+              <a class="item-delete" data-action="itemDelete" data-item-id="{{objet.id}}" title="Supprimer {{objet.name}}" aria-label="Supprimer {{objet.name}}"><i class="fas fa-trash" aria-hidden="true"></i></a>
+            </div>
+          </article>
+          {{/each}}
+        </div>
       <a class="item-add item-create" data-action="itemCreate" data-type="objet"><i class="fas fa-plus"></i> Ajouter un objet</a>
       <p class="hint">
         Poids total porté : {{poidsTotalObjets}} / {{poidsPorte}} indrammes (seuil "Porter", livre p.206,
-        selon la Chitine). Purement informatif : aucun malus n'est appliqué automatiquement.
+        selon la Chitine). Purement informatif : aucun malus n'est appliqué automatiquement. Seuls les
+        objets simples comptent dans ce poids pour l'instant (armes/armures n'ont pas de champ poids
+        dans leurs données — cf. template.json).
       </p>
       </div>
+
 
       <div class="recit-columns">
         <div class="panel">

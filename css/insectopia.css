@@ -1039,6 +1039,173 @@
   color: var(--ins-accent-cuivre);
 }
 
+/* --- Cartes d'items (Inventaire) -------------------------------------------
+   Les tableaux .items-list restent en place pour armes/armures/capacités
+   (structure tabulaire pertinente pour comparer des colonnes de chiffres).
+   Pour l'Inventaire, une liste plus longue et plus hétérogène, une carte
+   compacte par objet est plus lisible et plus confortable au clic/tactile
+   qu'une ligne de tableau étroite. */
+.insectopia .item-list {
+  display: grid;
+  gap: var(--ins-space-7);
+  margin: var(--ins-space-8) 0;
+}
+
+.insectopia .item-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  align-items: center;
+  gap: var(--ins-space-8);
+  background: var(--ins-panel-bg-alt);
+  border: 1px solid var(--ins-border-light);
+  border-radius: var(--ins-radius-4);
+  padding: var(--ins-space-6) var(--ins-space-8);
+}
+
+.insectopia .item-row .item-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: var(--ins-radius-3);
+}
+
+.insectopia .item-row .item-main {
+  min-width: 0;
+}
+
+.insectopia .item-row .item-name {
+  display: block;
+  font-weight: bold;
+  color: var(--ins-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.insectopia .item-row .item-name:hover {
+  color: var(--ins-accent-cuivre);
+  text-decoration: underline;
+}
+
+.insectopia .item-row .item-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ins-space-12);
+  font-size: var(--ins-fs-80);
+  color: var(--ins-text-secondary);
+}
+
+.insectopia .item-row .item-stat {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+}
+
+.insectopia .item-row .item-stat-label {
+  text-transform: uppercase;
+  font-size: var(--ins-fs-65);
+  letter-spacing: 0.03em;
+  opacity: 0.75;
+}
+
+.insectopia .item-row .item-actions {
+  display: flex;
+}
+
+/* Zone cliquable 32px minimum (repère d'accessibilité usuel pour le
+   tactile/pointeur) — l'icône poubelle seule aurait été plus proche de
+   16-18px de cible réelle. */
+.insectopia .item-row .item-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ins-radius-4);
+  color: var(--ins-accent-rouge);
+}
+.insectopia .item-row .item-actions a:hover {
+  background: rgba(158, 52, 43, 0.15);
+}
+
+.insectopia .item-list-subhead {
+  margin: var(--ins-space-10) 0 var(--ins-space-5) 0;
+  font-size: var(--ins-fs-80);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ins-accent-cuivre);
+}
+.insectopia .item-list-subhead:first-of-type {
+  margin-top: 0;
+}
+
+/* Armes/armures ont une colonne de plus que les objets simples : la case
+   "équipée" (même donnée, même bascule que dans l'onglet Combat). */
+.insectopia .item-row.item-row-equippable {
+  grid-template-columns: 32px 1fr auto auto auto;
+}
+.insectopia .item-equip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+.insectopia .item-equip input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+@container sheet (max-width: 620px) {
+  .insectopia .item-row.item-row-equippable {
+    grid-template-columns: 32px 1fr auto auto;
+    grid-template-areas:
+      "icon main equip actions"
+      "icon stats stats stats";
+  }
+  .insectopia .item-row.item-row-equippable .item-equip { grid-area: equip; }
+}
+@supports not (container-type: inline-size) {
+  @media (max-width: 620px) {
+    .insectopia .item-row.item-row-equippable {
+      grid-template-columns: 32px 1fr auto auto;
+      grid-template-areas:
+        "icon main equip actions"
+        "icon stats stats stats";
+    }
+    .insectopia .item-row.item-row-equippable .item-equip { grid-area: equip; }
+  }
+}
+
+@container sheet (max-width: 620px) {
+  .insectopia .item-row {
+    grid-template-columns: 32px 1fr auto;
+    grid-template-areas:
+      "icon main actions"
+      "icon stats stats";
+  }
+  .insectopia .item-row .item-icon { grid-area: icon; }
+  .insectopia .item-row .item-main { grid-area: main; }
+  .insectopia .item-row .item-actions { grid-area: actions; }
+  .insectopia .item-row .item-stats { grid-area: stats; }
+}
+@supports not (container-type: inline-size) {
+  @media (max-width: 620px) {
+    .insectopia .item-row {
+      grid-template-columns: 32px 1fr auto;
+      grid-template-areas:
+        "icon main actions"
+        "icon stats stats";
+    }
+    .insectopia .item-row .item-icon { grid-area: icon; }
+    .insectopia .item-row .item-main { grid-area: main; }
+    .insectopia .item-row .item-actions { grid-area: actions; }
+    .insectopia .item-row .item-stats { grid-area: stats; }
+  }
+}
+
 /* --- Contacts -------------------------------------------------------------- */
 
 .insectopia .contacts-table {

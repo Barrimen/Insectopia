@@ -170,7 +170,13 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
 
   /** @override */
   static PARTS = {
-    form: { template: "systems/insectopia/templates/actor/intre.html" },
+    // "scrollable" déclare à ApplicationV2 quel(s) élément(s), dans ce PART,
+    // doivent voir leur position de scroll sauvegardée avant un re-render
+    // puis restaurée après. Sans ça, chaque update() (ex: cocher "équiper"
+    // sur une arme, qui déclenche un re-render complet de la fiche) fait
+    // remonter la vue en haut, puisque le DOM du corps de fiche est
+    // reconstruit. C'est un mécanisme natif, pas un correctif à la main.
+    form: { template: "systems/insectopia/templates/actor/intre.html", scrollable: [".sheet-body"] },
   };
 
   /** @override */
@@ -252,6 +258,7 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     // le métier du personnage. Vide si le métier n'est pas un métier divin
     // reconnu, ou si aucune Sphère n'est encore taguée.
     const motsParMetierSheet = MOTS_POUVOIR_PAR_METIER[this.actor.system.identite.metierKey];
+    context.estMetierDivin = Boolean(motsParMetierSheet);
     context.jeteurDeSorts = motsParMetierSheet
       ? asArray(this.actor.system.caracteristiques.caste.competences)
           .filter((c) => c.sphere && SPHERES[c.sphere])
