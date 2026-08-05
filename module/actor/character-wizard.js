@@ -1,6 +1,7 @@
 import { RACES } from "../common/data-races.js";
 import { CASTES, COMPETENCES_CASTE } from "../common/data-castes.js";
 import { tirerBlattesEvolution, EFFETS_BLATTES_EVOLUTION, ORDRE_CARACS_EVOLUTION } from "../common/evolution.js";
+import { extraireSphereDepuisLabel, MOTS_POUVOIR_PAR_METIER, SPHERES } from "../common/data-spheres.js";
 
 const LABELS_CARAC = {
   aile: "Aile",
@@ -250,6 +251,7 @@ export default class CharacterWizard {
       <div class="form-group"><label>Caste</label><select id="wizard-caste">${casteOptions}</select></div>
       <div class="form-group"><label>Métier</label><select id="wizard-metier"></select></div>
       <div class="form-group"><label>Caractéristique bonus de caste</label><select id="wizard-bonus-carac"></select></div>
+      <div id="wizard-spheres"></div>
       <p><i>Les capacités de caste (livre de base p.203, "au choix") ne sont pas automatisées : ajoutez-les
       ensuite via le bouton "Ajouter une capacité" sur la fiche.</i></p>`;
 
@@ -265,7 +267,11 @@ export default class CharacterWizard {
               const casteKey = html.find("#wizard-caste")[0].value;
               const metierKey = html.find("#wizard-metier")[0].value;
               const bonusCaracKey = html.find("#wizard-bonus-carac")[0].value;
-              await this.actor.applyCaste(casteKey, metierKey, bonusCaracKey);
+              const sphereChoix = {};
+              html.find("#wizard-spheres select").each((_, el) => {
+                sphereChoix[el.dataset.label] = el.value;
+              });
+              await this.actor.applyCaste(casteKey, metierKey, bonusCaracKey, sphereChoix);
               await this._appliquerBlatteCaste(casteKey, metierKey);
               resolve(this.step4CompetencesCaste());
             },
@@ -294,12 +300,59 @@ export default class CharacterWizard {
               candidats.map((k) => `<option value="${k}">${LABELS_CARAC[k]}</option>`).join("")
             );
           };
+          // Pour un métier divin dont une (ou plusieurs) des deux compétences
+          // de départ est une Sphère "au choix parmi ..." (label ambigu,
+          // extraireSphereDepuisLabel() renvoie null), on demande la sphère
+          // ici plutôt que de laisser la compétence sans sphère assignée —
+          // c'est le seul moment où l'on connaît encore le métier ET où l'on
+          // peut encore poser la question avant que la compétence existe.
+          const majSpheres = () => {
+            const casteKey = html.find("#wizard-caste")[0].value;
+            const metierKey = html.find("#wizard-metier")[0].value;
+            const metier = CASTES[casteKey]?.metiers?.[metierKey];
+            const spheresMetier = Object.keys(MOTS_POUVOIR_PAR_METIER[metierKey] || {});
+            const zone = html.find("#wizard-spheres");
+            if (!metier || !spheresMetier.length) {
+              zone.html("");
+              return;
+            }
+            const labelsAmbigus = metier.competences.filter(
+              (label) => /Sphère de magie/i.test(label) && !extraireSphereDepuisLabel(label)
+            );
+            if (!labelsAmbigus.length) {
+              zone.html("");
+              return;
+            }
+            // Sphères déjà fixées sans ambiguïté par une autre compétence du
+            // même métier (ex: "Sphère de magie (Vie)" pour le Chaman) —
+            // exclues des choix ci-dessous pour éviter un doublon évident.
+            const spheresDejaFixees = metier.competences
+              .map((label) => extraireSphereDepuisLabel(label))
+              .filter(Boolean);
+            const candidats = spheresMetier.filter((s) => !spheresDejaFixees.includes(s));
+            zone.html(
+              labelsAmbigus
+                .map(
+                  (label, i) => `
+                <div class="form-group">
+                  <label>${label}</label>
+                  <select data-label="${label}" data-index="${i}">
+                    ${candidats.map((s) => `<option value="${s}">${SPHERES[s].label}</option>`).join("")}
+                  </select>
+                </div>`
+                )
+                .join("")
+            );
+          };
           html.find("#wizard-caste").change(() => {
             majMetiers();
             majBonus();
+            majSpheres();
           });
+          html.find("#wizard-metier").change(majSpheres);
           majMetiers();
           majBonus();
+          majSpheres();
         },
       });
       dialog.render(true);

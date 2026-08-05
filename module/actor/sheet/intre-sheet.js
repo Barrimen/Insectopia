@@ -1,4 +1,5 @@
 import { RACES } from "../../common/data-races.js";
+import { COMPETENCES_CASTE } from "../../common/data-castes.js";
 import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
 import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER } from "../../common/data-spheres.js";
@@ -250,7 +251,6 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
 
     context.contacts = asArray(this.actor.system.ressources?.contacts);
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
-    context.spheresListe = Object.entries(SPHERES).map(([key, sphere]) => ({ key, label: sphere.label }));
 
     // Tableau statique "Jeteur de sorts" (livre p.267, cf. la feuille papier
     // p.2) : une ligne par Sphère connue (compétence de Caste taguée
@@ -366,38 +366,25 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
   }
 
   /**
-   * Écouteurs "change" (select / checkbox) — le système d'actions
-   * déclaratif (`data-action`) ne couvre que les clics ; ces deux champs
-   * doivent donc être reliés à la main à chaque re-render.
+   * Écouteurs "change" (checkbox) — le système d'actions déclaratif
+   * (`data-action`) ne couvre que les clics ; ce champ doit donc être
+   * relié à la main à chaque re-render.
    */
   #activateChangeListeners() {
-    this.element
-      .querySelectorAll(".caste-comp-sphere")
-      .forEach((select) => select.addEventListener("change", this._onCasteCompSphereChange.bind(this)));
     this.element
       .querySelectorAll(".item-equip-toggle")
       .forEach((checkbox) => checkbox.addEventListener("change", this._onItemEquipToggle.bind(this)));
   }
 
-  /**
-   * Tague (ou détague) manuellement une compétence de Caste comme Sphère
-   * de magie connue (livre p.267) — nécessaire quand le libellé décrit un
-   * choix parmi plusieurs sphères ("au choix parmi ..."), qu'applyCaste()
-   * ne peut pas déduire automatiquement, ou pour une "Sphère de magie"
-   * générique ajoutée librement à l'étape 4 du wizard.
-   */
-  async _onCasteCompSphereChange(event) {
-    event.preventDefault();
-    const index = parseInt(event.currentTarget.dataset.index);
-    const competences = foundry.utils.duplicate(asArray(this.actor.system.caracteristiques.caste.competences));
-    const sphereKey = event.currentTarget.value;
-    if (sphereKey) competences[index].sphere = sphereKey;
-    else delete competences[index].sphere;
-    await this.actor.update({ "system.caracteristiques.caste.competences": competences });
-  }
-
   _onItemEquipToggle(event) {
     event.preventDefault();
+    // Le <form> de la fiche a `submitOnChange: true` : sans stopPropagation,
+    // l'événement "change" remonte ET déclenche le listener natif de
+    // soumission de Foundry EN PLUS de ce handler — deux mises à jour
+    // concurrentes de l'acteur, la seconde écrasant potentiellement la
+    // première avec un instantané de formulaire pris à un autre moment
+    // (cause probable du scroll qui saute après un re-render).
+    event.stopPropagation();
     const itemId = event.currentTarget.dataset.itemId;
     const item = this.actor.items.get(itemId);
     if (item) item.update({ "system.equipee": event.currentTarget.checked });
@@ -460,6 +447,14 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     event.preventDefault();
     const caracKey = target.dataset.carac;
     const compKey = target.dataset.comp;
+    // Une compétence de Caste taguée comme Sphère de magie ne se lance pas
+    // comme une compétence normale : elle ouvre le dialogue de lancer de
+    // sort (choix du Mot de pouvoir), présélectionné sur cette Sphère.
+    if (caracKey === "caste") {
+      const index = parseInt(compKey);
+      const comp = asArray(this.actor.system.caracteristiques.caste.competences)[index];
+      if (comp?.sphere) return ouvrirDialogueLancerSort(this.actor, index);
+    }
     return this.actor.check(caracKey, compKey);
   }
 
@@ -480,14 +475,60 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
   }
 
   /**
-   * Ajoute une compétence de Caste libre (deux, en général, cf. livret
-   * p.27 : Blocage/Fureur, Essaim/Courtoisie, Air/Terre, etc.)
+   * Ajoute une compétence de Caste (deux, en général, cf. livret p.27 :
+   * Blocage/Fureur, Essaim/Courtoisie, Air/Terre, etc.) via un dialogue de
+   * choix (livre de base p.229, COMPETENCES_CASTE) plutôt qu'un texte libre
+   * à renommer ensuite : la ligne sur la fiche n'a plus de champ éditable,
+   * le nom doit donc être fixé au moment de l'ajout. "Sphère de magie"
+   * propose en plus un sous-choix de sphère, immédiatement résolu (jamais
+   * de compétence Sphère sans sphère assignée).
    */
   static async #onCasteCompAdd(event) {
     event.preventDefault();
-    const competences = foundry.utils.duplicate(asArray(this.actor.system.caracteristiques.caste.competences));
-    competences.push({ label: "Nouvelle compétence", value: 1 });
-    await this.actor.update({ "system.caracteristiques.caste.competences": competences });
+    const actor = this.actor;
+    const metierKey = actor.system.identite.metierKey;
+    const spheresDisponibles = Object.keys(MOTS_POUVOIR_PAR_METIER[metierKey] || SPHERES);
+
+    const options = COMPETENCES_CASTE.map((label) => `<option value="${label}">${label}</option>`).join("");
+    const sphereOptions = spheresDisponibles.map((key) => `<option value="${key}">${SPHERES[key].label}</option>`).join("");
+    const content = `
+      <div class="form-group">
+        <label>Compétence de Caste</label>
+        <select id="caste-comp-choix">${options}</select>
+      </div>
+      <div class="form-group" id="caste-comp-sphere-group" style="display:none;">
+        <label>Sphère de magie</label>
+        <select id="caste-comp-sphere-choix">${sphereOptions}</select>
+      </div>`;
+
+    new Dialog({
+      title: "Ajouter une compétence de Caste",
+      content,
+      buttons: {
+        add: {
+          icon: '<i class="fas fa-plus"></i>',
+          label: "Ajouter",
+          callback: async (html) => {
+            const choix = html.find("#caste-comp-choix")[0].value;
+            const competences = foundry.utils.duplicate(asArray(actor.system.caracteristiques.caste.competences));
+            if (choix === "Sphère de magie") {
+              const sphereKey = html.find("#caste-comp-sphere-choix")[0].value;
+              competences.push({ label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey });
+            } else {
+              competences.push({ label: choix, value: 1 });
+            }
+            await actor.update({ "system.caracteristiques.caste.competences": competences });
+          },
+        },
+        cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler" },
+      },
+      default: "add",
+      render: (html) => {
+        html.find("#caste-comp-choix").change((ev) => {
+          html.find("#caste-comp-sphere-group").toggle(ev.currentTarget.value === "Sphère de magie");
+        });
+      },
+    }).render(true);
   }
 
   static async #onCasteCompRemove(event, target) {

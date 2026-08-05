@@ -10,7 +10,7 @@ import { asArray } from "./utils.js";
  * Pré-requis pour qu'un sort soit proposé :
  *  - au moins une compétence de Caste taguée avec un champ "sphere" valide
  *    (posé automatiquement par applyCaste() quand le libellé est non
- *    ambigu, ou à la main sur la fiche sinon — livre p.267) ;
+ *    ambigu, ou choisi à l'étape 3 de l'assistant sinon — livre p.267) ;
  *  - system.identite.metierKey renseigné (posé par applyCaste()) et
  *    présent dans MOTS_POUVOIR_PAR_METIER.
  *
@@ -19,8 +19,18 @@ import { asArray } from "./utils.js";
  * filtrées selon le métier) puis 5 niveaux d'Influence (Puissance/Portée/
  * Cibles/Zone d'effet/Durée, 0 à 7 chacun) dont la somme forme la
  * Difficulté qui s'oppose au score de Sphère.
+ *
+ * @param actor
+ * @param preselectIndex  index (dans system.caracteristiques.caste.competences)
+ *                        de la compétence de Sphère à présélectionner —
+ *                        utilisé quand on ouvre ce dialogue depuis le dé
+ *                        d'une ligne de Sphère précise plutôt que depuis le
+ *                        bouton générique "Lancer un sort". Toutes les
+ *                        combinaisons Sphère/Mot de pouvoir du personnage
+ *                        restent proposées dans le menu, seule la sélection
+ *                        de départ change.
  */
-export async function ouvrirDialogueLancerSort(actor) {
+export async function ouvrirDialogueLancerSort(actor, preselectIndex = null) {
   const competencesCaste = asArray(actor.system.caracteristiques.caste.competences);
   const spheresConnues = competencesCaste
     .map((c, index) => ({ ...c, index }))
@@ -111,5 +121,13 @@ export async function ouvrirDialogueLancerSort(actor) {
       cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler", callback: () => {} },
     },
     default: "lancer",
+    render: (dialogHtml) => {
+      if (preselectIndex === null) return;
+      // Le premier Mot de pouvoir de la Sphère cliquée, faute de mieux : le
+      // joueur peut changer dans le menu, on ne fait que lui éviter de
+      // rechercher sa propre Sphère dans une liste qui mélange tout.
+      const premiereCombo = combinaisons.find((c) => c.value.startsWith(`${preselectIndex}|`));
+      if (premiereCombo) dialogHtml.find("#sort-combo")[0].value = premiereCombo.value;
+    },
   }).render(true);
 }

@@ -246,8 +246,13 @@ export default class IntreActor extends Actor {
    * @param casteKey        clé dans CASTES (ex: "combattant")
    * @param metierKey       clé du métier dans CASTES[casteKey].metiers
    * @param bonusCaracKey   caractéristique choisie pour le bonus de caste
+   * @param sphereChoix     { [libellé de compétence]: clé de sphère } pour
+   *                        les compétences "au choix parmi ..." dont la
+   *                        sphère a été résolue en amont (assistant de
+   *                        création, étape 3) — évite de laisser une
+   *                        compétence de Sphère sans sphère assignée.
    */
-  async applyCaste(casteKey, metierKey, bonusCaracKey) {
+  async applyCaste(casteKey, metierKey, bonusCaracKey, sphereChoix = {}) {
     const caste = CASTES[casteKey];
     const metier = caste?.metiers?.[metierKey];
     if (!caste || !metier) return;
@@ -266,9 +271,9 @@ export default class IntreActor extends Actor {
     for (const label of metier.competences) {
       if (!competencesCaste.some((c) => c.label === label)) {
         // Pour un métier divin, "Sphère de magie (Vie)" est non ambigu et se
-        // tague automatiquement ; "Sphère de magie (au choix parmi ...)"
-        // reste à taguer manuellement sur la fiche (livre de base p.267).
-        const sphere = extraireSphereDepuisLabel(label);
+        // tague automatiquement ; "Sphère de magie (au choix parmi ...)" est
+        // résolue par sphereChoix (choisie à l'étape 3 de l'assistant).
+        const sphere = extraireSphereDepuisLabel(label) ?? sphereChoix[label] ?? null;
         competencesCaste.push(sphere ? { label, value: 1, sphere } : { label, value: 1 });
       }
     }

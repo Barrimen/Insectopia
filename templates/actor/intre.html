@@ -149,18 +149,14 @@
           </div>
           <div class="carac-competences-caste">
             {{#each carac.competencesListe as |comp index|}}
-            <div class="comp-row comp-row-caste">
-              <a class="comp-roll" data-action="compRoll" data-carac="caste" data-comp="{{index}}" title="Lancer les Blattes"><i class="fas fa-dice"></i></a>
-              <input type="text" class="comp-caste-label" name="system.caracteristiques.caste.competences.{{index}}.label" value="{{comp.label}}" />
+            <div class="comp-row comp-row-caste {{#if comp.sphere}}comp-row-sphere{{/if}}">
+              <a class="comp-roll" data-action="compRoll" data-carac="caste" data-comp="{{index}}" title="{{#if comp.sphere}}Lancer un sort{{else}}Lancer les Blattes{{/if}}">
+                <i class="fas {{#if comp.sphere}}fa-hand-sparkles{{else}}fa-dice{{/if}}"></i>
+              </a>
+              <span class="comp-caste-label">{{comp.label}}</span>
               <span class="hex-input-wrap">
                 <input class="small-input" type="number" name="system.caracteristiques.caste.competences.{{index}}.value" value="{{comp.value}}" />
               </span>
-              <select class="caste-comp-sphere" data-index="{{index}}" title="Sphère de magie associée">
-                <option value="">—</option>
-                {{#each @root.spheresListe as |sphere|}}
-                <option value="{{sphere.key}}" {{#ife comp.sphere sphere.key}}selected{{/ife}}>{{sphere.label}}</option>
-                {{/each}}
-              </select>
               <a class="caste-comp-remove" data-action="casteCompRemove" data-index="{{index}}"><i class="fas fa-trash"></i></a>
             </div>
             {{/each}}
@@ -210,32 +206,10 @@
       </p>
         </div>
 
-        <!-- Capacités & Magie : jeteur de sorts (action de jeu active, comme le
-             Combat), capacités spéciales à bonus automatisé, traits libres. -->
+        <!-- Capacités & Magie : capacités spéciales à bonus automatisé, traits
+             libres. Le Jeteur de sorts est désormais sous Localisation, dans
+             le Combat — même traitement que les autres actions de jeu. -->
         <div class="fiche-capacites panel">
-      {{#if jeteurDeSorts.length}}
-      <h3>Jeteur de sorts</h3>
-      <table class="jeteur-sorts-table">
-        <thead><tr><th>Sphère magique</th><th>Score</th><th>Mots de pouvoir</th></tr></thead>
-        <tbody>
-          {{#each jeteurDeSorts as |ligne|}}
-          <tr><td>{{ligne.sphereLabel}}</td><td>{{ligne.sphereValue}}</td><td>{{ligne.motsLabels}}</td></tr>
-          {{/each}}
-        </tbody>
-      </table>
-      <a class="sort-cast-open" data-action="sortCastOpen"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
-      <hr />
-      {{else if estMetierDivin}}
-      <h3>Jeteur de sorts</h3>
-      <p class="hint">
-        Ce métier permet de jeter des sorts, mais aucune Sphère de magie n'est encore associée à une
-        compétence de Caste. Choisissez-la dans le menu déroulant à côté de la compétence "Sphère de
-        magie" correspondante, à gauche — le tableau des Mots de pouvoir apparaîtra ici une fois la
-        Sphère sélectionnée.
-      </p>
-      <hr />
-      {{/if}}
-
       <h3>Capacités spéciales (avec bonus automatisé)</h3>
       <table class="items-list">
         <thead><tr><th></th><th>Nom</th><th>Catégorie</th><th>Bonus</th><th></th></tr></thead>
@@ -361,6 +335,31 @@
         <h3>Localisation</h3>
         <textarea name="system.ressources.localisation.notes" placeholder="Notes de localisation des blessures (zone interactive prévue en V2)">{{system.ressources.localisation.notes}}</textarea>
       </div>
+
+      {{#if jeteurDeSorts.length}}
+      <div class="panel panel-magie">
+        <h3>Jeteur de sorts</h3>
+        <table class="jeteur-sorts-table">
+          <thead><tr><th>Sphère magique</th><th>Score</th><th>Mots de pouvoir</th></tr></thead>
+          <tbody>
+            {{#each jeteurDeSorts as |ligne|}}
+            <tr><td>{{ligne.sphereLabel}}</td><td>{{ligne.sphereValue}}</td><td>{{ligne.motsLabels}}</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <a class="sort-cast-open" data-action="sortCastOpen"><i class="fas fa-hand-sparkles"></i> Lancer un sort</a>
+      </div>
+      {{else if estMetierDivin}}
+      <div class="panel panel-magie">
+        <h3>Jeteur de sorts</h3>
+        <p class="hint">
+          Ce métier permet de jeter des sorts, mais aucune Sphère de magie n'est encore associée à une
+          compétence de Caste — normalement déjà résolu par l'assistant de création (étape 3). Si ce
+          personnage a été créé avant cette étape, ou pour ajouter une Sphère supplémentaire, utilisez
+          "Compétence de Caste" dans le panneau Caste et choisissez "Sphère de magie".
+        </p>
+      </div>
+      {{/if}}
         </div>
 
       </div>

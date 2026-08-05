@@ -787,10 +787,6 @@
   padding: var(--ins-space-5) 0;
   border-bottom: 1px solid rgba(157, 143, 120, 0.3);
 }
-.insectopia .comp-row-caste .comp-caste-label {
-  flex: 1 1 auto;
-  min-width: 90px;
-}
 .insectopia .comp-row-caste .hex-input-wrap {
   position: relative;
   flex: 0 0 auto;
@@ -810,11 +806,51 @@
   font-weight: bold;
   padding: 0;
 }
-.insectopia .caste-comp-sphere {
-  flex: 0 0 auto;
-  font-size: var(--ins-fs-65);
-  width: 48px;
-  padding: 0;
+/* Teinte de fond distincte pour une ligne "Sphère de magie" — le dé de
+   cette ligne ouvre le dialogue de lancer de sort (icône différente aussi),
+   pas un jet de compétence classique : la couleur renforce la différence
+   de comportement, pas juste décorative. */
+.insectopia .comp-row-caste.comp-row-sphere {
+  background: rgba(46, 166, 180, 0.12);
+  border-radius: var(--ins-radius-3);
+  padding-left: var(--ins-space-5);
+  padding-right: var(--ins-space-5);
+}
+.insectopia .comp-row-caste.comp-row-sphere .comp-roll {
+  color: var(--ins-accent-cyan);
+}
+
+.insectopia .comp-row-caste .comp-caste-label {
+  flex: 1 1 auto;
+  min-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Panneau Jeteur de sorts (sous Localisation, dans le Combat) --------- */
+.insectopia .panel-magie .jeteur-sorts-table {
+  width: 100%;
+  font-size: var(--ins-fs-85);
+  margin-bottom: var(--ins-space-8);
+}
+.insectopia .panel-magie .jeteur-sorts-table th {
+  text-align: left;
+  color: var(--ins-accent-cuivre);
+  border-bottom: 1px solid var(--ins-border-light);
+}
+.insectopia .panel-magie .jeteur-sorts-table td {
+  padding: var(--ins-space-4) var(--ins-space-6);
+  border-bottom: 1px solid rgba(157, 143, 120, 0.3);
+}
+.insectopia .sort-cast-open {
+  display: inline-block;
+  color: var(--ins-accent-cyan);
+  font-weight: bold;
+  cursor: pointer;
+}
+.insectopia .sort-cast-open:hover {
+  text-decoration: underline;
 }
 
 /* La rosace : un unique <svg viewBox="0 0 640 560"> dans lequel chaque
