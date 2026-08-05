@@ -1,6 +1,6 @@
-<form class="{{cssClass}}" autocomplete="off">
+<div class="sheet-content">
   <header class="item-sheet-header">
-    <img class="itemimg" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <img class="itemimg" src="{{item.img}}" data-action="editImage" data-field="img" title="{{item.name}}" />
     <input class="itemname" name="name" type="text" value="{{item.name}}" placeholder="Nom de la capacité" />
   </header>
 
@@ -53,4 +53,4 @@
       {{editor descriptionhtml target="system.description" button=true owner=true editable=editable engine="prosemirror"}}
     </div>
   </div>
-</form>
+</div>
