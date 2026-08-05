@@ -1,11 +1,11 @@
 {
-  "_id": "bg1cHcZY4DIfrxBH",
-  "_key": "!items!bg1cHcZY4DIfrxBH",
+  "_id": "G7Q8MM6m7Y3GDtix",
+  "_key": "!items!G7Q8MM6m7Y3GDtix",
   "name": "Vision infrarouge",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Permet de repérer les sources de chaleur dans l'obscurité.",
+    "description": "Permet de repérer les sources de chaleur dans l'obscurité ; annule le Mimétisme adverse.",
     "categorie": "antenne",
     "souillureCout": 0,
     "fluideCout": 0,

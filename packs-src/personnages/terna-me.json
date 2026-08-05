@@ -1,6 +1,6 @@
 {
-  "_id": "R7K1Uy6ilGLwIP8l",
-  "_key": "!actors!R7K1Uy6ilGLwIP8l",
+  "_id": "1iuWnpSOaXKzwqkX",
+  "_key": "!actors!1iuWnpSOaXKzwqkX",
   "name": "Terna Mé",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "9fsw8UTFDnYgVqVp",
+      "_id": "rKZHroPdkQ2bQ77T",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.9fsw8UTFDnYgVqVp",
+      "_key": "!actors.items!1iuWnpSOaXKzwqkX.rKZHroPdkQ2bQ77T",
       "effects": []
     },
     {
-      "_id": "8Tn1yQ3jdYXWZURA",
+      "_id": "vykbkeESSyAPxFmm",
       "name": "Mandibules hypertrophiées",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -186,11 +186,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.8Tn1yQ3jdYXWZURA",
+      "_key": "!actors.items!1iuWnpSOaXKzwqkX.vykbkeESSyAPxFmm",
       "effects": []
     },
     {
-      "_id": "zTtkjcNyVmsKxYfF",
+      "_id": "yHuS5vfIVWesU3Tm",
       "name": "Armure de cuir de Sangchauds",
       "type": "armure",
       "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
@@ -204,11 +204,11 @@
         "prixQuartz": 6,
         "equipee": true
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.zTtkjcNyVmsKxYfF",
+      "_key": "!actors.items!1iuWnpSOaXKzwqkX.yHuS5vfIVWesU3Tm",
       "effects": []
     },
     {
-      "_id": "oHdUkNr2wIY8JCEa",
+      "_id": "grHpqSfPb9aMedEm",
       "name": "Perception chimique hors du commun",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -224,7 +224,7 @@
           "valeur": 1
         }
       },
-      "_key": "!actors.items!R7K1Uy6ilGLwIP8l.oHdUkNr2wIY8JCEa",
+      "_key": "!actors.items!1iuWnpSOaXKzwqkX.grHpqSfPb9aMedEm",
       "effects": []
     }
   ]

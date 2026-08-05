@@ -1,6 +1,6 @@
 {
-  "_id": "u4G9gMmcLJwJKE2p",
-  "_key": "!actors!u4G9gMmcLJwJKE2p",
+  "_id": "eMJS9yInzZnBgtgo",
+  "_key": "!actors!eMJS9yInzZnBgtgo",
   "name": "Pénore de Néopté",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "YPtogW9MqVU5YUoa",
+      "_id": "iFaXndKbdTky7zm6",
       "name": "Pinces (arme)",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,18 +166,18 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!u4G9gMmcLJwJKE2p.YPtogW9MqVU5YUoa",
+      "_key": "!actors.items!eMJS9yInzZnBgtgo.iFaXndKbdTky7zm6",
       "effects": []
     },
     {
-      "_id": "iZvBRL5HOnIbLs44",
-      "name": "Pince (capacité de saisie)",
+      "_id": "VKfNUkjt3ZWhEEWy",
+      "name": "Pinces démesurées",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
       "system": {
-        "description": "Permet de saisir un adversaire et de l'immobiliser avec un test de Prédateur réussi (capacité native Cerk ; détail exact du coût non vérifié depuis le livre de base, repris du kit de démarrage).",
-        "categorie": "mandibule",
-        "souillureCout": 0,
+        "description": "Dégâts égaux à Chitine ; bonus d'une Blatte pour une tentative de saisie/immobilisation, réalisable sans tarse libre (capacité native Cerk).",
+        "categorie": "chitine",
+        "souillureCout": 3,
         "fluideCout": 0,
         "bonus": {
           "actif": false,
@@ -186,11 +186,11 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!u4G9gMmcLJwJKE2p.iZvBRL5HOnIbLs44",
+      "_key": "!actors.items!eMJS9yInzZnBgtgo.VKfNUkjt3ZWhEEWy",
       "effects": []
     },
     {
-      "_id": "WCnXBdSyWn6lvulJ",
+      "_id": "hneKRn6xP0vQMzI6",
       "name": "Mimétisme",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -206,7 +206,7 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!u4G9gMmcLJwJKE2p.WCnXBdSyWn6lvulJ",
+      "_key": "!actors.items!eMJS9yInzZnBgtgo.hneKRn6xP0vQMzI6",
       "effects": []
     }
   ]

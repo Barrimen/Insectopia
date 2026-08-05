@@ -1,12 +1,12 @@
 {
-  "_id": "y6zmch6HBBtW7lVd",
-  "_key": "!items!y6zmch6HBBtW7lVd",
-  "name": "Résistance au froid",
+  "_id": "H8qQppoV9toMwl1Y",
+  "_key": "!items!H8qQppoV9toMwl1Y",
+  "name": "Défenses",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Valeur de résistance au froid égale à deux fois la Température (au lieu d'être égale à la Température).",
-    "categorie": "temperature",
+    "description": "Armes naturelles de contact, dégâts Chitine + 1 (voir aussi l'Item arme du même nom).",
+    "categorie": "chitine",
     "souillureCout": 3,
     "fluideCout": 0,
     "bonus": {

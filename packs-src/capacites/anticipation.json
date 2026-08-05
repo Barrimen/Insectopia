@@ -1,11 +1,11 @@
 {
-  "_id": "XxAmBHBacqZV1z4j",
-  "_key": "!items!XxAmBHBacqZV1z4j",
+  "_id": "Ys8RQ5C3hlQf1WSe",
+  "_key": "!items!Ys8RQ5C3hlQf1WSe",
   "name": "Anticipation",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Bonus d'anticipation, notamment en Initiative.",
+    "description": "Tire une Blatte de plus lors des tests d'Initiative (sans la garder) ; pour 1 Fluide, la garde et bénéficie d'une action supplémentaire.",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 1,

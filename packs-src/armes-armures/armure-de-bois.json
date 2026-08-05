@@ -1,6 +1,6 @@
 {
-  "_id": "HLLrasrMinV3FOc6",
-  "_key": "!items!HLLrasrMinV3FOc6",
+  "_id": "PaFGk95Lv7QuEsmU",
+  "_key": "!items!PaFGk95Lv7QuEsmU",
   "name": "Armure de bois",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -9,7 +9,7 @@
     "bonusChitine": 1,
     "bonusFeu": 0,
     "malusAile": 0,
-    "malusEncombrement": 0,
+    "malusEncombrement": 1,
     "modInitiativeType": "-1couleur",
     "prixQuartz": 30,
     "equipee": false

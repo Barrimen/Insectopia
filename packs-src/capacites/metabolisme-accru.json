@@ -1,11 +1,11 @@
 {
-  "_id": "ouUHjq42yDFLPejx",
-  "_key": "!items!ouUHjq42yDFLPejx",
+  "_id": "cOYHiJSXxR2jCvBy",
+  "_key": "!items!cOYHiJSXxR2jCvBy",
   "name": "Métabolisme accru",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Ne subit pas de blessure interne supplémentaire en cas de chute de température brutale.",
+    "description": "Ne subit pas de blessure interne supplémentaire en cas de chute de température brutale ; ne meurt pas en sombrant dans l'inconscience faute d'hémorragie supplémentaire.",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 0,

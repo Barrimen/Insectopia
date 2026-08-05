@@ -1,6 +1,6 @@
 {
-  "_id": "EmSdKZs9LbmLtn9W",
-  "_key": "!items!EmSdKZs9LbmLtn9W",
+  "_id": "CqVgKPpHJb8liTQx",
+  "_key": "!items!CqVgKPpHJb8liTQx",
   "name": "Arbalète des Anciens Dieux",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,8 +13,6 @@
     "portee": "300 insètres",
     "porteeInsettres": 300,
     "rechargeActions": 2,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "carreau",
     "prixQuartz": 100,
     "equipee": false
   },

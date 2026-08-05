@@ -1,12 +1,12 @@
 {
-  "_id": "y6zmch6HBBtW7lVd",
-  "_key": "!items!y6zmch6HBBtW7lVd",
-  "name": "Résistance au froid",
+  "_id": "ngqEHAwGFtYJhwTA",
+  "_key": "!items!ngqEHAwGFtYJhwTA",
+  "name": "Ravisseuses",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Valeur de résistance au froid égale à deux fois la Température (au lieu d'être égale à la Température).",
-    "categorie": "temperature",
+    "description": "Dégâts égaux à Chitine avec allonge ; améliore la couleur de la première Blatte d'initiative en attaquant.",
+    "categorie": "mandibule",
     "souillureCout": 3,
     "fluideCout": 0,
     "bonus": {

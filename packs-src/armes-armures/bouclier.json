@@ -1,6 +1,6 @@
 {
-  "_id": "atGJtEu81HAJ78CT",
-  "_key": "!items!atGJtEu81HAJ78CT",
+  "_id": "khQocLSR7wUzPDxQ",
+  "_key": "!items!khQocLSR7wUzPDxQ",
   "name": "Bouclier",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -9,7 +9,7 @@
     "bonusChitine": 0,
     "bonusFeu": 0,
     "malusAile": 0,
-    "malusEncombrement": 0,
+    "malusEncombrement": 1,
     "modInitiativeType": "-1couleur",
     "prixQuartz": 30,
     "equipee": false

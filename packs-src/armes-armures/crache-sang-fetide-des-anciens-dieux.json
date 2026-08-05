@@ -1,6 +1,6 @@
 {
-  "_id": "ngzzKjzqy5LFzNTY",
-  "_key": "!items!ngzzKjzqy5LFzNTY",
+  "_id": "U4kPrxRXMNS9wlHi",
+  "_key": "!items!U4kPrxRXMNS9wlHi",
   "name": "Crache-sang fétide des Anciens Dieux",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,10 +13,6 @@
     "portee": "50 insètres",
     "porteeInsettres": 50,
     "rechargeActions": 1,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "sangfetide",
-    "modInitiativeType": "-1couleur",
-    "bonusAllongePremiereBlatte": 0,
     "prixQuartz": 1000,
     "equipee": false
   },

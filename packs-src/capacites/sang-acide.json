@@ -1,11 +1,11 @@
 {
-  "_id": "XJeIwI52lWxH89tS",
-  "_key": "!items!XJeIwI52lWxH89tS",
+  "_id": "VcQ2C7pOeGfQhgUw",
+  "_key": "!items!VcQ2C7pOeGfQhgUw",
   "name": "Sang acide",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Hémolymphe corrosive.",
+    "description": "En cas de blessure interne subie, éclabousse les adversaires au contact (Température + 3 dégâts vs Carapace) ; déclenchable volontairement.",
     "categorie": "temperature",
     "souillureCout": 3,
     "fluideCout": 0,

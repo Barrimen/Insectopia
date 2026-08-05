@@ -1,6 +1,6 @@
 {
-  "_id": "lXIDuUyhlI77un4w",
-  "_key": "!items!lXIDuUyhlI77un4w",
+  "_id": "9ze6aVh0EIYwqEQv",
+  "_key": "!items!9ze6aVh0EIYwqEQv",
   "name": "Épée de justice ultime",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,10 +13,6 @@
     "portee": "",
     "porteeInsettres": 0,
     "rechargeActions": 0,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "",
-    "modInitiativeType": "-1action",
-    "bonusAllongePremiereBlatte": 0,
     "prixQuartz": 250,
     "equipee": false
   },

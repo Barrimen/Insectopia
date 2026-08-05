@@ -1,11 +1,11 @@
 {
-  "_id": "tU1oMAVhfXNYATfD",
-  "_key": "!items!tU1oMAVhfXNYATfD",
+  "_id": "inWU7jWSb2q0jdlB",
+  "_key": "!items!inWU7jWSb2q0jdlB",
   "name": "Régénération accrue",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Récupération de blessures améliorée.",
+    "description": "Tire une Blatte supplémentaire lors d'un test de Chrysalide pour récupérer d'une blessure interne ou d'une mutilation.",
     "categorie": "chitine",
     "souillureCout": 0,
     "fluideCout": 0,

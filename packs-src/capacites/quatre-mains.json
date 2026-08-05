@@ -1,11 +1,11 @@
 {
-  "_id": "uWasi88j7b3vxnsa",
-  "_key": "!items!uWasi88j7b3vxnsa",
+  "_id": "XO0YCd51OiVEBANj",
+  "_key": "!items!XO0YCd51OiVEBANj",
   "name": "Quatre mains",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Possède des mains articulées permettant d'utiliser armes et outils (la plupart des races l'ont nativement).",
+    "description": "Possède des mains articulées permettant d'utiliser armes et outils.",
     "categorie": "aile",
     "souillureCout": 4,
     "fluideCout": 0,

@@ -1,11 +1,11 @@
 {
-  "_id": "cGm7xuvhLiOjx7wd",
-  "_key": "!items!cGm7xuvhLiOjx7wd",
+  "_id": "Dhl6rmwa9QwMQD29",
+  "_key": "!items!Dhl6rmwa9QwMQD29",
   "name": "Neuf vies",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Bonus de survie dans les situations critiques.",
+    "description": "Ajoute deux blessures internes supplémentaires ; pour 1 Fluide, améliore la couleur d'un test de Métabolisme.",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 1,

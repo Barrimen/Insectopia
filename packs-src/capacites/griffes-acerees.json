@@ -1,14 +1,14 @@
 {
-  "_id": "8u8PYlolXETx3ug7",
-  "_key": "!items!8u8PYlolXETx3ug7",
-  "name": "Danse de guerre",
+  "_id": "7zMcXhllvjhbLX80",
+  "_key": "!items!7zMcXhllvjhbLX80",
+  "name": "Griffes acérées",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Pour 1 Fluide, améliore la couleur d'un test d'intimidation (Mandibule vs Mandibule).",
+    "description": "Dégâts naturels égaux à la Chitine du personnage (voir aussi l'Item arme du même nom).",
     "categorie": "mandibule",
     "souillureCout": 0,
-    "fluideCout": 1,
+    "fluideCout": 0,
     "bonus": {
       "actif": false,
       "caracKey": "",

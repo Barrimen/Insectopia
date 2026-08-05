@@ -1,6 +1,6 @@
 {
-  "_id": "KBoEyFOkUMZ690tJ",
-  "_key": "!items!KBoEyFOkUMZ690tJ",
+  "_id": "qEmBYMIgoYEfJiTL",
+  "_key": "!items!qEmBYMIgoYEfJiTL",
   "name": "Armure de cuir clouté (Anciens Dieux)",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -9,7 +9,7 @@
     "bonusChitine": 1,
     "bonusFeu": 1,
     "malusAile": 0,
-    "malusEncombrement": 0,
+    "malusEncombrement": 1,
     "modInitiativeType": "-1couleur",
     "prixQuartz": 12,
     "equipee": false

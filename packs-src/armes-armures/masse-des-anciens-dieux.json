@@ -1,6 +1,6 @@
 {
-  "_id": "RXnoTszXhjlFo64x",
-  "_key": "!items!RXnoTszXhjlFo64x",
+  "_id": "5TA13q4p7io6jfl8",
+  "_key": "!items!5TA13q4p7io6jfl8",
   "name": "Masse des Anciens Dieux",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,10 +13,6 @@
     "portee": "",
     "porteeInsettres": 0,
     "rechargeActions": 0,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "",
-    "modInitiativeType": "-1couleur",
-    "bonusAllongePremiereBlatte": 0,
     "prixQuartz": 280,
     "equipee": false
   },

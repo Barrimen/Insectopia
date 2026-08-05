@@ -1,11 +1,11 @@
 {
-  "_id": "70y6TtmYbp1mvY5q",
-  "_key": "!items!70y6TtmYbp1mvY5q",
+  "_id": "lZyq7FL2OB02Oqvw",
+  "_key": "!items!lZyq7FL2OB02Oqvw",
   "name": "Mutagène",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Effet lié à une mutation mineure.",
+    "description": "Les Blattes d'expérience rouges peuvent être dépensées comme des noires pour l'acquisition d'une nouvelle capacité.",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 0,

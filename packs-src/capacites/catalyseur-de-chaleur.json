@@ -1,11 +1,11 @@
 {
-  "_id": "As9T0OiiieUk3yOc",
-  "_key": "!items!As9T0OiiieUk3yOc",
+  "_id": "Nslitle32HlDzg4v",
+  "_key": "!items!Nslitle32HlDzg4v",
   "name": "Catalyseur de chaleur",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Manipulation de sa propre chaleur corporelle.",
+    "description": "Pour 1 Fluide, maintient pendant une heure la température des personnages à proximité directe (compense jusqu'à 2 points de Température).",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 1,

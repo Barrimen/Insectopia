@@ -1,11 +1,11 @@
 {
-  "_id": "79oOxXDWHlvjyIOy",
-  "_key": "!items!79oOxXDWHlvjyIOy",
+  "_id": "x9QOAXnjVCV0jf7Y",
+  "_key": "!items!x9QOAXnjVCV0jf7Y",
   "name": "Lance perce-chitine",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Longue lance utilisée pour arrêter les charges. Dégâts égaux à la Chitine plus un. Modificateur d'initiative : moins une couleur, sauf sur la première Blatte tirée à l'initiative qui bénéficie au contraire de l'Allonge (+2 couleurs, House Rule : magnitude non chiffrée par le livret). Peu maniable au-delà. Prix : 150 quartz.",
+    "description": "Longue lance utilisée pour arrêter les charges, avantageuse au premier tour de combat mais peu maniable ensuite. Dégâts égaux à la Chitine plus un. Modificateur d'initiative : moins une couleur. Prix : 150 quartz.",
     "competenceCombat": "melee",
     "modificateurAttaque": 0,
     "modificateurDegats": 1,
@@ -13,10 +13,6 @@
     "portee": "",
     "porteeInsettres": 0,
     "rechargeActions": 0,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "",
-    "modInitiativeType": "-1couleur",
-    "bonusAllongePremiereBlatte": 2,
     "prixQuartz": 150,
     "equipee": false
   },

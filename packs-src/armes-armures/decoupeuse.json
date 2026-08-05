@@ -1,6 +1,6 @@
 {
-  "_id": "vHUtBoRbm0Nuwm8V",
-  "_key": "!items!vHUtBoRbm0Nuwm8V",
+  "_id": "cGbZhJVggoPWIW3t",
+  "_key": "!items!cGbZhJVggoPWIW3t",
   "name": "Découpeuse",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,11 +13,7 @@
     "portee": "",
     "porteeInsettres": 0,
     "rechargeActions": 0,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "",
-    "modInitiativeType": "-1couleur",
-    "bonusAllongePremiereBlatte": 0,
-    "prixQuartz": 30,
+    "prixQuartz": 0,
     "equipee": false
   },
   "effects": [],

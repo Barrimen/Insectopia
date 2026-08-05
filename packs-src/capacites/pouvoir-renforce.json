@@ -1,11 +1,11 @@
 {
-  "_id": "pDVbvW0bXCiIQXHh",
-  "_key": "!items!pDVbvW0bXCiIQXHh",
+  "_id": "zJyl4Yvzv1c9UVhe",
+  "_key": "!items!zJyl4Yvzv1c9UVhe",
   "name": "Pouvoir renforcé",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Renforce l'effet d'une autre capacité du personnage.",
+    "description": "Pour 1 Fluide, améliore la couleur du test de dégâts de ses capacités.",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 1,

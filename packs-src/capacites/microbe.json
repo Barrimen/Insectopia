@@ -1,11 +1,11 @@
 {
-  "_id": "FS0nnhzDAfhARGhD",
-  "_key": "!items!FS0nnhzDAfhARGhD",
+  "_id": "QiYGM4l1VMUXie5R",
+  "_key": "!items!QiYGM4l1VMUXie5R",
   "name": "Microbe",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Effet lié à une contamination mineure contrôlée.",
+    "description": "Modification permanente : -1 Chitine, +1 Température.",
     "categorie": "temperature",
     "souillureCout": 0,
     "fluideCout": 0,

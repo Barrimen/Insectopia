@@ -1,11 +1,11 @@
 {
-  "_id": "0v32vsW2pFogd6ts",
-  "_key": "!items!0v32vsW2pFogd6ts",
+  "_id": "uQBJsGQKadnv0eXF",
+  "_key": "!items!uQBJsGQKadnv0eXF",
   "name": "Force de titan",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Force brute renforcée (capacité native Myrmide).",
+    "description": "Force brute renforcée : baisse d'un cran les malus d'initiative des armures, permet de dépenser 1 Fluide pour tirer une Blatte de dégâts supplémentaire, double les scores de lever/porter/projeter (capacité native Myrmide).",
     "categorie": "chitine",
     "souillureCout": 3,
     "fluideCout": 1,

@@ -1,11 +1,11 @@
 {
-  "_id": "j9nPaEVuyXMpo5Ow",
-  "_key": "!items!j9nPaEVuyXMpo5Ow",
+  "_id": "FCXzAPicttlXDc1Y",
+  "_key": "!items!FCXzAPicttlXDc1Y",
   "name": "Résistance à la Souillure",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Résistance renforcée à la maladie des Blafards.",
+    "description": "Pour 1 Fluide, améliore la couleur d'un test de Chrysalide contre la maladie des Blafards ; les capacités coûtent 1 point de Souillure en moins (minimum 1).",
     "categorie": "chitine",
     "souillureCout": 1,
     "fluideCout": 1,

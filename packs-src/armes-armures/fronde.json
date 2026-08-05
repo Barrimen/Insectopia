@@ -1,6 +1,6 @@
 {
-  "_id": "pIu8zhuMz5wvGB8h",
-  "_key": "!items!pIu8zhuMz5wvGB8h",
+  "_id": "n5NqCuqqgIPEFka7",
+  "_key": "!items!n5NqCuqqgIPEFka7",
   "name": "Fronde",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,10 +13,6 @@
     "portee": "50 insètres",
     "porteeInsettres": 50,
     "rechargeActions": 1,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "",
-    "modInitiativeType": "+1couleur",
-    "bonusAllongePremiereBlatte": 0,
     "prixQuartz": 3,
     "equipee": false
   },

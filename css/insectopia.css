@@ -35,6 +35,7 @@
 .insectopia.sheet.actor .small-input {
   width: 3em;
   text-align: center;
+  color: var(--ins-text);
 }
 .insectopia.sheet.actor .hint {
   font-size: 0.8em;
@@ -802,6 +803,7 @@
   clip-path: var(--hex-clip);
   background: var(--ins-panel-bg-alt);
   border: none;
+  color: var(--ins-text);
   text-align: center;
   font-weight: bold;
   padding: 0;

@@ -1,6 +1,6 @@
 {
-  "_id": "HLuCPWKe6VyXV82S",
-  "_key": "!actors!HLuCPWKe6VyXV82S",
+  "_id": "I2BR9QBeMiZyfRy0",
+  "_key": "!actors!I2BR9QBeMiZyfRy0",
   "name": "Apenlys",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "herW9fxSSXGnmlT7",
+      "_id": "dPhnAsgTQ9Gz9DNc",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!HLuCPWKe6VyXV82S.herW9fxSSXGnmlT7",
+      "_key": "!actors.items!I2BR9QBeMiZyfRy0.dPhnAsgTQ9Gz9DNc",
       "effects": []
     },
     {
-      "_id": "lnDSn1CCUoi09EMM",
+      "_id": "TCTAMkP9tpxtLNeX",
       "name": "Vitesse surnaturelle",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -186,16 +186,16 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!HLuCPWKe6VyXV82S.lnDSn1CCUoi09EMM",
+      "_key": "!actors.items!I2BR9QBeMiZyfRy0.TCTAMkP9tpxtLNeX",
       "effects": []
     },
     {
-      "_id": "Q21JMl5qjcMyXukO",
+      "_id": "dMQCbRPX77vcc1NR",
       "name": "Vision infrarouge",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
       "system": {
-        "description": "Permet de repérer les sources de chaleur dans l'obscurité.",
+        "description": "Permet de repérer les sources de chaleur dans l'obscurité ; annule le Mimétisme adverse.",
         "categorie": "antenne",
         "souillureCout": 0,
         "fluideCout": 0,
@@ -206,7 +206,7 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!HLuCPWKe6VyXV82S.Q21JMl5qjcMyXukO",
+      "_key": "!actors.items!I2BR9QBeMiZyfRy0.dMQCbRPX77vcc1NR",
       "effects": []
     }
   ]

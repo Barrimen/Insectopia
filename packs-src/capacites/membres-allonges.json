@@ -1,11 +1,11 @@
 {
-  "_id": "hAecJKNaaRO953gy",
-  "_key": "!items!hAecJKNaaRO953gy",
+  "_id": "KpLuabO3SdcHftCW",
+  "_key": "!items!KpLuabO3SdcHftCW",
   "name": "Membres allongés",
   "type": "capacite",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Allonge supplémentaire au corps à corps.",
+    "description": "Améliore la couleur de la première Blatte d'initiative du tour.",
     "categorie": "chitine",
     "souillureCout": 0,
     "fluideCout": 0,

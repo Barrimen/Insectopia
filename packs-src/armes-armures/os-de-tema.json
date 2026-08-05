@@ -1,6 +1,6 @@
 {
-  "_id": "aiijWmpBnImT2UG5",
-  "_key": "!items!aiijWmpBnImT2UG5",
+  "_id": "o9iEi1oZZ9Cs6NS3",
+  "_key": "!items!o9iEi1oZZ9Cs6NS3",
   "name": "Os de tema",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -13,11 +13,7 @@
     "portee": "",
     "porteeInsettres": 0,
     "rechargeActions": 0,
-    "actionsRechargeRestantes": 0,
-    "munitionType": "",
-    "modInitiativeType": "+1couleur",
-    "bonusAllongePremiereBlatte": 0,
-    "prixQuartz": 12,
+    "prixQuartz": 0,
     "equipee": false
   },
   "effects": [],
