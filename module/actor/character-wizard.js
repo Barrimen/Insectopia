@@ -383,16 +383,67 @@ export default class CharacterWizard {
     }
     // vert / bleue / blanche : point(s) de compétence de Caste, sur les
     // compétences déjà connues (celles du métier) faute de mieux, ou une
-    // nouvelle ligne libre pour la Blatte verte.
+    // nouvelle compétence au choix pour la Blatte verte.
     const nb = couleur === "bleue" ? 2 : 1;
     for (let i = 0; i < nb && competences.length; i++) {
       competences[0].value += 1;
     }
     if (couleur === "verte") {
-      competences.push({ label: "Point libre (Blatte verte, à renommer)", value: 1 });
+      const nouvelle = await this._choisirCompetenceCaste("Blatte de Caste verte : choisissez la compétence de caste supplémentaire (livre de base p.203, p.229).");
+      if (nouvelle) competences.push(nouvelle);
     }
     await this.actor.update({ "system.caracteristiques.caste.competences": competences });
     ui.notifications.info(`Blatte de Caste (${effet.label}) : points appliqués sur les compétences de métier — à ajuster si besoin sur la fiche.`);
+  }
+
+  /**
+   * Petit dialogue de choix d'une compétence de Caste (pool p.229), avec
+   * sous-choix de sphère si "Sphère de magie" est sélectionné — même
+   * logique que l'étape 4 et le bouton "+Compétence de Caste" de la fiche.
+   * Centralisé ici pour éviter de dupliquer une troisième fois la même
+   * mécanique (leçon tirée du "Point libre à renommer" qui comptait sur un
+   * champ texte depuis supprimé de la fiche).
+   * @returns {Promise<{label:string, value:number, sphere?:string}|null>}
+   */
+  async _choisirCompetenceCaste(intro) {
+    const optionsCompetences = COMPETENCES_CASTE.map((label) => `<option value="${label}">${label}</option>`).join("");
+    const metierKey = this.actor.system.identite.metierKey;
+    const spheresDisponibles = Object.keys(MOTS_POUVOIR_PAR_METIER[metierKey] || SPHERES);
+    const optionsSpheres = spheresDisponibles.map((key) => `<option value="${key}">${SPHERES[key].label}</option>`).join("");
+    const content = `
+      <p>${intro}</p>
+      <div class="form-group"><label>Compétence de Caste</label><select id="choix-comp">${optionsCompetences}</select></div>
+      <div class="form-group" id="choix-comp-sphere-group" style="display:none;">
+        <label>Sphère de magie</label><select id="choix-comp-sphere">${optionsSpheres}</select>
+      </div>`;
+    return new Promise((resolve) => {
+      new Dialog({
+        title: "Compétence de caste",
+        content,
+        buttons: {
+          add: {
+            icon: '<i class="fas fa-plus"></i>',
+            label: "Ajouter",
+            callback: (html) => {
+              const choix = html.find("#choix-comp")[0].value;
+              if (choix === "Sphère de magie") {
+                const sphereKey = html.find("#choix-comp-sphere")[0]?.value;
+                resolve(sphereKey ? { label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey } : null);
+              } else {
+                resolve({ label: choix, value: 1 });
+              }
+            },
+          },
+        },
+        default: "add",
+        render: (html) => {
+          html.find("#choix-comp").change((e) => {
+            html.find("#choix-comp-sphere-group").toggle(e.currentTarget.value === "Sphère de magie");
+          });
+        },
+        close: () => resolve(null),
+      }).render(true);
+    });
   }
 
   // --------------------------------------------------------------------
@@ -404,6 +455,9 @@ export default class CharacterWizard {
     const nbAChoisir = Math.max(0, scoreCaste - 2 - Math.max(0, nbActuelles - 2));
 
     const optionsCompetences = COMPETENCES_CASTE.map((label) => `<option value="${label}">${label}</option>`).join("");
+    const metierKey = this.actor.system.identite.metierKey;
+    const spheresDisponibles = Object.keys(MOTS_POUVOIR_PAR_METIER[metierKey] || SPHERES);
+    const optionsSpheres = spheresDisponibles.map((key) => `<option value="${key}">${SPHERES[key].label}</option>`).join("");
 
     const content = `
       <p>Étape 4/7 — Compétences de caste et leurs évolutions (livre de base p.205 et 229).</p>
@@ -424,17 +478,22 @@ export default class CharacterWizard {
             icon: '<i class="fas fa-arrow-right"></i>',
             label: "Suivant",
             callback: async (html) => {
-              const rows = html.find(".wizard-comp-supp-input");
-              if (rows.length !== nbAChoisir) return false; // bloque : ne ferme pas le dialogue
-              const noms = rows
-                .toArray()
-                .map((el) => el.value)
-                .filter(Boolean);
-              if (noms.length) {
-                const competences = foundry.utils.duplicate(this.actor.system.caracteristiques.caste.competences ?? []);
-                for (const label of noms) competences.push({ label, value: 1 });
-                await this.actor.update({ "system.caracteristiques.caste.competences": competences });
-              }
+              const lignes = html.find("#wizard-competences-supp > .form-group");
+              if (lignes.length !== nbAChoisir) return false; // bloque : ne ferme pas le dialogue
+              const competences = foundry.utils.duplicate(this.actor.system.caracteristiques.caste.competences ?? []);
+              lignes.toArray().forEach((ligneEl) => {
+                const ligne = $(ligneEl);
+                const choix = ligne.find(".wizard-comp-supp-input")[0]?.value;
+                if (!choix) return;
+                if (choix === "Sphère de magie") {
+                  const sphereKey = ligne.find(".wizard-comp-supp-sphere")[0]?.value;
+                  if (!sphereKey) return; // pas de sphère dispo pour ce métier (non divin) : ligne ignorée
+                  competences.push({ label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey });
+                } else {
+                  competences.push({ label: choix, value: 1 });
+                }
+              });
+              await this.actor.update({ "system.caracteristiques.caste.competences": competences });
               resolve(this.step5Repartition());
             },
           },
@@ -461,8 +520,18 @@ export default class CharacterWizard {
             const row = $(
               `<div class="form-group" data-row="${count}"><label>Compétence #${count}</label>
                 <select class="wizard-comp-supp-input">${optionsCompetences}</select>
+                <select class="wizard-comp-supp-sphere" style="display:none;">${optionsSpheres}</select>
                 <a class="wizard-remove-comp"><i class="fas fa-trash"></i></a></div>`
             );
+            // "Sphère de magie" est une entrée générique du pool p.229 : sans
+            // sous-choix, on se retrouvait avec une ligne "Sphère de magie"
+            // sans sphère assignée (cf. retour du 05/08, capture d'écran).
+            // Même logique que le dialogue "+Compétence de Caste" de la
+            // fiche : le sous-choix apparaît uniquement pour cette entrée.
+            row.find(".wizard-comp-supp-input").change((e) => {
+              row.find(".wizard-comp-supp-sphere").toggle(e.currentTarget.value === "Sphère de magie");
+              dialog.setPosition({ height: "auto" });
+            });
             row.find(".wizard-remove-comp").click((e) => {
               e.preventDefault();
               row.remove();

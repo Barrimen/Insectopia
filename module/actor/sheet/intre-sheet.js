@@ -171,13 +171,7 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
 
   /** @override */
   static PARTS = {
-    // "scrollable" déclare à ApplicationV2 quel(s) élément(s), dans ce PART,
-    // doivent voir leur position de scroll sauvegardée avant un re-render
-    // puis restaurée après. Sans ça, chaque update() (ex: cocher "équiper"
-    // sur une arme, qui déclenche un re-render complet de la fiche) fait
-    // remonter la vue en haut, puisque le DOM du corps de fiche est
-    // reconstruit. C'est un mécanisme natif, pas un correctif à la main.
-    form: { template: "systems/insectopia/templates/actor/intre.html", scrollable: [".sheet-body"] },
+    form: { template: "systems/insectopia/templates/actor/intre.html" },
   };
 
   /** @override */
@@ -272,12 +266,36 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     return context;
   }
 
+  /**
+   * Deux tentatives précédentes sur ce même bug (option native "scrollable"
+   * de PARTS, puis stopPropagation sur les listeners "change" concurrents
+   * avec submitOnChange) n'ont pas suffi — la remontée en haut de page
+   * survient aussi sur une simple création d'item (clic, pas de "change",
+   * donc pas de course d'écouteurs possible), ce qui élimine ma seconde
+   * hypothèse. Plutôt que de reproposer un troisième mécanisme que je ne
+   * peux pas vérifier sans Foundry sous la main, gestion manuelle et
+   * explicite : on lit le scroll AVANT que le DOM ne soit remplacé
+   * (_preRender, l'ancien contenu est encore là), on le réapplique APRÈS
+   * (_onRender, le nouveau contenu est en place). Aucune hypothèse sur le
+   * fonctionnement interne du framework, juste de la lecture/écriture de
+   * scrollTop directe.
+   */
+  async _preRender(context, options) {
+    await super._preRender(context, options);
+    const body = this.element?.querySelector(".sheet-body");
+    this._scrollSauvegarde = body ? body.scrollTop : null;
+  }
+
   /** @override */
   _onRender(context, options) {
     super._onRender(context, options);
     this.#activateTabs();
     this.#activateChangeListeners();
     this.#fixScrollableLayout();
+    if (this._scrollSauvegarde != null) {
+      const body = this.element.querySelector(".sheet-body");
+      if (body) body.scrollTop = this._scrollSauvegarde;
+    }
   }
 
   /**
@@ -366,28 +384,43 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
   }
 
   /**
-   * Écouteurs "change" (checkbox) — le système d'actions déclaratif
-   * (`data-action`) ne couvre que les clics ; ce champ doit donc être
-   * relié à la main à chaque re-render.
+   * Écouteur "change" délégué pour les champs gérés à la main (le système
+   * d'actions déclaratif `data-action` ne couvre que les clics) — attaché
+   * UNE SEULE FOIS, en phase de CAPTURE, directement sur le <form> racine
+   * de la fiche.
+   *
+   * Pourquoi la capture, et pas juste stopPropagation() dans un listener
+   * classique (approche précédente, insuffisante) : `form: { submitOnChange:
+   * true }` fait que Foundry attache son propre listener "change" sur ce
+   * même <form>, en phase de BULLE (comportement standard), pendant
+   * `super._onRender()` — donc AVANT que notre `_onRender` à nous attache
+   * quoi que ce soit. Un listener en phase de bulle ajouté après coup sur
+   * l'élément cible se déclenche cette fois APRÈS celui de Foundry : son
+   * `stopPropagation()` arrive trop tard, le second update (et le
+   * re-render qui l'accompagne, avec sa propre gestion du scroll) est déjà
+   * en route. La phase de capture, elle, se déroule AVANT que l'événement
+   * n'atteigne sa cible et ne bascule en phase de bulle : un listener de
+   * capture sur le <form> s'exécute donc systématiquement avant tout
+   * listener de bulle attaché plus tard sur ce même <form> ou sur un de
+   * ses descendants — ordre garanti par la spec DOM, plus une histoire de
+   * qui a été attaché en premier.
    */
   #activateChangeListeners() {
-    this.element
-      .querySelectorAll(".item-equip-toggle")
-      .forEach((checkbox) => checkbox.addEventListener("change", this._onItemEquipToggle.bind(this)));
-  }
-
-  _onItemEquipToggle(event) {
-    event.preventDefault();
-    // Le <form> de la fiche a `submitOnChange: true` : sans stopPropagation,
-    // l'événement "change" remonte ET déclenche le listener natif de
-    // soumission de Foundry EN PLUS de ce handler — deux mises à jour
-    // concurrentes de l'acteur, la seconde écrasant potentiellement la
-    // première avec un instantané de formulaire pris à un autre moment
-    // (cause probable du scroll qui saute après un re-render).
-    event.stopPropagation();
-    const itemId = event.currentTarget.dataset.itemId;
-    const item = this.actor.items.get(itemId);
-    if (item) item.update({ "system.equipee": event.currentTarget.checked });
+    if (this.element.dataset.changeCaptureBound) return; // le <form> racine persiste entre les re-renders
+    this.element.dataset.changeCaptureBound = "1";
+    this.element.addEventListener(
+      "change",
+      (event) => {
+        const target = event.target;
+        if (target.matches?.(".item-equip-toggle")) {
+          event.stopPropagation();
+          event.preventDefault();
+          const item = this.actor.items.get(target.dataset.itemId);
+          if (item) item.update({ "system.equipee": target.checked });
+        }
+      },
+      { capture: true }
+    );
   }
 
   /** Lance l'assistant de création de personnage (livre de base p.196-206). */
