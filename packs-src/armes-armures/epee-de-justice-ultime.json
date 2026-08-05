@@ -1,6 +1,6 @@
 {
-  "_id": "9ze6aVh0EIYwqEQv",
-  "_key": "!items!9ze6aVh0EIYwqEQv",
+  "_id": "SEFMeA6u4CposkHS",
+  "_key": "!items!SEFMeA6u4CposkHS",
   "name": "Épée de justice ultime",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 250,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

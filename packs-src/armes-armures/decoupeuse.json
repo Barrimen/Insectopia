@@ -1,6 +1,6 @@
 {
-  "_id": "cGbZhJVggoPWIW3t",
-  "_key": "!items!cGbZhJVggoPWIW3t",
+  "_id": "a5vDQk0pa7VVzgMz",
+  "_key": "!items!a5vDQk0pa7VVzgMz",
   "name": "Découpeuse",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

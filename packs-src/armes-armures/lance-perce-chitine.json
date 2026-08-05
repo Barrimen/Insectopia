@@ -1,6 +1,6 @@
 {
-  "_id": "x9QOAXnjVCV0jf7Y",
-  "_key": "!items!x9QOAXnjVCV0jf7Y",
+  "_id": "P7sbx2jh0Sc9TFQS",
+  "_key": "!items!P7sbx2jh0Sc9TFQS",
   "name": "Lance perce-chitine",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 150,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

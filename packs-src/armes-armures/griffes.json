@@ -1,6 +1,6 @@
 {
-  "_id": "8QeOmVAtfJcnSU7V",
-  "_key": "!items!8QeOmVAtfJcnSU7V",
+  "_id": "Xs3OwFZk6NHgUWdd",
+  "_key": "!items!Xs3OwFZk6NHgUWdd",
   "name": "Griffes",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

@@ -1,6 +1,6 @@
 {
-  "_id": "HjZxklxPkUcHMk06",
-  "_key": "!items!HjZxklxPkUcHMk06",
+  "_id": "fKmu4STrEbYNd3G4",
+  "_key": "!items!fKmu4STrEbYNd3G4",
   "name": "Cotte de mailles (Anciens Dieux)",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 0,
     "modInitiativeType": "-1action",
     "prixQuartz": 100,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

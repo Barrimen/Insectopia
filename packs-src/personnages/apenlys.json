@@ -1,6 +1,6 @@
 {
-  "_id": "I2BR9QBeMiZyfRy0",
-  "_key": "!actors!I2BR9QBeMiZyfRy0",
+  "_id": "A09v0FZfNRvpaz5P",
+  "_key": "!actors!A09v0FZfNRvpaz5P",
   "name": "Apenlys",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "dPhnAsgTQ9Gz9DNc",
+      "_id": "DAa0HMIwugauQWN6",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!I2BR9QBeMiZyfRy0.dPhnAsgTQ9Gz9DNc",
+      "_key": "!actors.items!A09v0FZfNRvpaz5P.DAa0HMIwugauQWN6",
       "effects": []
     },
     {
-      "_id": "TCTAMkP9tpxtLNeX",
+      "_id": "rmPcF8LCEYDnWg9n",
       "name": "Vitesse surnaturelle",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -186,11 +186,11 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!I2BR9QBeMiZyfRy0.TCTAMkP9tpxtLNeX",
+      "_key": "!actors.items!A09v0FZfNRvpaz5P.rmPcF8LCEYDnWg9n",
       "effects": []
     },
     {
-      "_id": "dMQCbRPX77vcc1NR",
+      "_id": "tFBQqxRGC69zHNdM",
       "name": "Vision infrarouge",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -206,7 +206,7 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!I2BR9QBeMiZyfRy0.dMQCbRPX77vcc1NR",
+      "_key": "!actors.items!A09v0FZfNRvpaz5P.tFBQqxRGC69zHNdM",
       "effects": []
     }
   ]

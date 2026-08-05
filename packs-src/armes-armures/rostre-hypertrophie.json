@@ -1,6 +1,6 @@
 {
-  "_id": "axFcSeow5I3J2qI8",
-  "_key": "!items!axFcSeow5I3J2qI8",
+  "_id": "0FiYcwxhTsPI0BkL",
+  "_key": "!items!0FiYcwxhTsPI0BkL",
   "name": "Rostre hypertrophié",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 10,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

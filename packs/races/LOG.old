@@ -1,14 +1,14 @@
-2026/08/05-22:25:16.000 6e94 Recovering log #35
-2026/08/05-22:25:16.020 6e94 Delete type=0 #35
-2026/08/05-22:25:16.021 6e94 Delete type=3 #33
-2026/08/05-22:25:16.045 50a8 Level-0 table #41: started
-2026/08/05-22:25:16.050 50a8 Level-0 table #41: 6799 bytes OK
-2026/08/05-22:25:16.057 50a8 Delete type=0 #39
-2026/08/05-22:25:16.057 50a8 Manual compaction at level-0 from '!journal!ID6K5eTRNJNlz3tq' @ 72057594037927935 : 1 .. '!journal.pages!ID6K5eTRNJNlz3tq.zQo8HFloHaRniKIh' @ 0 : 0; will stop at '!journal.pages!fFjqjmKAXYxnjfvy.wfN3hADIjlK5Kg4Y' @ 84 : 0
-2026/08/05-22:25:16.057 50a8 Compacting 1@0 + 1@1 files
-2026/08/05-22:25:16.063 50a8 Generated table #42@0: 21 keys, 6199 bytes
-2026/08/05-22:25:16.063 50a8 Compacted 1@0 + 1@1 files => 6199 bytes
-2026/08/05-22:25:16.070 50a8 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/08/05-22:25:16.070 50a8 Delete type=2 #37
-2026/08/05-22:25:16.070 50a8 Delete type=2 #41
-2026/08/05-22:25:16.070 50a8 Manual compaction at level-0 from '!journal.pages!fFjqjmKAXYxnjfvy.wfN3hADIjlK5Kg4Y' @ 84 : 0 .. '!journal.pages!ID6K5eTRNJNlz3tq.zQo8HFloHaRniKIh' @ 0 : 0; will stop at (end)
+2026/08/05-22:28:03.627 14e4 Recovering log #40
+2026/08/05-22:28:03.644 14e4 Delete type=0 #40
+2026/08/05-22:28:03.644 14e4 Delete type=3 #38
+2026/08/05-22:36:03.297 71a0 Level-0 table #46: started
+2026/08/05-22:36:03.307 71a0 Level-0 table #46: 9003 bytes OK
+2026/08/05-22:36:03.319 71a0 Delete type=0 #44
+2026/08/05-22:36:03.393 71a0 Manual compaction at level-0 from '!journal!ID6K5eTRNJNlz3tq' @ 72057594037927935 : 1 .. '!journal.pages!ID6K5eTRNJNlz3tq.zQo8HFloHaRniKIh' @ 0 : 0; will stop at '!journal.pages!ID6K5eTRNJNlz3tq.zQo8HFloHaRniKIh' @ 95 : 1
+2026/08/05-22:36:03.393 71a0 Compacting 1@0 + 1@1 files
+2026/08/05-22:36:03.417 71a0 Generated table #47@0: 21 keys, 9003 bytes
+2026/08/05-22:36:03.417 71a0 Compacted 1@0 + 1@1 files => 9003 bytes
+2026/08/05-22:36:03.422 71a0 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/08/05-22:36:03.422 71a0 Delete type=2 #42
+2026/08/05-22:36:03.424 71a0 Delete type=2 #46
+2026/08/05-22:36:03.499 71a0 Manual compaction at level-0 from '!journal.pages!ID6K5eTRNJNlz3tq.zQo8HFloHaRniKIh' @ 95 : 1 .. '!journal.pages!ID6K5eTRNJNlz3tq.zQo8HFloHaRniKIh' @ 0 : 0; will stop at (end)

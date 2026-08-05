@@ -1,6 +1,6 @@
 {
-  "_id": "adhUbbg8gYD1nFuW",
-  "_key": "!items!adhUbbg8gYD1nFuW",
+  "_id": "nB260GYROdFNxFpU",
+  "_key": "!items!nB260GYROdFNxFpU",
   "name": "Armure de carapace",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 0,
     "modInitiativeType": "-1action",
     "prixQuartz": 70,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

@@ -1,6 +1,6 @@
 {
-  "_id": "IkfjRKk1VyhrzBpF",
-  "_key": "!items!IkfjRKk1VyhrzBpF",
+  "_id": "i0Z7pyg0sOrxb14p",
+  "_key": "!items!i0Z7pyg0sOrxb14p",
   "name": "Grand bouclier",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 0,
     "modInitiativeType": "-1action",
     "prixQuartz": 80,
-    "equipee": false
+    "equipee": false,
+    "tradition": null
   },
   "effects": [],
   "folder": null,

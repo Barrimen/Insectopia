@@ -1,6 +1,6 @@
 {
-  "_id": "bMyrGipbnd8Y74EZ",
-  "_key": "!items!bMyrGipbnd8Y74EZ",
+  "_id": "0d857g6xw76uBM6X",
+  "_key": "!items!0d857g6xw76uBM6X",
   "name": "Épée de justice",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 50,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

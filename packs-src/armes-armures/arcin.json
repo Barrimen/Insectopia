@@ -1,6 +1,6 @@
 {
-  "_id": "dr81fod8ereKwJfF",
-  "_key": "!items!dr81fod8ereKwJfF",
+  "_id": "FaceA3px3CmKl5OH",
+  "_key": "!items!FaceA3px3CmKl5OH",
   "name": "Arcin",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

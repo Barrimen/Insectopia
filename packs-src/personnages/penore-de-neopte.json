@@ -1,6 +1,6 @@
 {
-  "_id": "eMJS9yInzZnBgtgo",
-  "_key": "!actors!eMJS9yInzZnBgtgo",
+  "_id": "aiLwRcK8MFHg84Jo",
+  "_key": "!actors!aiLwRcK8MFHg84Jo",
   "name": "Pénore de Néopté",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "iFaXndKbdTky7zm6",
+      "_id": "NUQ0V99Y7Csya3rS",
       "name": "Pinces (arme)",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!eMJS9yInzZnBgtgo.iFaXndKbdTky7zm6",
+      "_key": "!actors.items!aiLwRcK8MFHg84Jo.NUQ0V99Y7Csya3rS",
       "effects": []
     },
     {
-      "_id": "VKfNUkjt3ZWhEEWy",
+      "_id": "VKqDWCqAGQt8SZoT",
       "name": "Pinces démesurées",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -186,11 +186,11 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!eMJS9yInzZnBgtgo.VKfNUkjt3ZWhEEWy",
+      "_key": "!actors.items!aiLwRcK8MFHg84Jo.VKqDWCqAGQt8SZoT",
       "effects": []
     },
     {
-      "_id": "hneKRn6xP0vQMzI6",
+      "_id": "42AVQ6o894Nrkd0F",
       "name": "Mimétisme",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -206,7 +206,7 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!eMJS9yInzZnBgtgo.hneKRn6xP0vQMzI6",
+      "_key": "!actors.items!aiLwRcK8MFHg84Jo.42AVQ6o894Nrkd0F",
       "effects": []
     }
   ]

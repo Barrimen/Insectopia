@@ -1,14 +1,14 @@
-2026/08/05-22:25:14.325 61c8 Recovering log #36
-2026/08/05-22:25:14.344 61c8 Delete type=0 #36
-2026/08/05-22:25:14.346 61c8 Delete type=3 #34
-2026/08/05-22:25:14.387 2b44 Level-0 table #42: started
-2026/08/05-22:25:14.394 2b44 Level-0 table #42: 12558 bytes OK
-2026/08/05-22:25:14.398 2b44 Delete type=0 #40
-2026/08/05-22:25:14.400 2b44 Manual compaction at level-0 from '!actors!1Kjak9IKz1NrDuTC' @ 72057594037927935 : 1 .. '!actors.items!mrs1vvEC0qWSLlc8.yPqNI9h51ecjwN65' @ 0 : 0; will stop at '!actors.items!vaaiEUUB9PwMZ4oo.kUbqOMTY1ktTFV5P' @ 140 : 0
-2026/08/05-22:25:14.400 2b44 Compacting 1@0 + 1@1 files
-2026/08/05-22:25:14.407 2b44 Generated table #43@0: 28 keys, 11664 bytes
-2026/08/05-22:25:14.407 2b44 Compacted 1@0 + 1@1 files => 11664 bytes
-2026/08/05-22:25:14.411 2b44 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/08/05-22:25:14.412 2b44 Delete type=2 #38
-2026/08/05-22:25:14.413 2b44 Delete type=2 #42
-2026/08/05-22:25:14.413 2b44 Manual compaction at level-0 from '!actors.items!vaaiEUUB9PwMZ4oo.kUbqOMTY1ktTFV5P' @ 140 : 0 .. '!actors.items!mrs1vvEC0qWSLlc8.yPqNI9h51ecjwN65' @ 0 : 0; will stop at (end)
+2026/08/05-22:28:03.429 13fc Recovering log #41
+2026/08/05-22:28:03.447 13fc Delete type=0 #41
+2026/08/05-22:28:03.448 13fc Delete type=3 #39
+2026/08/05-22:36:03.363 71a0 Level-0 table #47: started
+2026/08/05-22:36:03.385 71a0 Level-0 table #47: 22683 bytes OK
+2026/08/05-22:36:03.391 71a0 Delete type=0 #45
+2026/08/05-22:36:03.471 71a0 Manual compaction at level-0 from '!actors!1Kjak9IKz1NrDuTC' @ 72057594037927935 : 1 .. '!actors.items!mrs1vvEC0qWSLlc8.yPqNI9h51ecjwN65' @ 0 : 0; will stop at '!actors.items!mrs1vvEC0qWSLlc8.yPqNI9h51ecjwN65' @ 166 : 1
+2026/08/05-22:36:03.471 71a0 Compacting 1@0 + 1@1 files
+2026/08/05-22:36:03.489 71a0 Generated table #48@0: 28 keys, 22683 bytes
+2026/08/05-22:36:03.489 71a0 Compacted 1@0 + 1@1 files => 22683 bytes
+2026/08/05-22:36:03.495 71a0 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/08/05-22:36:03.495 71a0 Delete type=2 #43
+2026/08/05-22:36:03.497 71a0 Delete type=2 #47
+2026/08/05-22:36:03.499 71a0 Manual compaction at level-0 from '!actors.items!mrs1vvEC0qWSLlc8.yPqNI9h51ecjwN65' @ 166 : 1 .. '!actors.items!mrs1vvEC0qWSLlc8.yPqNI9h51ecjwN65' @ 0 : 0; will stop at (end)

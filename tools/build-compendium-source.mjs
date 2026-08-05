@@ -25,6 +25,7 @@ function comp(value, label) {
 const armes = [
   {
     name: "Platère",
+    tradition: "naturelle",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -34,6 +35,7 @@ const armes = [
   },
   {
     name: "Arcin",
+    tradition: "naturelle",
     competenceCombat: "tir",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -43,6 +45,7 @@ const armes = [
   },
   {
     name: "Griffes",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: -1,
@@ -51,6 +54,7 @@ const armes = [
   },
   {
     name: "Griffes acérées",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -60,6 +64,7 @@ const armes = [
   },
   {
     name: "Mandibules hypertrophiées",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 1,
@@ -69,6 +74,7 @@ const armes = [
   },
   {
     name: "Pinces (arme)",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: -1,
@@ -78,6 +84,7 @@ const armes = [
   },
   {
     name: "Rostre hypertrophié",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -87,6 +94,7 @@ const armes = [
   },
   {
     name: "Ravisseuses",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -95,6 +103,7 @@ const armes = [
   },
   {
     name: "Pinces démesurées",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -103,6 +112,7 @@ const armes = [
   },
   {
     name: "Morsure",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -112,6 +122,7 @@ const armes = [
   },
   {
     name: "Défenses",
+    tradition: "naturelle",
     competenceCombat: "predateur",
     modificateurAttaque: 0,
     modificateurDegats: 1,
@@ -120,6 +131,7 @@ const armes = [
   },
   {
     name: "Découpeuse",
+    tradition: "naturelle",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: 1,
@@ -129,6 +141,7 @@ const armes = [
   },
   {
     name: "Os de tema",
+    tradition: "naturelle",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: -1,
@@ -138,6 +151,7 @@ const armes = [
   },
   {
     name: "Épée de justice",
+    tradition: "anciens_dieux",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: 1,
@@ -147,6 +161,7 @@ const armes = [
   },
   {
     name: "Épée de justice ultime",
+    tradition: "anciens_dieux",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: 2,
@@ -157,6 +172,7 @@ const armes = [
   },
   {
     name: "Masse des Anciens Dieux",
+    tradition: "anciens_dieux",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: 1,
@@ -167,6 +183,7 @@ const armes = [
   },
   {
     name: "Lance perce-chitine",
+    tradition: "naturelle",
     competenceCombat: "melee",
     modificateurAttaque: 0,
     modificateurDegats: 1,
@@ -177,6 +194,7 @@ const armes = [
   },
   {
     name: "Fronde",
+    tradition: "naturelle",
     competenceCombat: "tir",
     modificateurAttaque: 0,
     modificateurDegats: -1,
@@ -188,6 +206,7 @@ const armes = [
   },
   {
     name: "Arbalète des Anciens Dieux",
+    tradition: "anciens_dieux",
     competenceCombat: "tir",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -201,6 +220,7 @@ const armes = [
   },
   {
     name: "Crache-sang fétide des Anciens Dieux",
+    tradition: "anciens_dieux",
     competenceCombat: "tir",
     modificateurAttaque: 0,
     modificateurDegats: 0,
@@ -220,6 +240,7 @@ const armes = [
 const armures = [
   {
     name: "Armure de cuir de Sangchauds",
+    tradition: "naturelle",
     bonusChitine: 0,
     bonusFeu: 1,
     malusAile: 0,
@@ -231,6 +252,7 @@ const armures = [
   },
   {
     name: "Armure de bois",
+    tradition: "naturelle",
     bonusChitine: 1,
     bonusFeu: 0,
     malusAile: 0,
@@ -241,6 +263,7 @@ const armures = [
   },
   {
     name: "Armure de carapace",
+    tradition: "naturelle",
     bonusChitine: 2,
     bonusFeu: 0,
     malusAile: -1,
@@ -252,6 +275,7 @@ const armures = [
   },
   {
     name: "Armure de cuir clouté (Anciens Dieux)",
+    tradition: "anciens_dieux",
     bonusChitine: 1,
     bonusFeu: 1,
     malusAile: 0,
@@ -262,6 +286,7 @@ const armures = [
   },
   {
     name: "Cotte de mailles (Anciens Dieux)",
+    tradition: "anciens_dieux",
     bonusChitine: 2,
     bonusFeu: 0,
     malusAile: -1,
@@ -272,6 +297,7 @@ const armures = [
   },
   {
     name: "Armure de plaques de fer (Anciens Dieux)",
+    tradition: "anciens_dieux",
     bonusChitine: 3,
     bonusFeu: 0,
     malusAile: -2,
@@ -290,6 +316,7 @@ const armures = [
 const boucliers = [
   {
     name: "Écu",
+    tradition: null,
     bonusChitine: -1,
     bonusFeu: 0,
     malusAile: 0,
@@ -300,6 +327,7 @@ const boucliers = [
   },
   {
     name: "Bouclier",
+    tradition: null,
     bonusChitine: 0,
     bonusFeu: 0,
     malusAile: 0,
@@ -310,6 +338,7 @@ const boucliers = [
   },
   {
     name: "Grand bouclier",
+    tradition: null,
     bonusChitine: -1,
     bonusFeu: 0,
     malusAile: 0,
@@ -655,6 +684,7 @@ function writeDocs(list, type, dir) {
           rechargeActions: doc.rechargeActions ?? 0,
           prixQuartz: doc.prixQuartz ?? 0,
           equipee: false,
+          tradition: doc.tradition ?? null,
         }),
         ...(type === "armure" && {
           bonusChitine: doc.bonusChitine,
@@ -664,6 +694,7 @@ function writeDocs(list, type, dir) {
           modInitiativeType: doc.modInitiativeType ?? "aucun",
           prixQuartz: doc.prixQuartz ?? 0,
           equipee: false,
+          tradition: doc.tradition ?? null,
         }),
         ...(type === "capacite" && {
           categorie: doc.categorie,

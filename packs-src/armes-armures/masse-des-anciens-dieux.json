@@ -1,6 +1,6 @@
 {
-  "_id": "5TA13q4p7io6jfl8",
-  "_key": "!items!5TA13q4p7io6jfl8",
+  "_id": "yJtkHTbpLj9KpnBU",
+  "_key": "!items!yJtkHTbpLj9KpnBU",
   "name": "Masse des Anciens Dieux",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 280,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

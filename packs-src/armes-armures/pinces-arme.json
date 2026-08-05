@@ -1,6 +1,6 @@
 {
-  "_id": "vDRs7fNsAf8JO0YX",
-  "_key": "!items!vDRs7fNsAf8JO0YX",
+  "_id": "aO4ZYq6CVGfBI6Ru",
+  "_key": "!items!aO4ZYq6CVGfBI6Ru",
   "name": "Pinces (arme)",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

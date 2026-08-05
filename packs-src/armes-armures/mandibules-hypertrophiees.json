@@ -1,6 +1,6 @@
 {
-  "_id": "Qi5bpJ0ax4b010yI",
-  "_key": "!items!Qi5bpJ0ax4b010yI",
+  "_id": "oTQVtaFQx0anaUs6",
+  "_key": "!items!oTQVtaFQx0anaUs6",
   "name": "Mandibules hypertrophiées",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

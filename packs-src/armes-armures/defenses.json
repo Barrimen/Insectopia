@@ -1,6 +1,6 @@
 {
-  "_id": "tz71cCWqmiR7LBDS",
-  "_key": "!items!tz71cCWqmiR7LBDS",
+  "_id": "otTed2Lyo6FhrwoK",
+  "_key": "!items!otTed2Lyo6FhrwoK",
   "name": "Défenses",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

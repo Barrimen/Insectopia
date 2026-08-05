@@ -1,6 +1,6 @@
 {
-  "_id": "jbM0HOA39l3jkKmB",
-  "_key": "!items!jbM0HOA39l3jkKmB",
+  "_id": "9y10Rek2obrz2VEZ",
+  "_key": "!items!9y10Rek2obrz2VEZ",
   "name": "Platère",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

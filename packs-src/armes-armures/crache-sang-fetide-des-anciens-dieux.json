@@ -1,6 +1,6 @@
 {
-  "_id": "U4kPrxRXMNS9wlHi",
-  "_key": "!items!U4kPrxRXMNS9wlHi",
+  "_id": "7m832uLe6ioyaKLq",
+  "_key": "!items!7m832uLe6ioyaKLq",
   "name": "Crache-sang fétide des Anciens Dieux",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 50,
     "rechargeActions": 1,
     "prixQuartz": 1000,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

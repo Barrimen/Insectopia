@@ -1,6 +1,6 @@
 {
-  "_id": "cFeIdo5rLc2Vz8TF",
-  "_key": "!items!cFeIdo5rLc2Vz8TF",
+  "_id": "XnV9mG07bKtcM5A2",
+  "_key": "!items!XnV9mG07bKtcM5A2",
   "name": "Pinces démesurées",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

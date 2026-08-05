@@ -1,6 +1,6 @@
 {
-  "_id": "o9iEi1oZZ9Cs6NS3",
-  "_key": "!items!o9iEi1oZZ9Cs6NS3",
+  "_id": "CgygZSTeJsvNUWmC",
+  "_key": "!items!CgygZSTeJsvNUWmC",
   "name": "Os de tema",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

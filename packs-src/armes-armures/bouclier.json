@@ -1,6 +1,6 @@
 {
-  "_id": "khQocLSR7wUzPDxQ",
-  "_key": "!items!khQocLSR7wUzPDxQ",
+  "_id": "1rlKtZ3VPwPdY114",
+  "_key": "!items!1rlKtZ3VPwPdY114",
   "name": "Bouclier",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 1,
     "modInitiativeType": "-1couleur",
     "prixQuartz": 30,
-    "equipee": false
+    "equipee": false,
+    "tradition": null
   },
   "effects": [],
   "folder": null,

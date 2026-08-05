@@ -136,7 +136,8 @@
       "bonusAllongePremiereBlatte": 0,
       "prixQuartz": 0,
       "equipee": false,
-      "naturelle": false
+      "naturelle": false,
+      "tradition": null
     },
     "armure": {
       "templates": ["base"],
@@ -146,7 +147,8 @@
       "malusEncombrement": 0,
       "modInitiativeType": "aucun",
       "prixQuartz": 0,
-      "equipee": false
+      "equipee": false,
+      "tradition": null
     },
     "capacite": {
       "templates": ["base"],

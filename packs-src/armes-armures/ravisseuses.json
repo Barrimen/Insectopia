@@ -1,6 +1,6 @@
 {
-  "_id": "ytWPRLFN9vr2WuZ5",
-  "_key": "!items!ytWPRLFN9vr2WuZ5",
+  "_id": "XkF4U6KcTSXoYZ3a",
+  "_key": "!items!XkF4U6KcTSXoYZ3a",
   "name": "Ravisseuses",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

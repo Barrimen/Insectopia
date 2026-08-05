@@ -1,6 +1,6 @@
 {
-  "_id": "U3nJXqPsRHGxITSO",
-  "_key": "!items!U3nJXqPsRHGxITSO",
+  "_id": "aOYRlR0eXqypQ4BA",
+  "_key": "!items!aOYRlR0eXqypQ4BA",
   "name": "Morsure",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

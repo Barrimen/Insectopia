@@ -1,6 +1,6 @@
 {
-  "_id": "aOdezcuoURrOAzHT",
-  "_key": "!items!aOdezcuoURrOAzHT",
+  "_id": "YdMS7B5Gr5gXV4RK",
+  "_key": "!items!YdMS7B5Gr5gXV4RK",
   "name": "Écu",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 0,
     "modInitiativeType": "aucun",
     "prixQuartz": 12,
-    "equipee": false
+    "equipee": false,
+    "tradition": null
   },
   "effects": [],
   "folder": null,

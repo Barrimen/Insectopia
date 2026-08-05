@@ -1,6 +1,6 @@
 {
-  "_id": "4ncbwLnIseJzB2xF",
-  "_key": "!items!4ncbwLnIseJzB2xF",
+  "_id": "WY1L0NXzfdnTapmk",
+  "_key": "!items!WY1L0NXzfdnTapmk",
   "name": "Griffes acérées",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 0,
     "rechargeActions": 0,
     "prixQuartz": 0,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

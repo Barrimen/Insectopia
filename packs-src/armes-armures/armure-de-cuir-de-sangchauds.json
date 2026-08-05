@@ -1,6 +1,6 @@
 {
-  "_id": "ekGL9rGIMr2tKgmH",
-  "_key": "!items!ekGL9rGIMr2tKgmH",
+  "_id": "ppWutFIKPcFSB55V",
+  "_key": "!items!ppWutFIKPcFSB55V",
   "name": "Armure de cuir de Sangchauds",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 0,
     "modInitiativeType": "aucun",
     "prixQuartz": 6,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,

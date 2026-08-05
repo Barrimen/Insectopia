@@ -1,6 +1,6 @@
 {
-  "_id": "uCGBFxWJ8mAX5toY",
-  "_key": "!items!uCGBFxWJ8mAX5toY",
+  "_id": "95GcCNQS37Ye6Hf5",
+  "_key": "!items!95GcCNQS37Ye6Hf5",
   "name": "Armure de plaques de fer (Anciens Dieux)",
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
@@ -12,7 +12,8 @@
     "malusEncombrement": 0,
     "modInitiativeType": "-2action",
     "prixQuartz": 500,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

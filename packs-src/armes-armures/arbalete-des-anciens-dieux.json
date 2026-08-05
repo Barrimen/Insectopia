@@ -1,6 +1,6 @@
 {
-  "_id": "CqVgKPpHJb8liTQx",
-  "_key": "!items!CqVgKPpHJb8liTQx",
+  "_id": "E17HDx1Hjsh7VegT",
+  "_key": "!items!E17HDx1Hjsh7VegT",
   "name": "Arbalète des Anciens Dieux",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 300,
     "rechargeActions": 2,
     "prixQuartz": 100,
-    "equipee": false
+    "equipee": false,
+    "tradition": "anciens_dieux"
   },
   "effects": [],
   "folder": null,

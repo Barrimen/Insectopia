@@ -1,6 +1,6 @@
 {
-  "_id": "n5NqCuqqgIPEFka7",
-  "_key": "!items!n5NqCuqqgIPEFka7",
+  "_id": "c1uyiJ4dzu0RZrnC",
+  "_key": "!items!c1uyiJ4dzu0RZrnC",
   "name": "Fronde",
   "type": "arme",
   "img": "icons/svg/item-bag.svg",
@@ -14,7 +14,8 @@
     "porteeInsettres": 50,
     "rechargeActions": 1,
     "prixQuartz": 3,
-    "equipee": false
+    "equipee": false,
+    "tradition": "naturelle"
   },
   "effects": [],
   "folder": null,
