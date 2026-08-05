@@ -267,10 +267,10 @@ export default class CharacterWizard {
               const casteKey = html.find("#wizard-caste")[0].value;
               const metierKey = html.find("#wizard-metier")[0].value;
               const bonusCaracKey = html.find("#wizard-bonus-carac")[0].value;
-              const sphereChoix = {};
-              html.find("#wizard-spheres select").each((_, el) => {
-                sphereChoix[el.dataset.label] = el.value;
-              });
+              const sphereChoix = html
+                .find("#wizard-spheres select")
+                .toArray()
+                .map((el) => el.value);
               await this.actor.applyCaste(casteKey, metierKey, bonusCaracKey, sphereChoix);
               await this._appliquerBlatteCaste(casteKey, metierKey);
               resolve(this.step4CompetencesCaste());

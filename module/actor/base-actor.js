@@ -2,7 +2,7 @@ import { Blattes } from "../common/roll.js";
 import { ROLL_TYPE } from "../common/config.js";
 import { RACES } from "../common/data-races.js";
 import { CASTES } from "../common/data-castes.js";
-import { extraireSphereDepuisLabel } from "../common/data-spheres.js";
+import { extraireSphereDepuisLabel, SPHERES } from "../common/data-spheres.js";
 import { asArray } from "../common/utils.js";
 
 /**
@@ -246,13 +246,15 @@ export default class IntreActor extends Actor {
    * @param casteKey        clé dans CASTES (ex: "combattant")
    * @param metierKey       clé du métier dans CASTES[casteKey].metiers
    * @param bonusCaracKey   caractéristique choisie pour le bonus de caste
-   * @param sphereChoix     { [libellé de compétence]: clé de sphère } pour
-   *                        les compétences "au choix parmi ..." dont la
-   *                        sphère a été résolue en amont (assistant de
-   *                        création, étape 3) — évite de laisser une
-   *                        compétence de Sphère sans sphère assignée.
+   * @param sphereChoix     tableau ORDONNÉ de clés de sphère, une par
+   *                        compétence "au choix parmi ..." rencontrée dans
+   *                        metier.competences, DANS L'ORDRE. Pas un objet
+   *                        indexé par libellé : un métier peut avoir deux
+   *                        fois EXACTEMENT le même intitulé ambigu (ex:
+   *                        Contrôleur d'énergie), qu'un objet ne peut pas
+   *                        distinguer. Résolu à l'étape 3 de l'assistant.
    */
-  async applyCaste(casteKey, metierKey, bonusCaracKey, sphereChoix = {}) {
+  async applyCaste(casteKey, metierKey, bonusCaracKey, sphereChoix = []) {
     const caste = CASTES[casteKey];
     const metier = caste?.metiers?.[metierKey];
     if (!caste || !metier) return;
@@ -268,14 +270,36 @@ export default class IntreActor extends Actor {
     }
 
     const competencesCaste = foundry.utils.duplicate(asArray(this.system.caracteristiques.caste.competences));
+    // sphereChoix est un tableau ordonné (une valeur par compétence ambiguë
+    // rencontrée dans metier.competences, dans l'ordre) — pas un objet
+    // indexé par texte de libellé : deux compétences peuvent avoir
+    // EXACTEMENT le même intitulé ambigu (ex: Contrôleur d'énergie a deux
+    // fois "Sphère de magie (au choix parmi Eau/Air/Feu/Terre)"), ce
+    // qu'un objet ne peut pas distinguer.
+    const sphereChoixRestants = [...sphereChoix];
+    const occurrences = {}; // combien de fois CE texte de métier a déjà été traité dans cette boucle
     for (const label of metier.competences) {
-      if (!competencesCaste.some((c) => c.label === label)) {
-        // Pour un métier divin, "Sphère de magie (Vie)" est non ambigu et se
-        // tague automatiquement ; "Sphère de magie (au choix parmi ...)" est
-        // résolue par sphereChoix (choisie à l'étape 3 de l'assistant).
-        const sphere = extraireSphereDepuisLabel(label) ?? sphereChoix[label] ?? null;
-        competencesCaste.push(sphere ? { label, value: 1, sphere } : { label, value: 1 });
-      }
+      const occurrence = (occurrences[label] = (occurrences[label] || 0) + 1);
+      // Dédup par origineMetier (texte original du métier), pas par label
+      // affiché : ce dernier est réécrit avec la sphère résolue et ne
+      // correspond donc plus au texte du métier dès le deuxième passage
+      // dans l'assistant (ex: "Rouvrir la création") — sans ce marqueur
+      // stable, on perdrait la détection "déjà acquise" et on dupliquerait
+      // la compétence à chaque nouveau passage (cf. capture du 05/08 :
+      // 4 lignes de Sphère pour un métier qui n'en donne que 2).
+      const dejaAcquises = competencesCaste.filter((c) => (c.origineMetier ?? c.label) === label).length;
+      if (dejaAcquises >= occurrence) continue;
+
+      const sphereAuto = extraireSphereDepuisLabel(label);
+      const sphereChoisie = sphereAuto ?? sphereChoixRestants.shift() ?? null;
+      // Le libellé affiché doit toujours nommer la sphère résolue, jamais
+      // rester sur le texte ambigu "au choix parmi ..." une fois le choix
+      // fait — c'est justement ce que montrait la capture du 05/08.
+      const labelFinal =
+        sphereChoisie && !sphereAuto ? `Sphère de magie (${SPHERES[sphereChoisie]?.label ?? sphereChoisie})` : label;
+      const entry = { label: labelFinal, value: 1, origineMetier: label };
+      if (sphereChoisie) entry.sphere = sphereChoisie;
+      competencesCaste.push(entry);
     }
     updates["system.caracteristiques.caste.competences"] = competencesCaste;
 
