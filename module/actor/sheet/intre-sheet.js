@@ -4,6 +4,7 @@ import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
 import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER } from "../../common/data-spheres.js";
 import { asArray } from "../../common/utils.js";
+import { openItemPicker } from "../../dialog/item-picker.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -629,13 +630,11 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     await this.actor.update({ "system.ressources.contacts": contacts });
   }
 
-  /** Crée un nouvel Item embarqué du type indiqué (data-type: arme|armure|capacite). */
+  /** Ajoute un nouvel Item du type indiqué (data-type: arme|armure|capacite|objet), via le picker Compendium / Création libre. */
   static async #onItemCreate(event, target) {
     event.preventDefault();
     const type = target.dataset.type;
-    const nomParDefaut = { arme: "Nouvelle arme", armure: "Nouvelle armure", capacite: "Nouvelle capacité", objet: "Nouvel objet" };
-    const itemData = { name: nomParDefaut[type] ?? "Nouvel objet", type };
-    return this.actor.createEmbeddedDocuments("Item", [itemData]);
+    return openItemPicker(this.actor, type);
   }
 
   static #onItemEdit(event, target) {
