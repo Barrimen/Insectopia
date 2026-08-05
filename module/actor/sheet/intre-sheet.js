@@ -546,9 +546,9 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
             const competences = foundry.utils.duplicate(asArray(actor.system.caracteristiques.caste.competences));
             if (choix === "Sphère de magie") {
               const sphereKey = html.find("#caste-comp-sphere-choix")[0].value;
-              competences.push({ label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey });
+              competences.push({ id: foundry.utils.randomID(), label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey });
             } else {
-              competences.push({ label: choix, value: 1 });
+              competences.push({ id: foundry.utils.randomID(), label: choix, value: 1 });
             }
             await actor.update({ "system.caracteristiques.caste.competences": competences });
           },
@@ -564,11 +564,27 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     }).render(true);
   }
 
+  /**
+   * Suppression par identifiant stable (`comp.id`), pas par position dans
+   * le tableau : un `data-index` lu depuis un DOM pas encore rafraîchi
+   * après une suppression précédente peut viser la mauvaise ligne (deux
+   * clics rapides sur deux corbeilles avant le re-render intermédiaire).
+   * Repli sur l'index pour les lignes créées avant l'ajout de `id`
+   * (personnages existants) — tant qu'elles n'ont pas d'identifiant, le
+   * risque décrit ci-dessus reste présent pour elles spécifiquement.
+   */
   static async #onCasteCompRemove(event, target) {
     event.preventDefault();
-    const index = parseInt(target.dataset.index);
     const competences = foundry.utils.duplicate(asArray(this.actor.system.caracteristiques.caste.competences));
-    competences.splice(index, 1);
+    const compId = target.dataset.compId;
+    if (compId) {
+      const i = competences.findIndex((c) => c.id === compId);
+      if (i === -1) return; // déjà supprimée entre-temps (double-clic) : rien à faire
+      competences.splice(i, 1);
+    } else {
+      const index = parseInt(target.dataset.index);
+      competences.splice(index, 1);
+    }
     await this.actor.update({ "system.caracteristiques.caste.competences": competences });
   }
 

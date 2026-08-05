@@ -428,9 +428,13 @@ export default class CharacterWizard {
               const choix = html.find("#choix-comp")[0].value;
               if (choix === "Sphère de magie") {
                 const sphereKey = html.find("#choix-comp-sphere")[0]?.value;
-                resolve(sphereKey ? { label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey } : null);
+                resolve(
+                  sphereKey
+                    ? { id: foundry.utils.randomID(), label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey }
+                    : null
+                );
               } else {
-                resolve({ label: choix, value: 1 });
+                resolve({ id: foundry.utils.randomID(), label: choix, value: 1 });
               }
             },
           },
@@ -488,9 +492,14 @@ export default class CharacterWizard {
                 if (choix === "Sphère de magie") {
                   const sphereKey = ligne.find(".wizard-comp-supp-sphere")[0]?.value;
                   if (!sphereKey) return; // pas de sphère dispo pour ce métier (non divin) : ligne ignorée
-                  competences.push({ label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey });
+                  competences.push({
+                    id: foundry.utils.randomID(),
+                    label: `Sphère de magie (${SPHERES[sphereKey].label})`,
+                    value: 1,
+                    sphere: sphereKey,
+                  });
                 } else {
-                  competences.push({ label: choix, value: 1 });
+                  competences.push({ id: foundry.utils.randomID(), label: choix, value: 1 });
                 }
               });
               await this.actor.update({ "system.caracteristiques.caste.competences": competences });

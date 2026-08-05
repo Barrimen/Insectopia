@@ -297,7 +297,7 @@ export default class IntreActor extends Actor {
       // fait — c'est justement ce que montrait la capture du 05/08.
       const labelFinal =
         sphereChoisie && !sphereAuto ? `Sphère de magie (${SPHERES[sphereChoisie]?.label ?? sphereChoisie})` : label;
-      const entry = { label: labelFinal, value: 1, origineMetier: label };
+      const entry = { id: foundry.utils.randomID(), label: labelFinal, value: 1, origineMetier: label };
       if (sphereChoisie) entry.sphere = sphereChoisie;
       competencesCaste.push(entry);
     }
