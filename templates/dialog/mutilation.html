@@ -1,0 +1,56 @@
+<div class="dialog mutilation-localisation">
+  <p class="hint">
+    Mutilation (livret p.30) : cliquez une zone sur le schéma (ou le bouton correspondant), ou tirez une
+    Blatte au sort pour la déterminer.
+  </p>
+
+  <div class="loc-image-wrap">
+    <img src="systems/insectopia/assets/localisation-insecte.png" alt="Schéma de localisation" />
+    <div class="loc-hotspot" data-zone="tete" style="left:45%; top:0%; width:16%; height:14%;" title="Tête"></div>
+    <div class="loc-hotspot" data-zone="aile" style="left:12%; top:14%; width:33%; height:22%;" title="Aile (gauche)"></div>
+    <div class="loc-hotspot" data-zone="thorax" style="left:33%; top:14%; width:28%; height:22%;" title="Thorax"></div>
+    <div class="loc-hotspot" data-zone="aile" style="left:61%; top:14%; width:33%; height:22%;" title="Aile (droite)"></div>
+    <div class="loc-hotspot" data-zone="abdomen" style="left:41%; top:36%; width:24%; height:26%;" title="Abdomen"></div>
+    <div class="loc-hotspot" data-zone="patte" style="left:41%; top:58%; width:24%; height:8%;" title="Pattes"></div>
+  </div>
+
+  <div class="loc-buttons">
+    <button type="button" class="loc-zone-btn" data-zone="tete">Tête — mort</button>
+    <button type="button" class="loc-zone-btn" data-zone="thorax">Thorax — immobilisation</button>
+    <button type="button" class="loc-zone-btn" data-zone="abdomen">Abdomen — mort</button>
+    <button type="button" class="loc-zone-btn" data-zone="aile">Aile — mutilation</button>
+    <button type="button" class="loc-zone-btn" data-zone="patte">Patte — mutilation</button>
+  </div>
+
+  <div class="loc-hasard">
+    <button type="button" class="loc-tirage-btn">
+      <i class="fas fa-dice"></i> Tirer une Blatte au sort (Rouge=Tête, Verte=Thorax, Noire=Abdomen, Bleue=Aile, Blanche=Patte)
+    </button>
+  </div>
+
+  <style>
+    .mutilation-localisation .hint { font-style: italic; margin-bottom: 6px; }
+    .mutilation-localisation .loc-image-wrap {
+      position: relative;
+      width: 260px;
+      margin: 0 auto 10px auto;
+    }
+    .mutilation-localisation .loc-image-wrap img { width: 100%; display: block; border-radius: 4px; }
+    .mutilation-localisation .loc-hotspot {
+      position: absolute;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.1s ease;
+    }
+    .mutilation-localisation .loc-hotspot:hover { background-color: rgba(180, 0, 0, 0.35); }
+    .mutilation-localisation .loc-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .mutilation-localisation .loc-buttons button { flex: 1 1 45%; }
+    .mutilation-localisation .loc-hasard { text-align: center; }
+  </style>
+</div>

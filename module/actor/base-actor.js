@@ -4,6 +4,7 @@ import { RACES } from "../common/data-races.js";
 import { CASTES } from "../common/data-castes.js";
 import { extraireSphereDepuisLabel, SPHERES } from "../common/data-spheres.js";
 import { asArray } from "../common/utils.js";
+import { ouvrirDialogueMutilation } from "../combat/mutilation.js";
 
 /**
  * IntreActor
@@ -38,6 +39,15 @@ export default class IntreActor extends Actor {
     // Livre de base p.196 : vitesse en vol = Aile + 2 (le kit de démarrage,
     // simplifié, indiquait Aile x2 — corrigé ici pour suivre le livre de base).
     this.system.combat.vitesseVol = carac.aile.value + 2;
+
+    // House Rule (non écrite au livre, cf. module/combat/mutilation.js) :
+    // le livret p.30 ne chiffre aucun effet pour une Mutilation à
+    // l'Aile/la Patte (juste "mutilation permanente"). On applique ici un
+    // malus simple, isolé et facile à retirer/ajuster si besoin.
+    if (this.getFlag("insectopia", "aileMutilee")) this.system.combat.vitesseVol = 0;
+    if (this.getFlag("insectopia", "patteMutilee")) {
+      this.system.combat.vitesseSol = Math.max(0, this.system.combat.vitesseSol - 2);
+    }
 
     // Fluide (livre de base p.206) : ressource consommée par de nombreuses
     // capacités pour améliorer la couleur d'un tirage. Égal à Chrysalide +
@@ -380,43 +390,12 @@ export default class IntreActor extends Actor {
 
   /**
    * Choix de la partie du corps sectionnée par une mutilation (livret
-   * p.30) : tête ou abdomen -> mort immédiate ; thorax -> immobilisation.
-   * Le joueur/Deus effectuant le test de dégâts choisit la partie du corps.
+   * p.30) : tête ou abdomen -> mort immédiate ; thorax -> immobilisation ;
+   * aile ou patte -> mutilation permanente (House Rule de malus, cf.
+   * _prepareDataIntre). Ouvre le dialogue de Localisation (schéma
+   * cliquable + tirage au sort optionnel), voir module/combat/mutilation.js.
    */
   async demanderMutilation() {
-    const actor = this;
-    return new Promise((resolve) => {
-      new Dialog({
-        title: `Mutilation — ${actor.name}`,
-        content: `<p>Quelle partie du corps est sectionnée par cette mutilation ?</p>`,
-        buttons: {
-          tete: {
-            label: "Tête (mort immédiate)",
-            callback: async () => {
-              await actor.toggleStatusEffect?.("dead", { active: true });
-              ui.notifications.error(`${actor.name} meurt sur le coup (mutilation à la tête).`);
-              resolve("tete");
-            },
-          },
-          abdomen: {
-            label: "Abdomen (mort immédiate)",
-            callback: async () => {
-              await actor.toggleStatusEffect?.("dead", { active: true });
-              ui.notifications.error(`${actor.name} meurt sur le coup (mutilation à l'abdomen).`);
-              resolve("abdomen");
-            },
-          },
-          thorax: {
-            label: "Thorax (immobilisation)",
-            callback: async () => {
-              await actor.setFlag("insectopia", "immobilise", true);
-              ui.notifications.warn(`${actor.name} est immobilisé (mutilation au thorax).`);
-              resolve("thorax");
-            },
-          },
-        },
-        default: "thorax",
-      }).render(true);
-    });
+    return ouvrirDialogueMutilation(this);
   }
 }

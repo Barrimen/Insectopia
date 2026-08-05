@@ -110,6 +110,29 @@ export const RESULTAT_DEGATS = {
 };
 
 /**
+ * Localisation d'une Mutilation (livret p.30 : "le joueur choisit la partie
+ * du corps qu'il sectionne, ou si le Deus le désire, le joueur utilise la
+ * table de localisation de la fiche de personnage"). Le livre ne détaille
+ * pas cette "table" au-delà du schéma d'insecte de la fiche ; la
+ * correspondance couleur -> zone ci-dessous a été fixée avec l'auteur du
+ * jeu pour permettre un tirage au sort (une Blatte piochée dans le sac de
+ * 42, indépendamment du tirage de Dégâts).
+ *
+ * Effets Tête/Abdomen (mort immédiate) et Thorax (immobilisation) : livret
+ * p.30, mécanique fixe. Effets Aile/Patte : le livre ne précise qu'une
+ * "mutilation permanente" sans effet chiffré ; le malus appliqué ici
+ * (vitesseVol à 0, vitesseSol -2) est une House Rule, clairement isolée
+ * dans _prepareDataIntre() et facile à retirer/ajuster.
+ */
+export const LOCALISATION_ZONES = {
+  rouge: { zone: "tete", label: "Tête", effet: "mort" },
+  verte: { zone: "thorax", label: "Thorax", effet: "immobilisation" },
+  noire: { zone: "abdomen", label: "Abdomen", effet: "mort" },
+  bleue: { zone: "aile", label: "Aile", effet: "mutilation_aile" },
+  blanche: { zone: "patte", label: "Patte", effet: "mutilation_patte" },
+};
+
+/**
  * Résultats du test de Sphère de magie vs Difficulté (livre p.262-276).
  * Contrairement à RESULTAT_ATTAQUE/RESULTAT_DEGATS, aucune table de
  * sévérité chiffrée n'est donnée par le livre pour la magie : la couleur
