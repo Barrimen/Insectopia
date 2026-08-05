@@ -2,7 +2,7 @@
 
 > Ce fichier est la source de vérité sur l'avancement du projet. Il est mis à jour par Claude après chaque session de travail. En début de session, Claude le lit en premier (via clone du repo) avant de proposer quoi que ce soit.
 
-Dernière mise à jour : 2026-08-03 (création initiale du fichier)
+Dernière mise à jour : 2026-08-05 (Localisation des mutilations)
 
 ---
 
@@ -40,7 +40,8 @@ Dernière mise à jour : 2026-08-03 (création initiale du fichier)
 | Items (armes/armures/capacités + bonus auto) | ✅ Fait | |
 | Compendiums LevelDB | ✅ Fait mais **désynchronisé** | voir §5 |
 | Enrichissement données rulebook (races/castes/métiers/capacités) | ✅ Fait | |
-| **Système de magie** | ✅ Fait (dernière session) | voir §4 |
+| Système de magie | ✅ Fait | voir §4 |
+| **Localisation des mutilations** | ✅ Fait (dernière session) | voir §5 |
 
 ---
 
@@ -59,7 +60,18 @@ Dernière mise à jour : 2026-08-03 (création initiale du fichier)
 
 ---
 
-## 5. Dette technique / à surveiller
+## 5. Localisation des mutilations — détail
+
+- Déclenchée sur Blatte rouge au test de Dégâts (`mutilation: true`, livret p.30). Dialogue : schéma d'insecte cliquable (overlay SVG en `viewBox`, cf. §7 Journal de conception pour le pourquoi du SVG plutôt que des `div` en `position:absolute`) + boutons de secours + tirage au sort optionnel.
+- Tirage au sort = une Blatte indépendante piochée dans le sac de 42 (pas le tirage de Dégâts lui-même) : Rouge→Tête, Verte→Thorax, Noire→Abdomen, Bleue→Aile, Blanche→Patte (mapping validé par Obe, absent du livre tel quel).
+- Effets Tête/Abdomen = mort immédiate, Thorax = immobilisation : règle fixe p.30.
+- Effets Aile (vitesseVol → 0) / Patte (vitesseSol -2) : **House Rule**, le livre ne chiffrant qu'une "mutilation permanente" sans effet mécanique pour ces deux zones. Isolé et commenté comme tel dans `_prepareDataIntre()`.
+- Fichiers : `module/combat/mutilation.js`, `templates/dialog/mutilation.html`, `assets/localisation-insecte.png` (nouveaux) ; `module/common/config.js` (`LOCALISATION_ZONES`), `module/actor/base-actor.js` (modifiés).
+- Historique des mutilations journalisé en flag acteur (`insectopia.mutilations`), pas affiché sur la fiche (choix assumé — pas nécessaire selon Obe).
+
+---
+
+## 6. Dette technique / à surveiller
 
 - **Compendiums (`packs/`) en retard** sur le code source (`packs-src/`, `data-capacites.js`, `data-competences-caste.js`). Recompilation à faire après les derniers ajouts.
 - CLI `@foundryvtt/foundryvtt-cli` : chaque document source doit avoir un champ `_key`, sinon il est silencieusement ignoré au packing.
@@ -67,23 +79,25 @@ Dernière mise à jour : 2026-08-03 (création initiale du fichier)
 - Stratégie d'import CSS (GPT) : compatibilité avec le tableau `styles` de `system.json` à confirmer.
 - Champs de données pour la vitesse de déplacement : non confirmés.
 - Licence des polices utilisées par GPT : non confirmée.
+- **Classe `Dialog` (V1 Application framework) dépréciée depuis Foundry v13**, suppression prévue en v16 — confirmé par warning console en test live (2026-08-05). Utilisée par tous les dialogues actuels du système (`magic.js`/`sort-cast.html`, `mutilation.js`/`mutilation.html`, et les dialogues de `roll.js`). Migration vers `DialogV2` (`foundry.applications.api`, déjà stable en v14) actée comme prochain chantier — voir §7.
 
 ---
 
-## 6. À venir / backlog
+## 7. À venir / backlog
 
 Voir GitHub Issues (mise en place en cours — voir README ou demander à Claude/Obe pour le détail).
 
-Éléments identifiés au 2026-08-03 :
+Éléments identifiés au 2026-08-05 :
+- **Migration DialogV2** : chantier transverse, tous les dialogues du système à la fois (pas un fichier isolé) pour éviter la cohabitation de deux styles. Priorité proche vu la dépréciation déjà active en v14.
 - Test live du wizard de création de personnage sur Foundry
-- Résolution des 7 cellules `// À VÉRIFIER`
+- Résolution des 7 cellules `// À VÉRIFIER` (magie, table p.267)
 - Recompilation des `packs/`
 - Support race Arak (reporté)
 - Fonctionnalités magie V2 (§4)
 
 ---
 
-## 7. Règles apprises (erreurs corrigées)
+## 8. Règles apprises (erreurs corrigées)
 
 - Vitesse de vol = Aile+2, **pas** Aile×2
 - Jauge de corruption = "Souillure" 0–10, **pas** "Sombre" démarrant à −1

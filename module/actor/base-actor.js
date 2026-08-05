@@ -32,7 +32,9 @@ export default class IntreActor extends Actor {
 
     this.system.combat.initiative = Math.max(
       0,
-      carac.temperature.competences.activite.value - (this.system.combat.encombrement || 0) - this.getEncombrementArmures()
+      carac.temperature.competences.activite.value -
+        (this.system.combat.encombrement || 0) -
+        this.getModificateursInitiativeEquipement().actionMalus
     );
 
     this.system.combat.vitesseSol = carac.aile.value;
@@ -110,6 +112,33 @@ export default class IntreActor extends Actor {
     if (!cible) return;
 
     const arme = this.getArmeEquipee(competenceCombat);
+
+    // Verrou de rechargement (livre de base p.240) : tant que l'arme n'a
+    // pas encaissé son nombre d'actions de recharge, l'Attaque est
+    // bloquée. Voir tickRechargesArmes() pour la décrémentation.
+    if (arme?.system.actionsRechargeRestantes > 0) {
+      ui.notifications.warn(
+        `${arme.name} est en cours de rechargement (encore ${arme.system.actionsRechargeRestantes} action(s) avant de pouvoir tirer).`
+      );
+      return;
+    }
+
+    // Munitions : automatisation absente telle quelle du livret (qui ne
+    // chiffre qu'un coût en actions de recharge, pas un stock), ajoutée
+    // à la demande d'Obe. Bloque le tir si l'arme requiert un type de
+    // munition (system.munitionType) et que l'acteur n'en possède plus
+    // (Item "objet" avec le même munitionType, quantite > 0).
+    let munition = null;
+    if (arme?.system.munitionType) {
+      munition = this.items.find(
+        (i) => i.type === "objet" && i.system.munitionType === arme.system.munitionType && (i.system.quantite || 0) > 0
+      );
+      if (!munition) {
+        ui.notifications.warn(`${this.name} n'a plus de munitions (${arme.system.munitionType}) pour ${arme.name}.`);
+        return;
+      }
+    }
+
     const bonusCapacite = this.getCapaciteBonus(caracKey, competenceCombat);
     const modifier = (this.system.malusBlessuresInternes || 0) + (arme?.system.modificateurAttaque || 0) + bonusCapacite;
 
@@ -118,10 +147,57 @@ export default class IntreActor extends Actor {
       modifier,
       itemId: arme?.id ?? null,
       nomArme: arme?.name ?? "attaque naturelle",
+      munitionItemId: munition?.id ?? null,
     };
 
     const blattes = new Blattes(this, ROLL_TYPE.ATTACK, competence, data);
     blattes.openDialog();
+  }
+
+  /**
+   * Consomme le tir d'une arme à distance au moment où le joueur confirme
+   * le tirage de Blattes d'Attaque (roll.js, callback du bouton "Piocher"
+   * — volontairement pas dans attack() pour ne rien consommer si le
+   * dialogue est annulé) : décrémente le stock de munitions liées s'il y
+   * en a, puis arme le verrou de rechargement (livre de base p.240).
+   */
+  async consommerTirDistance(itemId, munitionItemId) {
+    const arme = itemId ? this.items.get(itemId) : null;
+    if (!arme || arme.type !== "arme") return;
+
+    if (munitionItemId) {
+      const munition = this.items.get(munitionItemId);
+      if (munition) {
+        const restant = Math.max(0, (munition.system.quantite || 0) - 1);
+        await munition.update({ "system.quantite": restant });
+      }
+    }
+
+    if (arme.system.rechargeActions > 0) {
+      await arme.update({ "system.actionsRechargeRestantes": arme.system.rechargeActions });
+    }
+  }
+
+  /**
+   * Décrémente d'une action le compteur de rechargement de toutes les
+   * armes à distance équipées encore en cours de rechargement. Appelé à
+   * chaque action dépensée en combat (InsectopiaCombatant.depenserBlatte).
+   *
+   * Hypothèse d'automatisation à valider avec Obe : le livret chiffre un
+   * coût en actions de recharge sans préciser si ces actions doivent être
+   * exclusivement dédiées à la recharge ou si n'importe quelle action du
+   * combattant la fait progresser. On retient ici la seconde lecture
+   * (plus simple à automatiser) ; à revoir si ça ne correspond pas à
+   * l'intention du livre.
+   */
+  async tickRechargesArmes() {
+    const armes = this.items.filter((i) => i.type === "arme" && i.system.actionsRechargeRestantes > 0);
+    if (!armes.length) return;
+    const updates = armes.map((i) => ({
+      _id: i.id,
+      "system.actionsRechargeRestantes": Math.max(0, i.system.actionsRechargeRestantes - 1),
+    }));
+    await this.updateEmbeddedDocuments("Item", updates);
   }
 
   /**
@@ -158,10 +234,64 @@ export default class IntreActor extends Actor {
   }
 
   /** Somme des malus d'encombrement des armures équipées. */
-  getEncombrementArmures() {
-    return this.items
-      .filter((i) => i.type === "armure" && i.system.equipee)
-      .reduce((sum, i) => sum + (i.system.malusEncombrement || 0), 0);
+  /**
+   * Modificateurs d'Initiative cumulés de l'équipement (livre de base
+   * p.239-240) : chaque armure/arme équipée porte un `modInitiativeType`
+   * parmi "aucun" / "-1couleur" / "+1couleur" / "-1action".
+   *
+   *  - "-1action" réduit le nombre d'actions du tour (Activité) de un.
+   *  - "-1couleur"/"+1couleur" dégradent/améliorent d'un cran la couleur
+   *    de CHAQUE Blatte tirée à l'initiative (appliqué dans
+   *    Blattes.piocher(), pas ici).
+   *
+   * Force de titan (p.216) atténue d'un cran chaque malus, objet par
+   * objet, avant cumul : -1action → -1couleur → aucun. Les bonus
+   * (+1couleur) ne sont pas concernés (la capacité ne parle que des
+   * malus d'armure).
+   *
+   * Empilement (décision Obe, non chiffrée telle quelle au livret) :
+   * si le cumul des malus atteint ou dépasse 2 crans de sévérité (ex :
+   * deux "-1couleur", ou un "-1action" isolé), le résultat final est
+   * plafonné à "-1action" plutôt que de dégrader indéfiniment la couleur.
+   *
+   * @returns {{actionMalus:number, couleurShift:number, allongeBonus:number}}
+   */
+  getModificateursInitiativeEquipement() {
+    const aForceDeTitan = this.items.some((i) => i.type === "capacite" && i.name === "Force de titan");
+
+    const SEVERITE = { "-1action": 2, "-1couleur": 1, aucun: 0, "": 0 };
+
+    const equipements = [
+      ...this.items.filter((i) => i.type === "armure" && i.system.equipee),
+      ...this.items.filter((i) => i.type === "arme" && i.system.equipee),
+    ];
+
+    let severiteTotale = 0;
+    let couleurBonus = 0;
+    let allongeBonus = 0;
+
+    for (const item of equipements) {
+      const type = item.system.modInitiativeType || "aucun";
+      if (type === "+1couleur") {
+        couleurBonus += 1;
+      } else {
+        let severite = SEVERITE[type] ?? 0;
+        if (aForceDeTitan && severite > 0) severite -= 1; // atténuation d'un cran, par objet
+        severiteTotale += severite;
+      }
+      allongeBonus += item.system.bonusAllongePremiereBlatte || 0;
+    }
+
+    // Conversion de la sévérité cumulée en malus final : 0 = aucun,
+    // 1 = -1couleur, 2+ = -1action (plafond, cf. décision empilement).
+    const actionMalus = severiteTotale >= 2 ? 1 : 0;
+    const couleurMalus = severiteTotale === 1 ? 1 : 0;
+
+    return {
+      actionMalus,
+      couleurShift: couleurBonus - couleurMalus,
+      allongeBonus,
+    };
   }
 
   /**

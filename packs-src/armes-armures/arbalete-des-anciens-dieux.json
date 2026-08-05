@@ -13,6 +13,8 @@
     "portee": "300 insètres",
     "porteeInsettres": 300,
     "rechargeActions": 2,
+    "actionsRechargeRestantes": 0,
+    "munitionType": "carreau",
     "prixQuartz": 100,
     "equipee": false
   },

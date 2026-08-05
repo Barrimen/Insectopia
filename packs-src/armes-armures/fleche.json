@@ -1,0 +1,19 @@
+{
+  "_id": "g7GWDUe32ykzqH8E",
+  "_key": "!items!g7GWDUe32ykzqH8E",
+  "name": "Flèche",
+  "type": "objet",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Munition pour Arcin (livre de base p.242). Consommée automatiquement à chaque tir.",
+    "quantite": 20,
+    "poidsUnitaire": 0.1,
+    "prixQuartz": 1,
+    "munitionType": "fleche"
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

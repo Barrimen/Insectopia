@@ -17,4 +17,14 @@ export default function registerHandlebarsHelpers() {
   Handlebars.registerHelper("ifne", function (v1, v2, options) {
     return v1 !== v2 ? options.fn(this) : options.inverse(this);
   });
+
+  // répète le bloc n fois (utilisé par templates/combat/tracker.hbs pour
+  // dessiner une blatte par unité de couleur d'initiative restante)
+  Handlebars.registerHelper("times", function (n, options) {
+    let result = "";
+    for (let i = 0; i < (n || 0); i++) {
+      result += options.fn(i);
+    }
+    return result;
+  });
 }

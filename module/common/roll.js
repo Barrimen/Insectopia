@@ -127,6 +127,13 @@ export class Blattes {
                 this.data.formulaValue += modifier;
               }
             }
+            // Consommation munitions/rechargement (livre de base p.240) :
+            // uniquement ici, au clic sur "Piocher", pas dans actor.attack()
+            // — sinon un dialogue annulé consommerait quand même le tir.
+            if (this.rolltype === ROLL_TYPE.ATTACK && this.data.itemId) {
+              await this.actor.consommerTirDistance(this.data.itemId, this.data.munitionItemId);
+            }
+
             await this.piocher();
             return await this.showResult();
           },
@@ -245,6 +252,51 @@ export class Blattes {
       this.data.blattesSorties.push(value);
       this.data.blattesParCouleur[color] += 1;
     }
+
+    // Modificateurs d'Initiative de l'équipement (livre de base p.239-240,
+    // cf. base-actor.js#getModificateursInitiativeEquipement) : ne
+    // s'appliquent qu'au tirage d'Initiative, jamais aux autres tirages
+    // (Attaque, Dégâts, Sort...).
+    if (this.rolltype === ROLL_TYPE.INITIATIVE && this.actor) {
+      const mods = this.actor.getModificateursInitiativeEquipement();
+      if (mods.couleurShift) this.decalerCouleurs(mods.couleurShift);
+      // Allonge (ex : Lance perce-chitine) : cran(s) supplémentaires
+      // réservés à la MEILLEURE Blatte tirée uniquement (avantage sur la
+      // première attaque du tour, livre p.240 + précision Obe : +2 crans).
+      if (mods.allongeBonus) this.decalerMeilleureBlatte(mods.allongeBonus);
+    }
+  }
+
+  /**
+   * Décale la couleur de CHAQUE Blatte tirée de `pas` crans (positif =
+   * amélioration vers rouge, négatif = dégradation vers noire), borné aux
+   * extrémités de l'échelle. Met à jour blattesResult et blattesParCouleur.
+   */
+  decalerCouleurs(pas) {
+    const ordre = ORDRE_COULEURS_CROISSANT;
+    this.data.blattesParCouleur = { rouge: 0, verte: 0, bleue: 0, blanche: 0, noire: 0 };
+    for (const blatte of this.data.blattesResult) {
+      const indexBorne = Math.min(ordre.length - 1, Math.max(0, ordre.indexOf(blatte.color) + pas));
+      blatte.color = ordre[indexBorne];
+      this.data.blattesParCouleur[blatte.color] += 1;
+    }
+  }
+
+  /**
+   * Décale uniquement la meilleure Blatte tirée (celle qui agira en
+   * premier) de `pas` crans. Utilisé pour l'effet Allonge.
+   */
+  decalerMeilleureBlatte(pas) {
+    if (!this.data.blattesResult.length) return;
+    const ordre = ORDRE_COULEURS_CROISSANT;
+    let meilleure = this.data.blattesResult[0];
+    for (const blatte of this.data.blattesResult) {
+      if (ordre.indexOf(blatte.color) > ordre.indexOf(meilleure.color)) meilleure = blatte;
+    }
+    this.data.blattesParCouleur[meilleure.color] -= 1;
+    const indexBorne = Math.min(ordre.length - 1, Math.max(0, ordre.indexOf(meilleure.color) + pas));
+    meilleure.color = ordre[indexBorne];
+    this.data.blattesParCouleur[meilleure.color] += 1;
   }
 
   evaluerBlattesATirer(formulaValue) {

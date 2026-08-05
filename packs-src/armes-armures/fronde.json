@@ -13,6 +13,10 @@
     "portee": "50 insètres",
     "porteeInsettres": 50,
     "rechargeActions": 1,
+    "actionsRechargeRestantes": 0,
+    "munitionType": "",
+    "modInitiativeType": "+1couleur",
+    "bonusAllongePremiereBlatte": 0,
     "prixQuartz": 3,
     "equipee": false
   },

@@ -1,0 +1,19 @@
+{
+  "_id": "a5rbSOQpyWPUyDri",
+  "_key": "!items!a5rbSOQpyWPUyDri",
+  "name": "Carreau",
+  "type": "objet",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Munition pour Arbalète des Anciens Dieux (livre de base p.242). Consommée automatiquement à chaque tir.",
+    "quantite": 20,
+    "poidsUnitaire": 0.1,
+    "prixQuartz": 3,
+    "munitionType": "carreau"
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

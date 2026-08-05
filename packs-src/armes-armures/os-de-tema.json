@@ -13,7 +13,11 @@
     "portee": "",
     "porteeInsettres": 0,
     "rechargeActions": 0,
-    "prixQuartz": 0,
+    "actionsRechargeRestantes": 0,
+    "munitionType": "",
+    "modInitiativeType": "+1couleur",
+    "bonusAllongePremiereBlatte": 0,
+    "prixQuartz": 12,
     "equipee": false
   },
   "effects": [],

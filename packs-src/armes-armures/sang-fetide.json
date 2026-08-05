@@ -1,0 +1,19 @@
+{
+  "_id": "rqyLyuDKjtfqZpd1",
+  "_key": "!items!rqyLyuDKjtfqZpd1",
+  "name": "Sang fétide",
+  "type": "objet",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Munition pour Crache-sang fétide des Anciens Dieux (livre de base p.242). Consommée automatiquement à chaque tir.",
+    "quantite": 5,
+    "poidsUnitaire": 0.1,
+    "prixQuartz": 10,
+    "munitionType": "sangfetide"
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
+}

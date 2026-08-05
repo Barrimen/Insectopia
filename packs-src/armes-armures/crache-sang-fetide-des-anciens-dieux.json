@@ -13,6 +13,10 @@
     "portee": "50 insètres",
     "porteeInsettres": 50,
     "rechargeActions": 1,
+    "actionsRechargeRestantes": 0,
+    "munitionType": "sangfetide",
+    "modInitiativeType": "-1couleur",
+    "bonusAllongePremiereBlatte": 0,
     "prixQuartz": 1000,
     "equipee": false
   },

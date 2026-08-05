@@ -130,6 +130,10 @@
       "portee": "",
       "porteeInsettres": 0,
       "rechargeActions": 0,
+      "actionsRechargeRestantes": 0,
+      "munitionType": "",
+      "modInitiativeType": "aucun",
+      "bonusAllongePremiereBlatte": 0,
       "prixQuartz": 0,
       "equipee": false,
       "naturelle": false
@@ -160,7 +164,8 @@
       "templates": ["base"],
       "quantite": 1,
       "poidsUnitaire": 0,
-      "prixQuartz": 0
+      "prixQuartz": 0,
+      "munitionType": ""
     }
   }
 }

@@ -50,6 +50,10 @@ export default class InsectopiaCombatant extends Combatant {
 
     initblattes.nbActions = Math.max(0, initblattes.nbActions - 1);
     initblattes.initEval = this.calculerInitEval(initblattes);
+    // Fait progresser le rechargement des armes à distance équipées
+    // (livre de base p.240) : voir base-actor.js#tickRechargesArmes pour
+    // l'hypothèse d'automatisation retenue.
+    await this.actor?.tickRechargesArmes?.();
     return this.update({ "flags.insectopia.initblattes": initblattes, initiative: initblattes.initEval });
   }
 

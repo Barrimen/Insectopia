@@ -52,7 +52,7 @@ Le mécanisme de fond est identique à Omega : un sac reconstruit et mélangé (
 
 Ce choix de couleur reste humain (cohérent avec le principe posé en §1) : boutons cliquables dans le chat, qui enchaînent automatiquement Attaque → dialogue de Dégâts pré-rempli en cas de succès.
 
-**Encaissement** : `subirImpacts()` — impacts jusqu'à Résistance, surplus en Blessures internes jusqu'à Métabolisme, inconscience notifiée (le décompte des 10 rounds avant hémorragie n'est **pas automatisé**, reste au Deus). `demanderMutilation()` — tête/abdomen = mort immédiate, thorax = immobilisation.
+**Encaissement** : `subirImpacts()` — impacts jusqu'à Résistance, surplus en Blessures internes jusqu'à Métabolisme, inconscience notifiée (le décompte des 10 rounds avant hémorragie n'est **pas automatisé**, reste au Deus). `demanderMutilation()` — délègue au dialogue de Localisation (schéma cliquable + tirage au sort), détail complet en §8.
 
 **Limites connues** : pas de restriction automatique "une arme = une action par phase d'initiative" (dépend de quelle arme a été utilisée à quelle phase — nécessite le modèle d'Item, posé à l'étape suivante).
 
@@ -125,7 +125,24 @@ Après lecture des pages 196-245 du livre de base, deux types de changements sur
 
 ---
 
-## 8. Magie (voir aussi STATUS.md §4 pour l'état courant)
+## 8. Localisation des mutilations (voir aussi STATUS.md §5 pour l'état courant)
+
+**Fichiers** : `module/combat/mutilation.js`, `templates/dialog/mutilation.html`, `assets/localisation-insecte.png`, `module/common/config.js` (`LOCALISATION_ZONES`), `module/actor/base-actor.js`
+
+Le livret (p.30) ne détaille pas de table de localisation chiffrée : il renvoie à *"la table de localisation de la fiche de personnage"*, qui est en réalité le petit schéma d'insecte de l'encart "Localisation" (fiche p.1), sans zones ni pourcentages imprimés. Deux choix ont donc été nécessaires, tous deux validés avec Obe plutôt que devinés :
+
+- **Correspondance couleur → zone pour le tirage au sort** (Rouge=Tête, Verte=Thorax, Noire=Abdomen, Bleue=Aile, Blanche=Patte) : réutilise le sac de 42 Blattes déjà en place pour toutes les résolutions du jeu (cf. §1), plutôt que d'inventer un nouveau mécanisme de hasard. Une seule Blatte est piochée, indépendamment du tirage de Dégâts qui a déclenché la mutilation.
+- **Effets Aile/Patte** : le livre ne chiffre qu'une "mutilation permanente" pour ces deux zones (contrairement à Tête/Abdomen = mort, Thorax = immobilisation, qui sont des règles fixes p.30). Un malus simple a été ajouté en **House Rule explicite** (Aile → vitesseVol à 0 ; Patte → vitesseSol -2, minimum 0), isolé dans `_prepareDataIntre()` et commenté comme extrapolation, pas comme règle du livre.
+
+**Pourquoi un overlay SVG plutôt que des zones cliquables en `<div>` + `position:absolute` en `%`** : première implémentation avec des `div.loc-hotspot` positionnées en pourcentage sur un conteneur à hauteur automatique — bug classique CSS, un élément en `position:absolute` ne peut pas résoudre un `%` de `top`/`height` si son conteneur positionné n'a pas de hauteur explicite (elle dépend elle-même du contenu, ici l'image). Résultat observé en test live : zones qui flottent au-dessus de l'image, hors de son cadre. Remplacé par un `<svg viewBox="0 0 490 486">` (dimensions natives de `localisation-insecte.png`) superposé à l'image via `display:grid` + `grid-area:1/1` sur les deux éléments — alignement garanti par construction, indépendant de la taille réelle d'affichage du dialogue.
+
+**Choix cohérent avec le reste du système** : `demanderMutilation()` (déjà existant depuis l'étape Combat, cf. §3) délègue simplement à `ouvrirDialogueMutilation()` — un seul point de branchement modifié, la logique reste dans un module dédié plutôt que noyée dans `base-actor.js`.
+
+**Historique** : chaque mutilation résolue est journalisée dans un flag acteur (`insectopia.mutilations` : zone, effet, round, manuel/hasard), sans affichage dédié sur la fiche — pas jugé nécessaire pour l'instant (retour Obe), l'info reste accessible en flag si un futur écran de récapitulatif la veut.
+
+---
+
+## 9. Magie (voir aussi STATUS.md §4 pour l'état courant)
 
 Cinq Mots de pouvoir (Altération, Contrôle, Connaissance, Évocation, Négation), restriction par métier/sphère selon la table p.267. Résolution en deux phases : compétence de sphère vs Difficulté (somme de 5 axes d'Influence 0-7), puis Puissance vs opposition choisie par le Deus. Maladresse (Blatte noire) = revers ; sphère Souillure donne des points de Souillure au lieu de dégâts.
 

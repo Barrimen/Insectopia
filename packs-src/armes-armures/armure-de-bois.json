@@ -9,7 +9,7 @@
     "bonusChitine": 1,
     "bonusFeu": 0,
     "malusAile": 0,
-    "malusEncombrement": 1,
+    "malusEncombrement": 0,
     "modInitiativeType": "-1couleur",
     "prixQuartz": 30,
     "equipee": false

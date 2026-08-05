@@ -5,12 +5,12 @@
   "type": "armure",
   "img": "icons/svg/item-bag.svg",
   "system": {
-    "description": "Protection très efficace mais très encombrante. Bonus de Chitine +3, -2 en Aile. Modificateur d'initiative : moins deux actions. Prix : 500 quartz.",
+    "description": "Protection très efficace mais très encombrante. Bonus de Chitine +3, -2 en Aile. Modificateur d'initiative : moins une action. Prix : 500 quartz.",
     "bonusChitine": 3,
     "bonusFeu": 0,
     "malusAile": -2,
     "malusEncombrement": 0,
-    "modInitiativeType": "-2action",
+    "modInitiativeType": "-1action",
     "prixQuartz": 500,
     "equipee": false
   },

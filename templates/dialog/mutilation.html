@@ -6,12 +6,14 @@
 
   <div class="loc-image-wrap">
     <img src="systems/insectopia/assets/localisation-insecte.png" alt="Schéma de localisation" />
-    <div class="loc-hotspot" data-zone="tete" style="left:45%; top:0%; width:16%; height:14%;" title="Tête"></div>
-    <div class="loc-hotspot" data-zone="aile" style="left:12%; top:14%; width:33%; height:22%;" title="Aile (gauche)"></div>
-    <div class="loc-hotspot" data-zone="thorax" style="left:33%; top:14%; width:28%; height:22%;" title="Thorax"></div>
-    <div class="loc-hotspot" data-zone="aile" style="left:61%; top:14%; width:33%; height:22%;" title="Aile (droite)"></div>
-    <div class="loc-hotspot" data-zone="abdomen" style="left:41%; top:36%; width:24%; height:26%;" title="Abdomen"></div>
-    <div class="loc-hotspot" data-zone="patte" style="left:41%; top:58%; width:24%; height:8%;" title="Pattes"></div>
+    <svg class="loc-overlay" viewBox="0 0 490 486" preserveAspectRatio="none">
+      <rect class="loc-hotspot" data-zone="tete" x="220" y="0" width="80" height="67"><title>Tête</title></rect>
+      <rect class="loc-hotspot" data-zone="aile" x="60" y="67" width="160" height="106"><title>Aile (gauche)</title></rect>
+      <rect class="loc-hotspot" data-zone="thorax" x="160" y="67" width="200" height="106"><title>Thorax</title></rect>
+      <rect class="loc-hotspot" data-zone="aile" x="300" y="67" width="160" height="106"><title>Aile (droite)</title></rect>
+      <rect class="loc-hotspot" data-zone="abdomen" x="200" y="173" width="120" height="107"><title>Abdomen</title></rect>
+      <rect class="loc-hotspot" data-zone="patte" x="200" y="280" width="120" height="45"><title>Pattes</title></rect>
+    </svg>
   </div>
 
   <div class="loc-buttons">
@@ -30,19 +32,34 @@
 
   <style>
     .mutilation-localisation .hint { font-style: italic; margin-bottom: 6px; }
+
+    /* Grille 1x1 : l'image et le SVG occupent exactement la même cellule,
+       donc le même rectangle à l'écran, quelle que soit la taille réelle
+       du dialogue. Le SVG utilise un viewBox calé sur les pixels natifs
+       de localisation-insecte.png (490x486) : chaque <rect> est donc
+       toujours aligné avec le dessin, sans dépendre d'un calcul de % sur
+       un conteneur "auto" (source du bug précédent). */
     .mutilation-localisation .loc-image-wrap {
-      position: relative;
+      display: grid;
       width: 260px;
       margin: 0 auto 10px auto;
     }
-    .mutilation-localisation .loc-image-wrap img { width: 100%; display: block; border-radius: 4px; }
-    .mutilation-localisation .loc-hotspot {
-      position: absolute;
-      cursor: pointer;
-      border-radius: 3px;
-      transition: background-color 0.1s ease;
+    .mutilation-localisation .loc-image-wrap img,
+    .mutilation-localisation .loc-image-wrap svg {
+      grid-area: 1 / 1;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    .mutilation-localisation .loc-hotspot:hover { background-color: rgba(180, 0, 0, 0.35); }
+    .mutilation-localisation .loc-image-wrap img { border-radius: 4px; }
+    .mutilation-localisation .loc-hotspot {
+      fill: rgba(180, 0, 0, 0);
+      stroke: none;
+      cursor: pointer;
+      transition: fill 0.1s ease;
+    }
+    .mutilation-localisation .loc-hotspot:hover { fill: rgba(180, 0, 0, 0.35); }
+
     .mutilation-localisation .loc-buttons {
       display: flex;
       flex-wrap: wrap;
