@@ -508,6 +508,33 @@
   text-align: center;
 }
 
+.insectopia .badge-input-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.insectopia .badge-input-wrap .content-link {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #F3EAD7;
+  opacity: 0.75;
+  padding: 0;
+  font-size: 0;
+}
+
+.insectopia .badge-input-wrap .content-link:hover {
+  opacity: 1;
+}
+
+.insectopia .badge-input-wrap .content-link i {
+  font-size: var(--ins-fs-85);
+}
+
 .insectopia .identite-line {
   display: flex;
   gap: var(--ins-space-8);

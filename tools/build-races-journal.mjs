@@ -12,13 +12,35 @@ function id16() {
   return out;
 }
 
-// Import direct du fichier de données (mêmes valeurs que celles utilisées
+// Import direct des fichiers de données (mêmes valeurs que celles utilisées
 // par IntreActor.applyRace() dans le système).
 const { RACES } = await import("../module/common/data-races.js");
+// Lore narratif (livre de base, section "Les Peuples" p.16-73). Optionnel :
+// une race sans entrée dans LORE_RACES n'affiche que le bloc mécanique
+// (repli propre tant que les 20 fiches ne sont pas toutes collectées).
+const { LORE_RACES } = await import("../module/common/data-lore-races.js");
+
+function loreHtml(lore) {
+  if (!lore) return "";
+  const section = (titre, texte) =>
+    texte ? `<h3>${titre}</h3><p>${texte}</p>` : "";
+  return `
+<hr>
+${lore.phrase ? `<p><em>« ${lore.phrase} »</em></p>` : ""}
+${section("Apparence", lore.apparence)}
+${lore.societe ? section(lore.societe.titre, lore.societe.texte) : ""}
+${section("Organisation sociale", lore.organisationSociale)}
+${section("Art et langage", lore.artEtLangage)}
+${lore.religion ? section(`Religion — ${lore.religion.culte}`, lore.religion.details) : ""}
+${section("Préjugés", lore.prejuges)}
+${section("Population et ethnies", lore.population)}
+${section("Onomastique", lore.onomastique)}
+`.trim();
+}
 
 const pages = Object.entries(RACES).map(([key, race]) => {
   const c = race.caracteristiques;
-  const html = `
+  const mecaniqueHtml = `
 <table>
   <tbody>
     <tr><td>Aile</td><td>${c.aile}</td><td>Antenne</td><td>${c.antenne}</td></tr>
@@ -34,6 +56,8 @@ ${race.faiblesse ? `<p><strong>Faiblesse :</strong> ${race.faiblesse}</p>` : ""}
 <ul>${race.castes.map((c2) => `<li>${c2}</li>`).join("")}</ul>
 ${race.variante === "arak" ? "<p><em>Variante arak : Patte/Palpe/Chélicère remplacent Aile/Antenne/Mandibule, Soie remplace Mêlée (livret p.197).</em></p>" : ""}
 `.trim();
+
+  const html = mecaniqueHtml + loreHtml(LORE_RACES[key]);
 
   return {
     _id: id16(),

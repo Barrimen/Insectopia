@@ -1,4 +1,3 @@
-import { RACES } from "../../common/data-races.js";
 import { COMPETENCES_CASTE } from "../../common/data-castes.js";
 import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
@@ -165,7 +164,6 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
       itemCreate: this.#onItemCreate,
       itemEdit: this.#onItemEdit,
       itemDelete: this.#onItemDelete,
-      raceApply: this.#onRaceApply,
       wizardOpen: this.#onWizardOpen,
       wizardGmToggle: this.#onWizardGmToggle,
       stabiliser: this.#onStabiliser,
@@ -270,7 +268,32 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     context.mainsUtilisees = this.actor.getMainsUtilisees();
 
     context.contacts = asArray(this.actor.system.ressources?.contacts);
-    context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
+
+    // Lien vers la page de lore/mécanique de la race actuelle du personnage,
+    // dans le compendium "insectopia.races" (JournalEntry unique, une page
+    // par race — cf. tools/build-races-journal.mjs). Résolu dynamiquement
+    // via l'index du pack plutôt que codé en dur, car les _id sont générés
+    // aléatoirement à chaque compilation du compendium.
+    context.raceContentLink = null;
+    const raceNomActuel = this.actor.system.identite?.race;
+    if (raceNomActuel) {
+      const pack = game.packs.get("insectopia.races");
+      if (pack) {
+        const index = await pack.getIndex();
+        const journalIndexEntry = index.contents[0]; // pack ne contient qu'un seul JournalEntry
+        if (journalIndexEntry) {
+          const journal = await pack.getDocument(journalIndexEntry._id);
+          const page = journal?.pages.find((p) => p.name === raceNomActuel);
+          if (page) {
+            const uuid = `Compendium.insectopia.races.JournalEntry.${journal.id}.JournalEntryPage.${page.id}`;
+            context.raceContentLink =
+              `<a class="content-link" draggable="true" data-link data-uuid="${uuid}" ` +
+              `data-id="${page.id}" data-type="JournalEntryPage" data-tooltip="${raceNomActuel} — survolez pour un aperçu, cliquez pour la fiche complète">` +
+              `<i class="fas fa-file-lines"></i></a>`;
+          }
+        }
+      }
+    }
 
     // Tableau statique "Jeteur de sorts" (livre p.267, cf. la feuille papier
     // p.2) : une ligne par Sphère connue (compétence de Caste taguée
@@ -709,16 +732,4 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     if (item) this.actor.deleteEmbeddedDocuments("Item", [item.id]);
   }
 
-  static async #onRaceApply(event) {
-    event.preventDefault();
-    const raceKey = this.element.querySelector("#raceSelect")?.value;
-    if (!raceKey) return;
-    const confirmed = await DialogV2.confirm({
-      window: { title: "Appliquer la race" },
-      content:
-        "<p>Ceci va écraser les 7 caractéristiques du personnage avec les valeurs de la race choisie, et ajouter ses capacités natives (livre de base p.198-201). Continuer ?</p>",
-      rejectClose: false,
-    });
-    if (confirmed) return this.actor.applyRace(raceKey);
-  }
 }

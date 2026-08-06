@@ -10,7 +10,12 @@
       <input class="charname" name="name" type="text" value="{{actor.name}}" placeholder="Nom" />
 
       <div class="identite-badges">
-        <input class="badge-input" name="system.identite.race" type="text" value="{{system.identite.race}}" placeholder="Espèce" />
+        <div class="badge-input-wrap">
+          <input class="badge-input" name="system.identite.race" type="text" value="{{system.identite.race}}" placeholder="Espèce" />
+          {{#if raceContentLink}}
+          {{{raceContentLink}}}
+          {{/if}}
+        </div>
         <input class="badge-input" name="system.identite.casteNom" type="text" value="{{system.identite.casteNom}}" placeholder="Caste" />
         <input class="badge-input" name="system.identite.metier" type="text" value="{{system.identite.metier}}" placeholder="Métier" />
       </div>
@@ -53,15 +58,6 @@
           <i class="fas fa-user-shield"></i> {{#if creationTerminee}}Rouvrir la création{{else}}Marquer terminée{{/if}}
         </a>
         {{/if}}
-      </div>
-
-      <div class="identite-line">
-        <select name="raceSelect" id="raceSelect">
-          {{#each racesListe as |race|}}
-          <option value="{{race.key}}">{{race.label}}</option>
-          {{/each}}
-        </select>
-        <a class="race-apply" data-action="raceApply"><i class="fas fa-check"></i> Appliquer la race</a>
       </div>
     </div>
 
