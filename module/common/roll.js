@@ -2,6 +2,9 @@ import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, 
 
 const { DialogV2 } = foundry.applications.api;
 
+/** Noms affichables des couleurs de Blattes, utilisés par l'échange de Blattes de chance. */
+const NOM_COULEUR = { rouge: "Rouge", verte: "Verte", bleue: "Bleue", blanche: "Blanche", noire: "Noire" };
+
 /**
  * Classe Blattes
  * ---------------------------------------------------------------------
@@ -101,6 +104,16 @@ export class Blattes {
           label: "Piocher",
           default: true,
           callback: async (event, button) => {
+            // Détection de la cible ciblée sur la scène (game.user.targets),
+            // si c'est un intre : elle devient éligible à l'échange de
+            // Blattes de chance sur CE jet, en plus du rôleur lui-même
+            // (livre — un joueur peut remplacer les Blattes de son propre
+            // tirage, OU celles du tirage de son adversaire). S'applique à
+            // l'Attaque comme à tout jet d'Opposition/Difficulté avec une
+            // cible sélectionnée (demande d'Obe).
+            const cibleActor = Array.from(game.user.targets)[0]?.actor;
+            if (cibleActor?.type === "intre") this.data.opposantActorId = cibleActor.id;
+
             const form = button.form;
             if (this.rolltype === ROLL_TYPE.SIMPLE) {
               const nbBlattes = parseInt(form.elements["nbblattes"]?.value) || 0;
@@ -194,6 +207,14 @@ export class Blattes {
           default: true,
           callback: async (event, button) => {
             const form = button.form;
+            // Le défenseur (déjà ciblé au moment du choix du résultat
+            // d'Attaque, cf. resoudreChoixAttaque) reste éligible à
+            // l'échange de Blattes de chance sur ce test de Dégâts, en plus
+            // de l'attaquant qui pioche.
+            if (this.data.opposantActorId === undefined) {
+              const cibleActor = Array.from(game.user.targets)[0]?.actor;
+              if (cibleActor?.type === "intre") this.data.opposantActorId = cibleActor.id;
+            }
             const chitineAttaque = parseInt(form.elements["opposantvalue"]?.value) || 0; // réutilisé comme Chitine totale attaquant
             const chitineDefense = parseInt(form.elements["difficulte"]?.value) || 0; // réutilisé comme Chitine totale défenseur
             this.data.formula = chitineAttaque.toString().concat(" - ", chitineDefense.toString());
@@ -411,6 +432,27 @@ export class Blattes {
       this.chat.setFlag("world", "choixSimpleData", { actorId: this.actor?.id });
     }
 
+    // Blattes de chance : non applicable au tirage de Chance lui-même, ni
+    // à l'Initiative (non couverte par la règle transmise par Obe ; à
+    // revoir si besoin).
+    if (![ROLL_TYPE.CHANCE, ROLL_TYPE.INITIATIVE].includes(this.rolltype)) {
+      this.chat.setFlag("world", "chanceData", {
+        chanceActorIds: [...new Set([this.actor?.id, this.data.opposantActorId].filter(Boolean))],
+        blattesParCouleur: foundry.utils.duplicate(this.data.blattesParCouleur),
+        mode: "simple",
+        rolltype: this.rolltype,
+        templateData: foundry.utils.duplicate({
+          owner: templateData.owner,
+          actingCharName: templateData.actingCharName,
+          actingCharImg: templateData.actingCharImg,
+          data: templateData.data,
+          rerollButton: templateData.rerollButton,
+          resultText: templateData.resultText,
+          interactiveChoice: templateData.interactiveChoice,
+        }),
+      });
+    }
+
     if (this.rolltype === ROLL_TYPE.INITIATIVE) return this.data;
   }
 
@@ -454,6 +496,22 @@ export class Blattes {
       rolltype: this.rolltype,
       competence: this.competence,
       data: this.data,
+    });
+
+    this.chat.setFlag("world", "chanceData", {
+      chanceActorIds: [...new Set([this.actor?.id, this.data.opposantActorId].filter(Boolean))],
+      blattesParCouleur: foundry.utils.duplicate(this.data.blattesParCouleur),
+      mode: "choix",
+      rolltype: this.rolltype,
+      templateData: foundry.utils.duplicate({
+        owner: templateData.owner,
+        actingCharName: templateData.actingCharName,
+        actingCharImg: templateData.actingCharImg,
+        data: templateData.data,
+        isAttack: templateData.isAttack,
+        isDegats: templateData.isDegats,
+        isSort: templateData.isSort,
+      }),
     });
   }
 
@@ -508,12 +566,127 @@ export class Blattes {
     await newMessage.update({ content: html });
   }
 
-  async utiliserBlatteDeChance(couleurChoisie) {
-    const chance = foundry.utils.duplicate(this.actor.system.chance);
-    if (!chance?.[couleurChoisie] || chance[couleurChoisie] <= 0) return false;
-    chance[couleurChoisie] -= 1;
-    await this.actor.update({ "system.chance": chance });
-    return true;
+  /**
+   * Échange d'une Blatte de chance (règle fournie par Obe, référence de
+   * page à confirmer dans le livre de base). Chaque acteur éligible sur un
+   * jet (le rôleur, et l'adversaire ciblé sur la scène le cas échéant —
+   * voir chanceActorIds, calculé dans showResult/showResultChoix à partir
+   * de this.actor et this.data.opposantActorId) peut, sur son propre
+   * stock, remplacer une des Blattes tirées par une Blatte de chance de
+   * son choix, avant que le résultat retenu ne soit choisi. La Blatte de
+   * chance utilisée est défaussée (retranchée du stock de l'acteur).
+   *
+   * Le tirage affiché est réécrit en conséquence : la couleur remplacée
+   * perd une occurrence, la couleur de la Blatte de chance en gagne une.
+   * L'opération peut être répétée plusieurs fois sur le même message,
+   * tant que le résultat final n'a pas été choisi (cf. exemple du livre :
+   * deux Blattes rouges remplacées par une bleue et une blanche).
+   *
+   * @param message  Le message de chat portant le flag "chanceData".
+   * @param actorId  L'acteur dont on dépense le stock de Blattes de chance
+   *                 (doit figurer dans flag.chanceActorIds — le rôleur et,
+   *                 le cas échéant, l'adversaire ciblé sont tous deux
+   *                 éligibles, chacun sur son propre stock).
+   */
+  static async echangerBlatteDeChance(message, actorId) {
+    const flag = message.getFlag("world", "chanceData");
+    if (!flag) return;
+    if (!flag.chanceActorIds?.includes(actorId)) return;
+
+    const actor = game.actors.get(actorId);
+    if (!actor) return;
+    if (!(actor.isOwner || game.user.isGM)) {
+      ui.notifications.warn(`Seul le joueur de ${actor.name} (ou le Deus) peut utiliser ses Blattes de chance.`);
+      return;
+    }
+
+    const chance = actor.system.chance ?? {};
+    const couleursChance = ["rouge", "verte", "bleue", "blanche", "noire"].filter((c) => (chance[c] || 0) > 0);
+    if (!couleursChance.length) {
+      ui.notifications.warn(`${actor.name} n'a plus de Blattes de chance disponibles.`);
+      return;
+    }
+    const couleursTirees = ["rouge", "verte", "bleue", "blanche", "noire"].filter((c) => (flag.blattesParCouleur[c] || 0) > 0);
+    if (!couleursTirees.length) return;
+
+    const optionsTiree = couleursTirees
+      .map((c) => `<option value="${c}">${NOM_COULEUR[c]} (${flag.blattesParCouleur[c]} tirée(s))</option>`)
+      .join("");
+    const optionsChance = couleursChance.map((c) => `<option value="${c}">${NOM_COULEUR[c]} (${chance[c]} en stock)</option>`).join("");
+
+    const content = `
+      <p>${actor.name} remplace une Blatte du tirage par une Blatte de chance. La Blatte de chance utilisée est défaussée.</p>
+      <div class="form-group"><label>Blatte tirée à remplacer</label><select name="remplacee">${optionsTiree}</select></div>
+      <div class="form-group"><label>Blatte de chance utilisée</label><select name="chance">${optionsChance}</select></div>
+    `;
+
+    const result = await DialogV2.wait({
+      window: { title: "Utiliser une Blatte de chance" },
+      content,
+      buttons: [
+        {
+          action: "confirm",
+          icon: "fas fa-check",
+          label: "Échanger",
+          default: true,
+          callback: (event, button) => ({
+            remplacee: button.form.elements["remplacee"].value,
+            chance: button.form.elements["chance"].value,
+          }),
+        },
+        { action: "cancel", icon: "fas fa-times", label: "Annuler" },
+      ],
+      rejectClose: false,
+    });
+    if (!result) return;
+
+    const { remplacee, chance: couleurChance } = result;
+
+    // Défausse de la Blatte de chance utilisée.
+    const nouveauStock = foundry.utils.duplicate(actor.system.chance);
+    nouveauStock[couleurChance] = Math.max(0, (nouveauStock[couleurChance] || 0) - 1);
+    await actor.update({ "system.chance": nouveauStock });
+
+    // Mise à jour du tirage affiché.
+    const nouveauTirage = foundry.utils.duplicate(flag.blattesParCouleur);
+    nouveauTirage[remplacee] = Math.max(0, (nouveauTirage[remplacee] || 0) - 1);
+    nouveauTirage[couleurChance] = (nouveauTirage[couleurChance] || 0) + 1;
+
+    const nouveauFlag = foundry.utils.duplicate(flag);
+    nouveauFlag.blattesParCouleur = nouveauTirage;
+    await message.setFlag("world", "chanceData", nouveauFlag);
+
+    const echangeTexte = `<div class="resultText">🍀 ${actor.name} remplace une Blatte ${NOM_COULEUR[remplacee]} par une Blatte de chance ${NOM_COULEUR[couleurChance]}.</div>`;
+
+    let nouveauBloc;
+    if (flag.mode === "choix") {
+      const table =
+        flag.rolltype === ROLL_TYPE.ATTACK ? RESULTAT_ATTAQUE : flag.rolltype === ROLL_TYPE.SORT ? RESULTAT_SORT : RESULTAT_DEGATS;
+      const choix = ["rouge", "verte", "bleue", "blanche", "noire"]
+        .filter((c) => nouveauTirage[c] > 0)
+        .map((couleur) => ({
+          couleur,
+          count: nouveauTirage[couleur],
+          label: table[couleur].label,
+          description: table[couleur].description,
+          impacts: table[couleur].impacts,
+        }));
+      nouveauBloc = await foundry.applications.handlebars.renderTemplate(
+        "systems/insectopia/templates/chat/roll-result-choix.html",
+        {
+          ...flag.templateData,
+          data: { ...flag.templateData.data, blattesParCouleur: nouveauTirage },
+          choix,
+        }
+      );
+    } else {
+      nouveauBloc = await foundry.applications.handlebars.renderTemplate("systems/insectopia/templates/chat/roll-result.html", {
+        ...flag.templateData,
+        data: { ...flag.templateData.data, blattesParCouleur: nouveauTirage },
+      });
+    }
+
+    await message.update({ content: nouveauBloc.concat(echangeTexte) });
   }
 
   // --------------------------------------------------------------------
@@ -553,6 +726,10 @@ export class Blattes {
       ameliorerCouleur: ameliorerParCouleur[couleur],
       chitineAttaquePrefill,
       chitineDefensePrefill,
+      // Le défenseur (cible ciblée sur la scène) est éligible à l'échange
+      // de Blattes de chance sur ce test de Dégâts, en plus de l'attaquant
+      // qui pioche (voir chanceActorIds dans showResult/showResultChoix).
+      opposantActorId: cibleToken?.actor?.type === "intre" ? cibleToken.actor.id : undefined,
     };
     const competence = { value: 0, label: "INSECTOPIA.label.combat.degats" };
     const blattes = new Blattes(actor, ROLL_TYPE.DEGATS, competence, data);
