@@ -1,6 +1,6 @@
 {
-  "_id": "0M9HGICXEkdjRBju",
-  "_key": "!actors!0M9HGICXEkdjRBju",
+  "_id": "tdhkfaSmqSidZmgz",
+  "_key": "!actors!tdhkfaSmqSidZmgz",
   "name": "Combeis Marginatus",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "JGf5OTKZTev1JYrs",
+      "_id": "jA1vGkx3RxeVHIHe",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!0M9HGICXEkdjRBju.JGf5OTKZTev1JYrs",
+      "_key": "!actors.items!tdhkfaSmqSidZmgz.jA1vGkx3RxeVHIHe",
       "effects": []
     },
     {
-      "_id": "UMwZYhpuCENDq8Sd",
+      "_id": "89dj1DNVvni5arUT",
       "name": "Armure de cuir de Sangchauds",
       "type": "armure",
       "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
@@ -184,11 +184,11 @@
         "prixQuartz": 6,
         "equipee": true
       },
-      "_key": "!actors.items!0M9HGICXEkdjRBju.UMwZYhpuCENDq8Sd",
+      "_key": "!actors.items!tdhkfaSmqSidZmgz.89dj1DNVvni5arUT",
       "effects": []
     },
     {
-      "_id": "vsIhZZAib8yE84me",
+      "_id": "vZkang7jfJrsPjVY",
       "name": "Ailé",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -204,11 +204,11 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!0M9HGICXEkdjRBju.vsIhZZAib8yE84me",
+      "_key": "!actors.items!tdhkfaSmqSidZmgz.vZkang7jfJrsPjVY",
       "effects": []
     },
     {
-      "_id": "NQtNqb2PbsTR5iSE",
+      "_id": "3MO10Vlw1ltrvWOU",
       "name": "Pestilence",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -224,11 +224,11 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!0M9HGICXEkdjRBju.NQtNqb2PbsTR5iSE",
+      "_key": "!actors.items!tdhkfaSmqSidZmgz.3MO10Vlw1ltrvWOU",
       "effects": []
     },
     {
-      "_id": "1M5PUk7otLvQwgEC",
+      "_id": "RvAGOxc9QSqBfH3G",
       "name": "Antennes ramifiées",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -244,7 +244,7 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!0M9HGICXEkdjRBju.1M5PUk7otLvQwgEC",
+      "_key": "!actors.items!tdhkfaSmqSidZmgz.RvAGOxc9QSqBfH3G",
       "effects": []
     }
   ]

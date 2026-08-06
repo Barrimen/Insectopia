@@ -1,10 +1,10 @@
 {
-  "_id": "3vamfyJNGw1wNGjG",
-  "_key": "!journal!3vamfyJNGw1wNGjG",
+  "_id": "gBcmhqdbsMqvGlfd",
+  "_key": "!journal!gBcmhqdbsMqvGlfd",
   "name": "Insectopia — Races (livre de base, données mécaniques)",
   "pages": [
     {
-      "_id": "c4HauautyVuZDWWH",
+      "_id": "gohoyTxIjCjurV86",
       "name": "Apis",
       "type": "text",
       "title": {
@@ -18,10 +18,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.c4HauautyVuZDWWH"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.gohoyTxIjCjurV86"
     },
     {
-      "_id": "5eir9bLskrxVY2XQ",
+      "_id": "ZaQ5TrX1VuHM4gCe",
       "name": "Blatère",
       "type": "text",
       "title": {
@@ -35,10 +35,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.5eir9bLskrxVY2XQ"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.ZaQ5TrX1VuHM4gCe"
     },
     {
-      "_id": "H8P4TbMdX6StjUzG",
+      "_id": "gBpQN9Io3dwPLVYy",
       "name": "Brindis",
       "type": "text",
       "title": {
@@ -52,10 +52,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.H8P4TbMdX6StjUzG"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.gBpQN9Io3dwPLVYy"
     },
     {
-      "_id": "rj1SFmkXjBIcsmFZ",
+      "_id": "kllqss9BQ1yRN4JK",
       "name": "Cerk",
       "type": "text",
       "title": {
@@ -69,10 +69,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.rj1SFmkXjBIcsmFZ"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.kllqss9BQ1yRN4JK"
     },
     {
-      "_id": "HaADYxaXpmL7foPu",
+      "_id": "iFr7ogeWutulW5v7",
       "name": "Crinar Acridien",
       "type": "text",
       "title": {
@@ -86,10 +86,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.HaADYxaXpmL7foPu"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.iFr7ogeWutulW5v7"
     },
     {
-      "_id": "9uTrDa5TaNJBGmky",
+      "_id": "88oykMFVMTICluTF",
       "name": "Crinelle",
       "type": "text",
       "title": {
@@ -103,10 +103,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.9uTrDa5TaNJBGmky"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.88oykMFVMTICluTF"
     },
     {
-      "_id": "MPv1IcAFg8drRP2P",
+      "_id": "F1MxWt6ljCDNYPDU",
       "name": "Koks'ihne",
       "type": "text",
       "title": {
@@ -120,10 +120,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.MPv1IcAFg8drRP2P"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.F1MxWt6ljCDNYPDU"
     },
     {
-      "_id": "kcDUOa68sTFtIY6m",
+      "_id": "iE4EcF56hNYc1OxL",
       "name": "Lépide",
       "type": "text",
       "title": {
@@ -137,10 +137,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.kcDUOa68sTFtIY6m"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.iE4EcF56hNYc1OxL"
     },
     {
-      "_id": "qTbSFxvs8m0uwlcM",
+      "_id": "0M0lLldwSzGKf4g5",
       "name": "Lulle",
       "type": "text",
       "title": {
@@ -154,10 +154,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.qTbSFxvs8m0uwlcM"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.0M0lLldwSzGKf4g5"
     },
     {
-      "_id": "ZJ6FywhI9eO3jLhl",
+      "_id": "JqvY7RdJRkmiHZUd",
       "name": "Mantide",
       "type": "text",
       "title": {
@@ -171,10 +171,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.ZJ6FywhI9eO3jLhl"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.JqvY7RdJRkmiHZUd"
     },
     {
-      "_id": "E9A3h44fz1oQDRN1",
+      "_id": "e2MpZEadZLNKgzYn",
       "name": "Myrmide",
       "type": "text",
       "title": {
@@ -188,10 +188,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.E9A3h44fz1oQDRN1"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.e2MpZEadZLNKgzYn"
     },
     {
-      "_id": "IQ7NoqmXQmKeHda3",
+      "_id": "eLOmPKYRXKDQWSRP",
       "name": "Putère",
       "type": "text",
       "title": {
@@ -205,10 +205,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.IQ7NoqmXQmKeHda3"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.eLOmPKYRXKDQWSRP"
     },
     {
-      "_id": "mQgJJpTm7iTY9qSC",
+      "_id": "mzCn8qhvLrIsrcZf",
       "name": "Skadan",
       "type": "text",
       "title": {
@@ -222,10 +222,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.mQgJJpTm7iTY9qSC"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.mzCn8qhvLrIsrcZf"
     },
     {
-      "_id": "mYVK92mYkRpkKKTJ",
+      "_id": "iTaTXLQ21WVSg2lc",
       "name": "Skarab",
       "type": "text",
       "title": {
@@ -239,10 +239,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.mYVK92mYkRpkKKTJ"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.iTaTXLQ21WVSg2lc"
     },
     {
-      "_id": "lQCuugpG92tvADNt",
+      "_id": "8Re6TJcTCdTFALHv",
       "name": "Stick",
       "type": "text",
       "title": {
@@ -256,10 +256,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.lQCuugpG92tvADNt"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.8Re6TJcTCdTFALHv"
     },
     {
-      "_id": "n61PcWHTTVQ4cM1U",
+      "_id": "5wkTKMK9udV8o6zY",
       "name": "Syrphe",
       "type": "text",
       "title": {
@@ -273,10 +273,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.n61PcWHTTVQ4cM1U"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.5wkTKMK9udV8o6zY"
     },
     {
-      "_id": "JXULxG5jYT5PL2k6",
+      "_id": "I4bzc7PrmMD1JGXu",
       "name": "Termide",
       "type": "text",
       "title": {
@@ -290,10 +290,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.JXULxG5jYT5PL2k6"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.I4bzc7PrmMD1JGXu"
     },
     {
-      "_id": "R0id7TtdsHseoyLL",
+      "_id": "43OHUF50kTwcbImS",
       "name": "Vespale",
       "type": "text",
       "title": {
@@ -307,10 +307,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.R0id7TtdsHseoyLL"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.43OHUF50kTwcbImS"
     },
     {
-      "_id": "F41Wxehn9sIcDew8",
+      "_id": "wIoHtKF5KZt5295u",
       "name": "Arak'chass",
       "type": "text",
       "title": {
@@ -324,10 +324,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.F41Wxehn9sIcDew8"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.wIoHtKF5KZt5295u"
     },
     {
-      "_id": "oJ8YknT6cxYR0FHS",
+      "_id": "6iUlGJWs8kWPGHtC",
       "name": "Arak'tiss",
       "type": "text",
       "title": {
@@ -341,7 +341,7 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!3vamfyJNGw1wNGjG.oJ8YknT6cxYR0FHS"
+      "_key": "!journal.pages!gBcmhqdbsMqvGlfd.6iUlGJWs8kWPGHtC"
     }
   ],
   "folder": null,

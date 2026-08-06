@@ -1,5 +1,7 @@
 import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, RESULTAT_SORT, RESULTAT_SIMPLE, ORDRE_COULEURS_CROISSANT } from "./config.js";
 
+const { DialogV2 } = foundry.applications.api;
+
 /**
  * Classe Blattes
  * ---------------------------------------------------------------------
@@ -89,30 +91,33 @@ export class Blattes {
       }
     );
 
-    return await new Dialog({
-      title: "Tirage de Blattes",
+    return await DialogV2.wait({
+      window: { title: "Tirage de Blattes" },
       content: html,
-      buttons: {
-        roll: {
-          icon: '<i class="fas fa-check"></i>',
+      buttons: [
+        {
+          action: "roll",
+          icon: "fas fa-check",
           label: "Piocher",
-          callback: async (html) => {
+          default: true,
+          callback: async (event, button) => {
+            const form = button.form;
             if (this.rolltype === ROLL_TYPE.SIMPLE) {
-              const nbBlattes = parseInt(html.find("#nbblattes")[0].value) || 0;
+              const nbBlattes = parseInt(form.elements["nbblattes"]?.value) || 0;
               this.data.formula = nbBlattes.toString();
               this.data.formulaValue = nbBlattes;
             } else {
               this.data.formula = this.competence.value.toString();
               this.data.formulaValue = this.competence.value;
 
-              const opposant = parseInt(html.find("#opposantvalue")?.[0]?.value);
+              const opposant = parseInt(form.elements["opposantvalue"]?.value);
               if (!Number.isNaN(opposant)) {
                 this.data.opposantValue = opposant;
                 this.data.formula = this.data.formula.concat(" - ", opposant.toString());
                 this.data.formulaValue -= opposant;
               }
 
-              const difficulte = parseInt(html.find("#difficulte")?.[0]?.value);
+              const difficulte = parseInt(form.elements["difficulte"]?.value);
               if (!Number.isNaN(difficulte)) {
                 this.data.difficulte = difficulte;
                 this.data.difficulteLabel = DIFFICULTE[difficulte];
@@ -120,7 +125,7 @@ export class Blattes {
                 this.data.formulaValue -= difficulte;
               }
 
-              const modifier = parseInt(html.find("#rollmodifier")?.[0]?.value) || 0;
+              const modifier = parseInt(form.elements["rollmodifier"]?.value) || 0;
               if (modifier) {
                 this.data.modifier = modifier;
                 this.data.formula = this.data.formula.concat(modifier > 0 ? " + " : " ", modifier.toString());
@@ -143,10 +148,10 @@ export class Blattes {
             return await this.showResult();
           },
         },
-        cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler", callback: () => {} },
-      },
-      default: "roll",
-    }).render(true);
+        { action: "cancel", icon: "fas fa-times", label: "Annuler" },
+      ],
+      rejectClose: false,
+    });
   }
 
   /**
@@ -178,16 +183,19 @@ export class Blattes {
       }
     );
 
-    return await new Dialog({
-      title: "Test de Dégâts",
+    return await DialogV2.wait({
+      window: { title: "Test de Dégâts" },
       content: html,
-      buttons: {
-        roll: {
-          icon: '<i class="fas fa-check"></i>',
+      buttons: [
+        {
+          action: "roll",
+          icon: "fas fa-check",
           label: "Piocher",
-          callback: async (html) => {
-            const chitineAttaque = parseInt(html.find("#opposantvalue")?.[0]?.value) || 0; // réutilisé comme Chitine totale attaquant
-            const chitineDefense = parseInt(html.find("#difficulte")?.[0]?.value) || 0; // réutilisé comme Chitine totale défenseur
+          default: true,
+          callback: async (event, button) => {
+            const form = button.form;
+            const chitineAttaque = parseInt(form.elements["opposantvalue"]?.value) || 0; // réutilisé comme Chitine totale attaquant
+            const chitineDefense = parseInt(form.elements["difficulte"]?.value) || 0; // réutilisé comme Chitine totale défenseur
             this.data.formula = chitineAttaque.toString().concat(" - ", chitineDefense.toString());
             this.data.formulaValue = chitineAttaque - chitineDefense;
             this.data.chitineAttaque = chitineAttaque;
@@ -196,10 +204,10 @@ export class Blattes {
             return await this.showResult();
           },
         },
-        cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler", callback: () => {} },
-      },
-      default: "roll",
-    }).render(true);
+        { action: "cancel", icon: "fas fa-times", label: "Annuler" },
+      ],
+      rejectClose: false,
+    });
   }
 
   /**

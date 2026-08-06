@@ -1,6 +1,6 @@
 {
-  "_id": "R0ii0DBDZdKJrQys",
-  "_key": "!actors!R0ii0DBDZdKJrQys",
+  "_id": "tvErCVBZfLz9kred",
+  "_key": "!actors!tvErCVBZfLz9kred",
   "name": "Norim",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "XNx6NmqNv7VluRGk",
+      "_id": "jNpg6SyypKWZh8a4",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!R0ii0DBDZdKJrQys.XNx6NmqNv7VluRGk",
+      "_key": "!actors.items!tvErCVBZfLz9kred.jNpg6SyypKWZh8a4",
       "effects": []
     },
     {
-      "_id": "WL7VDK7qc2bQxric",
+      "_id": "n9CQd1ty8DjReFXC",
       "name": "Griffes acérées",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -186,11 +186,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!R0ii0DBDZdKJrQys.WL7VDK7qc2bQxric",
+      "_key": "!actors.items!tvErCVBZfLz9kred.n9CQd1ty8DjReFXC",
       "effects": []
     },
     {
-      "_id": "Q05e8amaS1DvxDP5",
+      "_id": "QIJsdJJiNnhGmiYK",
       "name": "Armure de cuir de Sangchauds",
       "type": "armure",
       "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
@@ -204,11 +204,11 @@
         "prixQuartz": 6,
         "equipee": true
       },
-      "_key": "!actors.items!R0ii0DBDZdKJrQys.Q05e8amaS1DvxDP5",
+      "_key": "!actors.items!tvErCVBZfLz9kred.QIJsdJJiNnhGmiYK",
       "effects": []
     },
     {
-      "_id": "zetarQomDlGTtxBC",
+      "_id": "DeuYGft5CxX2Uggp",
       "name": "Vitesse surnaturelle",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -224,7 +224,7 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!R0ii0DBDZdKJrQys.zetarQomDlGTtxBC",
+      "_key": "!actors.items!tvErCVBZfLz9kred.DeuYGft5CxX2Uggp",
       "effects": []
     }
   ]

@@ -5,6 +5,7 @@
 *.ps1xml
 *.psd1
 *.psm1
+*.py
 
 # Variables d'environnement et secrets
 .env

@@ -1,3 +1,16 @@
-2026/08/05-23:07:48.934 14e4 Recovering log #50
-2026/08/05-23:07:49.021 14e4 Delete type=0 #50
-2026/08/05-23:07:49.026 14e4 Delete type=3 #48
+2026/08/06-08:44:06.931 43c0 Recovering log #54
+2026/08/06-08:44:06.931 43c0 Level-0 table #56: started
+2026/08/06-08:44:06.952 43c0 Level-0 table #56: 9004 bytes OK
+2026/08/06-08:44:06.971 43c0 Delete type=0 #54
+2026/08/06-08:44:06.971 43c0 Delete type=3 #53
+2026/08/06-15:43:58.360 5ac4 Level-0 table #59: started
+2026/08/06-15:43:58.360 5ac4 Level-0 table #59: 0 bytes OK
+2026/08/06-15:43:58.360 5ac4 Delete type=0 #57
+2026/08/06-15:43:58.373 5ac4 Manual compaction at level-0 from '!journal!3vamfyJNGw1wNGjG' @ 72057594037927935 : 1 .. '!journal.pages!3vamfyJNGw1wNGjG.rj1SFmkXjBIcsmFZ' @ 0 : 0; will stop at '!journal.pages!3vamfyJNGw1wNGjG.rj1SFmkXjBIcsmFZ' @ 151 : 1
+2026/08/06-15:43:58.373 5ac4 Compacting 1@0 + 1@1 files
+2026/08/06-15:43:58.375 5ac4 Generated table #60@0: 21 keys, 9004 bytes
+2026/08/06-15:43:58.375 5ac4 Compacted 1@0 + 1@1 files => 9004 bytes
+2026/08/06-15:43:58.375 5ac4 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/08/06-15:43:58.375 5ac4 Delete type=2 #52
+2026/08/06-15:43:58.375 5ac4 Delete type=2 #56
+2026/08/06-15:43:58.428 5ac4 Manual compaction at level-0 from '!journal.pages!3vamfyJNGw1wNGjG.rj1SFmkXjBIcsmFZ' @ 151 : 1 .. '!journal.pages!3vamfyJNGw1wNGjG.rj1SFmkXjBIcsmFZ' @ 0 : 0; will stop at (end)

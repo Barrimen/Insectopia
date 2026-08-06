@@ -1,6 +1,6 @@
 {
-  "_id": "kHQtoORE6YQXUjG4",
-  "_key": "!actors!kHQtoORE6YQXUjG4",
+  "_id": "hjxLBcvt81ugurRx",
+  "_key": "!actors!hjxLBcvt81ugurRx",
   "name": "Mosha le gris",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "h6q0uJb4OaHQMbHS",
+      "_id": "yNNhGzhAlWjlY4MB",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!kHQtoORE6YQXUjG4.h6q0uJb4OaHQMbHS",
+      "_key": "!actors.items!hjxLBcvt81ugurRx.yNNhGzhAlWjlY4MB",
       "effects": []
     },
     {
-      "_id": "JelUfcbu9Z5NB5JP",
+      "_id": "TPcaDHnr8OdiWKOY",
       "name": "Ailé",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -186,11 +186,11 @@
           "valeur": 0
         }
       },
-      "_key": "!actors.items!kHQtoORE6YQXUjG4.JelUfcbu9Z5NB5JP",
+      "_key": "!actors.items!hjxLBcvt81ugurRx.TPcaDHnr8OdiWKOY",
       "effects": []
     },
     {
-      "_id": "UB8seJuYdNqVSuXC",
+      "_id": "inXZ9wiY7qRO3qVX",
       "name": "Perception chimique hors du commun",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -206,7 +206,7 @@
           "valeur": 1
         }
       },
-      "_key": "!actors.items!kHQtoORE6YQXUjG4.UB8seJuYdNqVSuXC",
+      "_key": "!actors.items!hjxLBcvt81ugurRx.inXZ9wiY7qRO3qVX",
       "effects": []
     }
   ]

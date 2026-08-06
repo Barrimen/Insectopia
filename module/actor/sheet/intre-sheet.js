@@ -4,8 +4,10 @@ import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
 import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER } from "../../common/data-spheres.js";
 import { asArray } from "../../common/utils.js";
+import { openItemPicker } from "../../dialog/item-picker.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
+const { DialogV2 } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
 
 const CARAC_SIDE = {
@@ -482,11 +484,12 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
   static async #onWizardGmToggle(event) {
     event.preventDefault();
     const actuel = this.actor.getFlag(game.system.id, "creationTerminee");
-    const confirmed = await Dialog.confirm({
-      title: "Assistant de création",
+    const confirmed = await DialogV2.confirm({
+      window: { title: "Assistant de création" },
       content: actuel
         ? `<p>Rouvrir la création de personnage pour ${this.actor.name} (réaffiche le bouton de l'assistant) ?</p>`
         : `<p>Marquer la création de ${this.actor.name} comme terminée (masque le bouton de l'assistant) ?</p>`,
+      rejectClose: false,
     });
     if (!confirmed) return;
     if (actuel) await this.actor.unsetFlag(game.system.id, "creationTerminee");
@@ -585,18 +588,20 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
         <select id="caste-comp-sphere-choix">${sphereOptions}</select>
       </div>`;
 
-    new Dialog({
-      title: "Ajouter une compétence de Caste",
+    await DialogV2.wait({
+      window: { title: "Ajouter une compétence de Caste" },
       content,
-      buttons: {
-        add: {
-          icon: '<i class="fas fa-plus"></i>',
+      buttons: [
+        {
+          action: "add",
+          icon: "fas fa-plus",
           label: "Ajouter",
-          callback: async (html) => {
-            const choix = html.find("#caste-comp-choix")[0].value;
+          default: true,
+          callback: async (event, button) => {
+            const choix = button.form.elements["caste-comp-choix"].value;
             const competences = foundry.utils.duplicate(asArray(actor.system.caracteristiques.caste.competences));
             if (choix === "Sphère de magie") {
-              const sphereKey = html.find("#caste-comp-sphere-choix")[0].value;
+              const sphereKey = button.form.elements["caste-comp-sphere-choix"].value;
               competences.push({ id: foundry.utils.randomID(), label: `Sphère de magie (${SPHERES[sphereKey].label})`, value: 1, sphere: sphereKey });
             } else {
               competences.push({ id: foundry.utils.randomID(), label: choix, value: 1 });
@@ -604,15 +609,17 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
             await actor.update({ "system.caracteristiques.caste.competences": competences });
           },
         },
-        cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler" },
-      },
-      default: "add",
-      render: (html) => {
-        html.find("#caste-comp-choix").change((ev) => {
-          html.find("#caste-comp-sphere-group").toggle(ev.currentTarget.value === "Sphère de magie");
+        { action: "cancel", icon: "fas fa-times", label: "Annuler" },
+      ],
+      render: (event, dialog) => {
+        const root = dialog.element;
+        root.querySelector("#caste-comp-choix")?.addEventListener("change", (ev) => {
+          const group = root.querySelector("#caste-comp-sphere-group");
+          if (group) group.style.display = ev.currentTarget.value === "Sphère de magie" ? "" : "none";
         });
       },
-    }).render(true);
+      rejectClose: false,
+    });
   }
 
   /**
@@ -681,12 +688,11 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
   }
 
   /** Crée un nouvel Item embarqué du type indiqué (data-type: arme|armure|capacite). */
+  /** Ajoute un nouvel Item du type indiqué (data-type: arme|armure|capacite|objet), via le picker Compendium / Création libre. */
   static async #onItemCreate(event, target) {
     event.preventDefault();
     const type = target.dataset.type;
-    const nomParDefaut = { arme: "Nouvelle arme", armure: "Nouvelle armure", capacite: "Nouvelle capacité", objet: "Nouvel objet" };
-    const itemData = { name: nomParDefaut[type] ?? "Nouvel objet", type };
-    return this.actor.createEmbeddedDocuments("Item", [itemData]);
+    return openItemPicker(this.actor, type);
   }
 
   static #onItemEdit(event, target) {
@@ -707,10 +713,11 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     event.preventDefault();
     const raceKey = this.element.querySelector("#raceSelect")?.value;
     if (!raceKey) return;
-    const confirmed = await Dialog.confirm({
-      title: "Appliquer la race",
+    const confirmed = await DialogV2.confirm({
+      window: { title: "Appliquer la race" },
       content:
         "<p>Ceci va écraser les 7 caractéristiques du personnage avec les valeurs de la race choisie, et ajouter ses capacités natives (livre de base p.198-201). Continuer ?</p>",
+      rejectClose: false,
     });
     if (confirmed) return this.actor.applyRace(raceKey);
   }

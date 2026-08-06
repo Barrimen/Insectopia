@@ -1,10 +1,10 @@
 {
-  "_id": "yk34WWrkJ6cTHTdk",
-  "_key": "!journal!yk34WWrkJ6cTHTdk",
+  "_id": "4xDIHjCFYcjKKYRZ",
+  "_key": "!journal!4xDIHjCFYcjKKYRZ",
   "name": "Insectopia — Castes et métiers (livre de base p.204)",
   "pages": [
     {
-      "_id": "zk3AUTA5OWcMgFOV",
+      "_id": "bJbDKovAub7TyyQw",
       "name": "Combattants",
       "type": "text",
       "title": {
@@ -18,10 +18,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!yk34WWrkJ6cTHTdk.zk3AUTA5OWcMgFOV"
+      "_key": "!journal.pages!4xDIHjCFYcjKKYRZ.bJbDKovAub7TyyQw"
     },
     {
-      "_id": "RXHQ8OgmySsL4jDA",
+      "_id": "nvY8EMXRGbxgPZos",
       "name": "Divins",
       "type": "text",
       "title": {
@@ -35,10 +35,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!yk34WWrkJ6cTHTdk.RXHQ8OgmySsL4jDA"
+      "_key": "!journal.pages!4xDIHjCFYcjKKYRZ.nvY8EMXRGbxgPZos"
     },
     {
-      "_id": "ph7shpyS7v2X2sRK",
+      "_id": "XKNVLJFr3jsvU9Cm",
       "name": "Dominants",
       "type": "text",
       "title": {
@@ -52,10 +52,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!yk34WWrkJ6cTHTdk.ph7shpyS7v2X2sRK"
+      "_key": "!journal.pages!4xDIHjCFYcjKKYRZ.XKNVLJFr3jsvU9Cm"
     },
     {
-      "_id": "R24w6ahjDiUcX3Ge",
+      "_id": "ZEqMC0Vaj1dk68oS",
       "name": "Hors-caste",
       "type": "text",
       "title": {
@@ -69,10 +69,10 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!yk34WWrkJ6cTHTdk.R24w6ahjDiUcX3Ge"
+      "_key": "!journal.pages!4xDIHjCFYcjKKYRZ.ZEqMC0Vaj1dk68oS"
     },
     {
-      "_id": "HseWVUf6mAYzMkQW",
+      "_id": "qRMyW7hOCiREKNyR",
       "name": "Producteurs",
       "type": "text",
       "title": {
@@ -86,7 +86,7 @@
       "ownership": {
         "default": -1
       },
-      "_key": "!journal.pages!yk34WWrkJ6cTHTdk.HseWVUf6mAYzMkQW"
+      "_key": "!journal.pages!4xDIHjCFYcjKKYRZ.qRMyW7hOCiREKNyR"
     }
   ],
   "folder": null,

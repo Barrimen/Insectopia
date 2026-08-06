@@ -1,29 +1,25 @@
 {
-    "_id": "vHUtBoRbm0Nuwm8V",
-    "_key": "!items!vHUtBoRbm0Nuwm8V",
-    "name": "Découpeuse",
-    "type": "arme",
-    "img": "icons/svg/item-bag.svg",
-    "system": {
-        "description": "Arme en demi-lune à lame crantée, l'une des plus redoutées d'Entoma. Dégâts égaux à la Chitine plus un. Modificateur d'initiative : moins une couleur. Prix : 30 quartz.",
-        "competenceCombat": "melee",
-        "modificateurAttaque": 0,
-        "modificateurDegats": 1,
-        "degatsFixes": null,
-        "portee": "",
-        "porteeInsettres": 0,
-        "rechargeActions": 0,
-        "actionsRechargeRestantes": 0,
-        "munitionType": "",
-        "modInitiativeType": "-1couleur",
-        "bonusAllongePremiereBlatte": 0,
-        "prixQuartz": 30,
-        "equipee": false,
-        "nbPattes": 2
-    },
-    "effects": [],
-    "folder": null,
-    "ownership": {
-        "default": 0
-    }
+  "_id": "vGxCp7p0kuoE4Ybl",
+  "_key": "!items!vGxCp7p0kuoE4Ybl",
+  "name": "Découpeuse",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme en demi-lune à lame crantée, l'une des plus redoutées d'Entoma. Dégâts égaux à la Chitine plus un. Modificateur d'initiative : moins une couleur. Prix : 30 quartz.",
+    "competenceCombat": "melee",
+    "modificateurAttaque": 0,
+    "modificateurDegats": 1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false,
+    "tradition": "naturelle"
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
 }

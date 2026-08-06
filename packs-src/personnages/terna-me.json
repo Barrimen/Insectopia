@@ -1,6 +1,6 @@
 {
-  "_id": "3arMahmyRX8Wp9lh",
-  "_key": "!actors!3arMahmyRX8Wp9lh",
+  "_id": "AJ9NWLr1fIjHiPui",
+  "_key": "!actors!AJ9NWLr1fIjHiPui",
   "name": "Terna Mé",
   "type": "intre",
   "img": "icons/svg/mystery-man.svg",
@@ -150,7 +150,7 @@
   },
   "items": [
     {
-      "_id": "XPehKcvVD3furGl4",
+      "_id": "yEPTrUkO0lklqyWG",
       "name": "Platère",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -166,11 +166,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!3arMahmyRX8Wp9lh.XPehKcvVD3furGl4",
+      "_key": "!actors.items!AJ9NWLr1fIjHiPui.yEPTrUkO0lklqyWG",
       "effects": []
     },
     {
-      "_id": "gmnYtVIAyRN8tOCj",
+      "_id": "Rru5YfkckGLhH6G4",
       "name": "Mandibules hypertrophiées",
       "type": "arme",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -186,11 +186,11 @@
         "prixQuartz": 0,
         "equipee": true
       },
-      "_key": "!actors.items!3arMahmyRX8Wp9lh.gmnYtVIAyRN8tOCj",
+      "_key": "!actors.items!AJ9NWLr1fIjHiPui.Rru5YfkckGLhH6G4",
       "effects": []
     },
     {
-      "_id": "xWIYu0tQbxJYSbts",
+      "_id": "OXZnyi8OxNEmpRyj",
       "name": "Armure de cuir de Sangchauds",
       "type": "armure",
       "img": "icons/equipment/chest/breastplate-layered-leather-brown.webp",
@@ -204,11 +204,11 @@
         "prixQuartz": 6,
         "equipee": true
       },
-      "_key": "!actors.items!3arMahmyRX8Wp9lh.xWIYu0tQbxJYSbts",
+      "_key": "!actors.items!AJ9NWLr1fIjHiPui.OXZnyi8OxNEmpRyj",
       "effects": []
     },
     {
-      "_id": "r4x8T4OeJ1ieYTJQ",
+      "_id": "uuB8raazmVyIdA0l",
       "name": "Perception chimique hors du commun",
       "type": "capacite",
       "img": "icons/magic/symbols/rune-sigil-blue-pink.webp",
@@ -224,7 +224,7 @@
           "valeur": 1
         }
       },
-      "_key": "!actors.items!3arMahmyRX8Wp9lh.r4x8T4OeJ1ieYTJQ",
+      "_key": "!actors.items!AJ9NWLr1fIjHiPui.uuB8raazmVyIdA0l",
       "effects": []
     }
   ]

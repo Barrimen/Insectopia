@@ -1,29 +1,25 @@
 {
-    "_id": "aiijWmpBnImT2UG5",
-    "_key": "!items!aiijWmpBnImT2UG5",
-    "name": "Os de tema",
-    "type": "arme",
-    "img": "icons/svg/item-bag.svg",
-    "system": {
-        "description": "Arme d'estoc longue, souple et fine, taillée dans l'os d'un tema. Dégâts égaux à la Chitine moins un. Modificateur d'initiative : plus une couleur. Prix : 12 quartz.",
-        "competenceCombat": "melee",
-        "modificateurAttaque": 0,
-        "modificateurDegats": -1,
-        "degatsFixes": null,
-        "portee": "",
-        "porteeInsettres": 0,
-        "rechargeActions": 0,
-        "actionsRechargeRestantes": 0,
-        "munitionType": "",
-        "modInitiativeType": "+1couleur",
-        "bonusAllongePremiereBlatte": 0,
-        "prixQuartz": 12,
-        "equipee": false,
-        "nbPattes": 1
-    },
-    "effects": [],
-    "folder": null,
-    "ownership": {
-        "default": 0
-    }
+  "_id": "jtAK5CNQpyRTMEh7",
+  "_key": "!items!jtAK5CNQpyRTMEh7",
+  "name": "Os de tema",
+  "type": "arme",
+  "img": "icons/svg/item-bag.svg",
+  "system": {
+    "description": "Arme d'estoc longue, souple et fine, taillée dans l'os d'un tema. Dégâts égaux à la Chitine moins un. Modificateur d'initiative : plus une couleur. Prix : 12 quartz.",
+    "competenceCombat": "melee",
+    "modificateurAttaque": 0,
+    "modificateurDegats": -1,
+    "degatsFixes": null,
+    "portee": "",
+    "porteeInsettres": 0,
+    "rechargeActions": 0,
+    "prixQuartz": 0,
+    "equipee": false,
+    "tradition": "naturelle"
+  },
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0
+  }
 }
