@@ -3,6 +3,8 @@ import { ROLL_TYPE } from "./config.js";
 import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER, TABLE_INFLUENCE } from "./data-spheres.js";
 import { asArray } from "./utils.js";
 
+const { DialogV2 } = foundry.applications.api;
+
 /**
  * Ouvre la boîte de dialogue de lancer de sort (livre p.262-276) pour cet
  * acteur.
@@ -83,23 +85,26 @@ export async function ouvrirDialogueLancerSort(actor, preselectIndex = null) {
     tableInfluence: TABLE_INFLUENCE,
   });
 
-  return new Dialog({
-    title: `Lancer un sort — ${actor.name}`,
+  return DialogV2.wait({
+    window: { title: `Lancer un sort — ${actor.name}` },
     content: html,
-    buttons: {
-      lancer: {
-        icon: '<i class="fas fa-hand-sparkles"></i>',
+    buttons: [
+      {
+        action: "lancer",
+        icon: "fas fa-hand-sparkles",
         label: "Lancer le sort",
-        callback: async (dialogHtml) => {
-          const comboValue = dialogHtml.find("#sort-combo")[0]?.value;
+        default: true,
+        callback: async (event, button) => {
+          const form = button.form;
+          const comboValue = form.elements["sort-combo"]?.value;
           const trouvee = combinaisons.find((c) => c.value === comboValue);
           if (!trouvee) return;
 
-          const niveauPuissance = parseInt(dialogHtml.find("#sort-puissance")[0]?.value) || 0;
-          const niveauPortee = parseInt(dialogHtml.find("#sort-portee")[0]?.value) || 0;
-          const niveauCibles = parseInt(dialogHtml.find("#sort-cibles")[0]?.value) || 0;
-          const niveauZone = parseInt(dialogHtml.find("#sort-zone")[0]?.value) || 0;
-          const niveauDuree = parseInt(dialogHtml.find("#sort-duree")[0]?.value) || 0;
+          const niveauPuissance = parseInt(form.elements["sort-puissance"]?.value) || 0;
+          const niveauPortee = parseInt(form.elements["sort-portee"]?.value) || 0;
+          const niveauCibles = parseInt(form.elements["sort-cibles"]?.value) || 0;
+          const niveauZone = parseInt(form.elements["sort-zone"]?.value) || 0;
+          const niveauDuree = parseInt(form.elements["sort-duree"]?.value) || 0;
           const difficulteSort = niveauPuissance + niveauPortee + niveauCibles + niveauZone + niveauDuree;
 
           const competence = { value: trouvee.sphereValue, label: trouvee.sphereLabel };
@@ -118,16 +123,17 @@ export async function ouvrirDialogueLancerSort(actor, preselectIndex = null) {
           return blattes.lancerSort();
         },
       },
-      cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler", callback: () => {} },
-    },
-    default: "lancer",
-    render: (dialogHtml) => {
+      { action: "cancel", icon: "fas fa-times", label: "Annuler" },
+    ],
+    render: (event, dialog) => {
       if (preselectIndex === null) return;
       // Le premier Mot de pouvoir de la Sphère cliquée, faute de mieux : le
       // joueur peut changer dans le menu, on ne fait que lui éviter de
       // rechercher sa propre Sphère dans une liste qui mélange tout.
       const premiereCombo = combinaisons.find((c) => c.value.startsWith(`${preselectIndex}|`));
-      if (premiereCombo) dialogHtml.find("#sort-combo")[0].value = premiereCombo.value;
+      const select = dialog.element.querySelector("#sort-combo");
+      if (premiereCombo && select) select.value = premiereCombo.value;
     },
-  }).render(true);
+    rejectClose: false,
+  });
 }

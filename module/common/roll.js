@@ -133,6 +133,11 @@ export class Blattes {
             if (this.rolltype === ROLL_TYPE.ATTACK && this.data.itemId) {
               await this.actor.consommerTirDistance(this.data.itemId, this.data.munitionItemId);
             }
+            // Verrou "une Attaque par arme et par round" + consommation
+            // automatique de l'action du tour (demandes d'Obe).
+            if (this.rolltype === ROLL_TYPE.ATTACK) {
+              await this.actor.terminerActionAttaque(this.data.itemId);
+            }
 
             await this.piocher();
             return await this.showResult();

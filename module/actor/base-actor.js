@@ -103,7 +103,7 @@ export default class IntreActor extends Actor {
    *
    * @param competenceCombat  "melee" | "tir" | "predateur"
    */
-  async attack(competenceCombat) {
+  async attack(competenceCombat, itemId = null) {
     const map = { melee: "mandibule", tir: "antenne", predateur: "mandibule" };
     const caracKey = map[competenceCombat];
     if (!caracKey) return;
@@ -111,7 +111,32 @@ export default class IntreActor extends Actor {
     const cible = this.system.caracteristiques[caracKey].competences[competenceCombat];
     if (!cible) return;
 
-    const arme = this.getArmeEquipee(competenceCombat);
+    const arme = this.getArmeEquipee(competenceCombat, itemId);
+
+    // Verrou de tour (demande d'Obe) : en combat, seul le combattant dont
+    // c'est le tour peut lancer une Attaque. Les autres jets (Caractéristique,
+    // Chance, Sorts...) restent libres, ce verrou ne concerne qu'attack().
+    const combat = game.combat;
+    if (combat) {
+      const combatant = combat.combatants.find((c) => c.actorId === this.id);
+      if (combatant && combat.combatant?.id !== combatant.id) {
+        ui.notifications.warn("Ce n'est pas votre tour : impossible d'attaquer pour l'instant.");
+        return;
+      }
+    }
+
+    // Verrou "une Attaque par arme et par Phase de combat" (règle
+    // confirmée par Obe) : une même arme ne peut pas attaquer deux fois
+    // dans le même round. Remis à zéro par InsectopiaCombat.resetAll() à
+    // chaque nouveau round. Ne s'applique que si on est en combat.
+    if (combat && arme) {
+      const combatant = combat.combatants.find((c) => c.actorId === this.id);
+      const armesUtilisees = combatant?.getFlag("insectopia", "armesUtilisees") || [];
+      if (armesUtilisees.includes(arme.id)) {
+        ui.notifications.warn(`${arme.name} a déjà attaqué ce round : il faut changer d'arme pour attaquer à nouveau.`);
+        return;
+      }
+    }
 
     // Verrou de rechargement (livre de base p.240) : tant que l'arme n'a
     // pas encaissé son nombre d'actions de recharge, l'Attaque est
@@ -152,6 +177,37 @@ export default class IntreActor extends Actor {
 
     const blattes = new Blattes(this, ROLL_TYPE.ATTACK, competence, data);
     blattes.openDialog();
+  }
+
+  /**
+   * Appelé au moment où le joueur confirme le tirage de Blattes d'une
+   * Attaque (roll.js, callback "Piocher" — même timing que
+   * consommerTirDistance, pour ne rien valider si le dialogue est annulé) :
+   *  - marque l'arme utilisée comme indisponible pour une nouvelle
+   *    Attaque ce round (règle confirmée : « il n'est pas possible
+   *    d'effectuer plus d'une Attaque avec la même arme au cours d'une
+   *    même Phase de combat ») ;
+   *  - consomme automatiquement l'action du combattant (demande d'Obe :
+   *    plus besoin que le Deus clique "tour suivant" après une Attaque).
+   *    Les actions sans jet (discussion, etc.) restent décomptées
+   *    manuellement via la flèche du tracker.
+   */
+  async terminerActionAttaque(itemId) {
+    const combat = game.combat;
+    if (!combat) return;
+    const combatant = combat.combatants.find((c) => c.actorId === this.id);
+    if (!combatant) return;
+
+    if (itemId) {
+      const armesUtilisees = combatant.getFlag("insectopia", "armesUtilisees") || [];
+      if (!armesUtilisees.includes(itemId)) {
+        await combatant.setFlag("insectopia", "armesUtilisees", [...armesUtilisees, itemId]);
+      }
+    }
+
+    if (combat.combatant?.id === combatant.id) {
+      await combat.nextTurn();
+    }
   }
 
   /**
@@ -203,12 +259,41 @@ export default class IntreActor extends Actor {
   /**
    * Arme équipée correspondant à une compétence de combat donnée, s'il y
    * en a une (sinon l'attaque est considérée comme une attaque naturelle,
-   * sans modificateur d'arme).
+   * sans modificateur d'arme). Si plusieurs armes sont équipées pour la
+   * même compétence (une par main), itemId permet de préciser laquelle ;
+   * sans précision, la première trouvée est utilisée (comportement
+   * historique, conservé pour les appels qui ne précisent rien).
    */
-  getArmeEquipee(competenceCombat) {
+  getArmeEquipee(competenceCombat, itemId = null) {
+    if (itemId) {
+      const arme = this.items.get(itemId);
+      if (arme?.type === "arme" && arme.system.equipee && arme.system.competenceCombat === competenceCombat) return arme;
+    }
     return this.items.find(
       (i) => i.type === "arme" && i.system.equipee && i.system.competenceCombat === competenceCombat
     );
+  }
+
+  /**
+   * Nombre de "mains/pattes" disponibles pour porter des armes et outils
+   * (capacité Quatre mains, livre de base p.208) : 4 pour la plupart des
+   * races (natif), 0 pour les Araks et Mantide qui n'ont conservé que
+   * leurs pattes primaires (armes naturelles uniquement pour eux).
+   */
+  getMainsDisponibles() {
+    const aQuatreMains = this.items.some((i) => i.type === "capacite" && i.name === "Quatre mains");
+    return aQuatreMains ? 4 : 0;
+  }
+
+  /**
+   * Nombre de "mains/pattes" actuellement occupées par les armes non
+   * naturelles équipées (system.nbPattes, table p.240). Les armes
+   * naturelles (griffes, mandibules...) n'occupent pas de main.
+   */
+  getMainsUtilisees() {
+    return this.items
+      .filter((i) => i.type === "arme" && i.system.equipee && !i.system.naturelle)
+      .reduce((total, i) => total + (i.system.nbPattes || 1), 0);
   }
 
   /**
@@ -476,11 +561,48 @@ export default class IntreActor extends Actor {
 
   /**
    * Tirage d'initiative en tour de combat.
+   *
+   * Usage interne uniquement (appelé par InsectopiaCombat.rollInitiative()) :
+   * ne fait que tirer les Blattes et poster le résultat au chat, sans
+   * toucher au Combattant ni au tri du tracker. Pour un tirage déclenché
+   * depuis la fiche de perso, voir joinCombatAndRollInitiative() ci-dessous.
    */
   async rollInitiative() {
     const competence = { value: this.system.combat.initiative, label: "INSECTOPIA.label.combat.initiative" };
     const blattes = new Blattes(this, ROLL_TYPE.INITIATIVE, competence, {});
     return blattes.openDialog();
+  }
+
+  /**
+   * Tirage d'Initiative déclenché depuis la fiche de personnage (bouton
+   * "Tirer les Blattes" du panneau Chance). Contrairement à rollInitiative()
+   * ci-dessus, celui-ci :
+   *  - refuse le tirage s'il n'y a pas de combat en cours (demande d'Obe :
+   *    l'Initiative ne se tire qu'en combat) ;
+   *  - rejoint automatiquement le combat actif si l'acteur n'y est pas
+   *    encore (crée son Combattant à partir de son token sur la scène) ;
+   *  - passe ensuite par InsectopiaCombat.rollInitiative(), le seul chemin
+   *    qui met à jour le Combattant et redéclenche le tri du tracker.
+   */
+  async joinCombatAndRollInitiative() {
+    const combat = game.combat;
+    if (!combat) {
+      ui.notifications.warn("Aucun combat en cours : impossible de tirer l'Initiative.");
+      return;
+    }
+
+    let combatant = combat.combatants.find((c) => c.actorId === this.id);
+    if (!combatant) {
+      const token = this.getActiveTokens(false, true)[0];
+      if (!token) {
+        ui.notifications.warn(`${this.name} n'a pas de token sur la scène active : impossible de le rejoindre au combat.`);
+        return;
+      }
+      const created = await combat.createEmbeddedDocuments("Combatant", [{ tokenId: token.id, actorId: this.id }]);
+      combatant = created[0];
+    }
+
+    return combat.rollInitiative([combatant.id]);
   }
 
   // --------------------------------------------------------------------
@@ -511,11 +633,57 @@ export default class IntreActor extends Actor {
     await this.update({ "system.combat.blessures": blessures });
 
     if (blessures.blessureinterne.value >= blessures.blessureinterne.max) {
+      // N'enclenche le compte à rebours que s'il n'est pas déjà en cours
+      // (évite de le réarmer à 10 à chaque nouvel impact encaissé une fois
+      // déjà inconscient).
+      if (!blessures.hemorragieRounds) {
+        await this.update({ "system.combat.blessures.hemorragieRounds": 10 });
+        // Statut "inconscient" (distinct du statut "dead" utilisé par la
+        // mutilation Tête/Abdomen, cf. mutilation.js) : n'active PAS le
+        // crâne du tracker, juste l'icône de statut correspondante.
+        await this.toggleStatusEffect?.("unconscious", { active: true });
+      }
       ui.notifications.warn(
         `${this.name} sombre dans l'inconscience. Sans soins rapides, il meurt d'hémorragie dans les 10 rounds qui suivent.`
       );
     }
     return blessures;
+  }
+
+  /**
+   * Fait progresser d'un round le compte à rebours d'hémorragie (appelé
+   * par InsectopiaCombat.nextRound() pour chaque combattant). N'agit que
+   * si le compteur est actif (>0). À 0, bascule le personnage en statut
+   * "mort" (crâne du tracker inclus) au lieu de le tuer silencieusement —
+   * la confirmation narrative reste au Deus.
+   */
+  async tickHemorragie() {
+    const rounds = this.system.combat.blessures.hemorragieRounds || 0;
+    if (rounds <= 0) return;
+
+    const restant = rounds - 1;
+    await this.update({ "system.combat.blessures.hemorragieRounds": restant });
+
+    if (restant <= 0) {
+      await this.toggleStatusEffect?.("unconscious", { active: false });
+      await this.toggleStatusEffect?.("dead", { active: true });
+      ui.notifications.error(`${this.name} n'a pas reçu de soins à temps : il meurt d'hémorragie (au Deus de le confirmer).`);
+      ChatMessage.create({
+        content: `<strong>${this.name}</strong> n'a pas reçu de soins à temps : le compte à rebours d'hémorragie est arrivé à zéro.`,
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+      });
+    }
+  }
+
+  /**
+   * Stabilise un personnage inconscient (soins reçus) : arrête le compte
+   * à rebours d'hémorragie et retire le statut "inconscient". Les
+   * Blessures internes restent à ajuster manuellement selon les soins
+   * prodigués (pas de règle chiffrée pour ça au livret).
+   */
+  async stabiliser() {
+    await this.toggleStatusEffect?.("unconscious", { active: false });
+    return this.update({ "system.combat.blessures.hemorragieRounds": 0 });
   }
 
   /**

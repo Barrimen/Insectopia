@@ -1,5 +1,7 @@
 import { SAC_BLATTES, LOCALISATION_ZONES } from "../common/config.js";
 
+const { DialogV2 } = foundry.applications.api;
+
 /**
  * Localisation d'une Mutilation
  * ---------------------------------------------------------------------
@@ -93,21 +95,28 @@ export async function ouvrirDialogueMutilation(actor) {
   const html = await foundry.applications.handlebars.renderTemplate("systems/insectopia/templates/dialog/mutilation.html", {});
 
   return new Promise((resolve) => {
-    let dlg;
-    dlg = new Dialog({
-      title: `Mutilation — Localisation (${actor.name})`,
-      content: html,
-      buttons: {
-        cancel: { icon: '<i class="fas fa-times"></i>', label: "Annuler", callback: () => resolve(null) },
-      },
-      default: "cancel",
-      render: (dialogHtml) => {
-        const root = dialogHtml[0] ?? dialogHtml;
+    let resolved = false;
+    const resoudre = (value) => {
+      if (resolved) return; // évite un double resolve() (choix de zone puis fermeture déclenchée par this.close())
+      resolved = true;
+      resolve(value);
+    };
+
+    // Sous-classe plutôt que `new DialogV2({ render, close, ... })` : rien ne
+    // garantit que les callbacks `render`/`close` passés en config soient
+    // câblés hors du helper statique `DialogV2.wait()` (c'est probablement
+    // ce qui expliquait les hotspots/boutons inertes en test). `_onRender`
+    // et `close()` sont les points d'extension documentés d'ApplicationV2,
+    // garantis quel que soit le chemin d'instanciation.
+    class MutilationDialog extends DialogV2 {
+      async _onRender(context, options) {
+        await super._onRender(context, options);
+        const root = this.element;
 
         const choisirZone = async (zoneKey, source) => {
           await appliquerMutilation(actor, zoneKey, source);
-          dlg.close();
-          resolve(zoneKey);
+          resoudre(zoneKey);
+          this.close();
         };
 
         for (const el of root.querySelectorAll(".loc-hotspot, .loc-zone-btn")) {
@@ -119,7 +128,18 @@ export async function ouvrirDialogueMutilation(actor) {
           const couleur = tirerBlatteLocalisation();
           choisirZone(LOCALISATION_ZONES[couleur].zone, "hasard");
         });
-      },
+      }
+
+      async close(options) {
+        resoudre(null); // sans effet si déjà résolu (zone choisie) ; sinon fermeture manuelle = annulation
+        return super.close(options);
+      }
+    }
+
+    const dlg = new MutilationDialog({
+      window: { title: `Mutilation — Localisation (${actor.name})` },
+      content: html,
+      buttons: [{ action: "cancel", icon: "fas fa-times", label: "Annuler" }],
     });
     dlg.render(true);
   });

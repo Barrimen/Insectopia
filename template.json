@@ -100,7 +100,8 @@
         "combat": {
           "blessures": {
             "impact": { "value": 0, "max": 0 },
-            "blessureinterne": { "value": 0, "max": 0 }
+            "blessureinterne": { "value": 0, "max": 0 },
+            "hemorragieRounds": 0
           },
           "souillure": 0,
           "fluide": { "value": 0, "max": 0 },
@@ -134,10 +135,10 @@
       "munitionType": "",
       "modInitiativeType": "aucun",
       "bonusAllongePremiereBlatte": 0,
+      "nbPattes": 1,
       "prixQuartz": 0,
       "equipee": false,
-      "naturelle": false,
-      "tradition": null
+      "naturelle": false
     },
     "armure": {
       "templates": ["base"],
@@ -147,8 +148,7 @@
       "malusEncombrement": 0,
       "modInitiativeType": "aucun",
       "prixQuartz": 0,
-      "equipee": false,
-      "tradition": null
+      "equipee": false
     },
     "capacite": {
       "templates": ["base"],

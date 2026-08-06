@@ -41,6 +41,14 @@
             {{/if}}
         </div>
 
+        {{#if armesEnRecharge.length}}
+        <div class="token-recharge" title="Arme(s) en cours de rechargement">
+            {{#each armesEnRecharge}}
+                <span class="badge-recharge">⏳ {{this.nom}} ({{this.restant}})</span>
+            {{/each}}
+        </div>
+        {{/if}}
+
         {{#if isOwner}}
         {{#if initblattes.nbActions}}
         <div class="token-resource blatte-adjust">

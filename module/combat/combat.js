@@ -14,8 +14,9 @@
 export default class InsectopiaCombat extends Combat {
   /** @override */
   _sortCombatants(a, b) {
-    if (a.defeated) return 1;
-    if (b.defeated) return -1;
+    const inactif = (c) => c.defeated || c.actor?.statuses?.has("unconscious");
+    if (inactif(a) && !inactif(b)) return 1;
+    if (inactif(b) && !inactif(a)) return -1;
 
     const initA = a.getFlag("insectopia", "initblattes");
     const initB = b.getFlag("insectopia", "initblattes");
@@ -81,10 +82,71 @@ export default class InsectopiaCombat extends Combat {
 
   /** @override */
   async nextTurn() {
-    await this._pushHistory(this.combatant.getState());
-    await this.combatant.depenserBlatte();
-    if (this.combatant.initiative <= 0) return this.nextRound();
-    return this.update({ turn: 0 });
+    // Garde-fou : this.combatant (= this.turns[this.turn]) peut être
+    // undefined juste après un rechargement de page si this.turns n'a pas
+    // fini de se recalculer, ou s'il n'y a aucun combattant en lice. On
+    // force un recalcul et on abandonne proprement plutôt que de planter,
+    // au lieu de laisser passer l'exception d'origine :
+    // "Cannot read properties of undefined (reading 'getState')".
+    this.setupTurns();
+    let current = this.combatant;
+    if (!current) {
+      console.warn(
+        "Insectopia | nextTurn() : aucun combattant courant valide (this.combatant est undefined). " +
+          "Vérifie qu'au moins un combattant a tiré son Initiative, ou recharge la page si le souci persiste."
+      );
+      ui.notifications?.warn("Impossible de passer au tour suivant : aucun combattant valide trouvé.");
+      return this;
+    }
+
+    // Saute automatiquement les combattants inconscients ou morts : ils ne
+    // peuvent pas agir, mais on doit tout de même consommer leur Blatte
+    // (silencieusement, sans les proposer au Deus) pour que le tour
+    // avance normalement jusqu'au prochain combattant valide.
+    let garde = 0;
+    const estInactif = (c) => c.defeated || c.actor?.statuses?.has("unconscious");
+    while (current && estInactif(current) && garde < this.turns.length) {
+      await current.depenserBlatte();
+      this.setupTurns();
+      current = this.combatant;
+      garde += 1;
+    }
+    if (!current || estInactif(current)) {
+      ui.notifications?.info("Plus aucun combattant valide ne peut agir ce round.");
+      return this;
+    }
+
+    const idAvant = current.id;
+    await this._pushHistory(current.getState());
+    await current.depenserBlatte();
+    if (current.initiative <= 0) return this.nextRound();
+    const resultat = await this.update({ turn: 0 });
+    // Annonce uniquement dans le cas normal (pas juste après un
+    // changement de round, où personne n'a encore tiré d'Initiative —
+    // l'annonce n'aurait alors aucun sens, "0 action restante" pour tout
+    // le monde).
+    await this._annoncerTour(idAvant);
+    return resultat;
+  }
+
+  /**
+   * Poste un message de chat annonçant à qui c'est le tour et combien
+   * d'actions (Blattes) il lui reste — indicateur demandé par Obe, sous
+   * forme de message plutôt que de bandeau flottant (cohérent avec le
+   * reste du système, tout passe par le chat). Ne poste rien si le
+   * combattant actif n'a pas changé (ex : plusieurs actions d'affilée
+   * pour le même combattant grâce à une bonne Initiative).
+   */
+  async _annoncerTour(idCombattantPrecedent) {
+    this.setupTurns();
+    const actuel = this.combatant;
+    if (!actuel || actuel.id === idCombattantPrecedent) return;
+    const initblattes = actuel.getFlag("insectopia", "initblattes");
+    const restant = initblattes?.nbActions ?? 0;
+    ChatMessage.create({
+      content: `<strong>C'est au tour de ${actuel.name}</strong> — ${restant} action(s) restante(s) ce round.`,
+      speaker: { alias: "Combat" },
+    });
   }
 
   /** @override */
@@ -92,6 +154,11 @@ export default class InsectopiaCombat extends Combat {
     await this._pushHistory(this.combatants.map((c) => c.getState()));
     await this._pushHistory("newRound");
     await this.resetAll();
+    // Compte à rebours d'hémorragie (livret) : un round de plus sans soins
+    // pour chaque combattant inconscient présent dans ce combat.
+    for (const c of this.combatants) {
+      await c.actor?.tickHemorragie?.();
+    }
     return this.update({ round: this.round + 1, turn: 0 }, { advanceTime: CONFIG.time.roundTime });
   }
 
@@ -133,9 +200,17 @@ export default class InsectopiaCombat extends Combat {
   async resetAll() {
     const initblattes = { rouge: 0, verte: 0, bleue: 0, blanche: 0, noire: 0, nbActions: 0, initEval: 0 };
     for (const c of this.combatants) {
-      c.updateSource({ initiative: null, "flags.insectopia.initblattes": initblattes });
+      c.updateSource({ initiative: null, "flags.insectopia.initblattes": initblattes, "flags.insectopia.armesUtilisees": [] });
     }
-    return this.update({ turn: 0, combatants: this.combatants.toObject() }, { diff: false });
+    await this.update({ turn: 0, combatants: this.combatants.toObject() }, { diff: false });
+    // updateSource() + update() groupé ci-dessus ne passe pas par
+    // _onUpdateDescendantDocuments (réservé aux mises à jour normales de
+    // Combattant) : on force donc explicitement le retri du tracker ici,
+    // sinon l'ordre du round précédent reste figé tant qu'aucune autre
+    // mise à jour de Combattant n'a lieu.
+    this.setupTurns();
+    if (this.active) this.collection.render();
+    return this;
   }
 
   async _pushHistory(data) {

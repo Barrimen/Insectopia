@@ -1,25 +1,29 @@
 {
-  "_id": "SEFMeA6u4CposkHS",
-  "_key": "!items!SEFMeA6u4CposkHS",
-  "name": "Épée de justice ultime",
-  "type": "arme",
-  "img": "icons/svg/item-bag.svg",
-  "system": {
-    "description": "Grande sœur de l'épée de justice, maniée à quatre mains. Dégâts égaux à la Chitine plus deux. Modificateur d'initiative : moins une action. Prix : 250 quartz.",
-    "competenceCombat": "melee",
-    "modificateurAttaque": 0,
-    "modificateurDegats": 2,
-    "degatsFixes": null,
-    "portee": "",
-    "porteeInsettres": 0,
-    "rechargeActions": 0,
-    "prixQuartz": 250,
-    "equipee": false,
-    "tradition": "anciens_dieux"
-  },
-  "effects": [],
-  "folder": null,
-  "ownership": {
-    "default": 0
-  }
+    "_id": "lXIDuUyhlI77un4w",
+    "_key": "!items!lXIDuUyhlI77un4w",
+    "name": "Épée de justice ultime",
+    "type": "arme",
+    "img": "icons/svg/item-bag.svg",
+    "system": {
+        "description": "Grande sœur de l'épée de justice, maniée à quatre mains. Dégâts égaux à la Chitine plus deux. Modificateur d'initiative : moins une action. Prix : 250 quartz.",
+        "competenceCombat": "melee",
+        "modificateurAttaque": 0,
+        "modificateurDegats": 2,
+        "degatsFixes": null,
+        "portee": "",
+        "porteeInsettres": 0,
+        "rechargeActions": 0,
+        "actionsRechargeRestantes": 0,
+        "munitionType": "",
+        "modInitiativeType": "-1action",
+        "bonusAllongePremiereBlatte": 0,
+        "prixQuartz": 250,
+        "equipee": false,
+        "nbPattes": 4
+    },
+    "effects": [],
+    "folder": null,
+    "ownership": {
+        "default": 0
+    }
 }

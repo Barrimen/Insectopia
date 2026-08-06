@@ -16,6 +16,12 @@ export default class InsectopiaCombatTracker extends foundry.applications.sideba
   async _prepareTurnContext(combat, combatant, index) {
     const turn = await super._prepareTurnContext(combat, combatant, index);
     turn.initblattes = combatant.getFlag("insectopia", "initblattes");
+    // Armes encore en cours de rechargement (livre p.240) : petit badge
+    // dans le tracker pour rappeler que ce combattant ne peut pas encore
+    // tirer avec cette arme.
+    turn.armesEnRecharge = (combatant.actor?.items ?? [])
+      .filter((i) => i.type === "arme" && i.system.equipee && i.system.actionsRechargeRestantes > 0)
+      .map((i) => ({ nom: i.name, restant: i.system.actionsRechargeRestantes }));
     return turn;
   }
 

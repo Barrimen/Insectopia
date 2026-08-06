@@ -4,7 +4,6 @@ import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
 import { SPHERES, MOTS_POUVOIR, MOTS_POUVOIR_PAR_METIER } from "../../common/data-spheres.js";
 import { asArray } from "../../common/utils.js";
-import { openItemPicker } from "../../dialog/item-picker.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -167,6 +166,7 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
       raceApply: this.#onRaceApply,
       wizardOpen: this.#onWizardOpen,
       wizardGmToggle: this.#onWizardGmToggle,
+      stabiliser: this.#onStabiliser,
     },
   };
 
@@ -243,6 +243,29 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
         0
       ),
     };
+
+    // Sélecteur d'arme par compétence (demande d'Obe) : si plusieurs armes
+    // sont équipées pour la même compétence (une par main), un bouton
+    // d'Attaque distinct est affiché pour chacune plutôt qu'un bouton
+    // générique qui prendrait toujours la première. Sans arme équipée
+    // pour la compétence, on garde un bouton unique "attaque naturelle".
+    const armesUtiliseesRound =
+      game.combat?.combatants.find((c) => c.actorId === this.actor.id)?.getFlag("insectopia", "armesUtilisees") || [];
+    context.armesParCompetence = {};
+    for (const comp of ["melee", "tir", "predateur"]) {
+      const equipees = toutesArmes.filter((i) => i.system.equipee && i.system.competenceCombat === comp);
+      context.armesParCompetence[comp] = equipees.length
+        ? equipees.map((i) => ({
+            id: i.id,
+            nom: i.name,
+            dejaUtilisee: armesUtiliseesRound.includes(i.id),
+            enRecharge: (i.system.actionsRechargeRestantes || 0) > 0,
+          }))
+        : [{ id: null, nom: null, dejaUtilisee: false, enRecharge: false }];
+    }
+
+    context.mainsDisponibles = this.actor.getMainsDisponibles();
+    context.mainsUtilisees = this.actor.getMainsUtilisees();
 
     context.contacts = asArray(this.actor.system.ressources?.contacts);
     context.racesListe = Object.entries(RACES).map(([key, race]) => ({ key, label: race.label }));
@@ -417,7 +440,28 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
           event.stopPropagation();
           event.preventDefault();
           const item = this.actor.items.get(target.dataset.itemId);
-          if (item) item.update({ "system.equipee": target.checked });
+          if (!item) return;
+
+          // Capacité de port (Quatre mains, livre p.208) : bloque
+          // l'équipement d'une arme si ça dépasse le nombre de mains
+          // disponibles. Ne concerne que les armes non naturelles (les
+          // naturelles n'occupent pas de main) et uniquement à
+          // l'équipement (le déséquipement libère toujours de la place).
+          if (target.checked && item.type === "arme" && !item.system.naturelle) {
+            const disponibles = this.actor.getMainsDisponibles();
+            const utilisees = this.actor.getMainsUtilisees();
+            const besoin = item.system.nbPattes || 1;
+            if (utilisees + besoin > disponibles) {
+              ui.notifications.warn(
+                `${this.actor.name} n'a pas assez de mains libres pour équiper ${item.name} ` +
+                  `(${besoin} patte(s) nécessaire(s), ${Math.max(0, disponibles - utilisees)} disponible(s)).`
+              );
+              target.checked = false;
+              return;
+            }
+          }
+
+          item.update({ "system.equipee": target.checked });
         }
       },
       { capture: true }
@@ -499,13 +543,19 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
 
   static async #onInitRoll(event) {
     event.preventDefault();
-    return this.actor.rollInitiative();
+    return this.actor.joinCombatAndRollInitiative();
+  }
+
+  static async #onStabiliser(event) {
+    event.preventDefault();
+    return this.actor.stabiliser();
   }
 
   static async #onAttackRoll(event, target) {
     event.preventDefault();
     const competenceCombat = target.dataset.competence; // melee | tir | predateur
-    return this.actor.attack(competenceCombat);
+    const itemId = target.dataset.itemId || null;
+    return this.actor.attack(competenceCombat, itemId);
   }
 
   /**
@@ -630,11 +680,13 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
     await this.actor.update({ "system.ressources.contacts": contacts });
   }
 
-  /** Ajoute un nouvel Item du type indiqué (data-type: arme|armure|capacite|objet), via le picker Compendium / Création libre. */
+  /** Crée un nouvel Item embarqué du type indiqué (data-type: arme|armure|capacite). */
   static async #onItemCreate(event, target) {
     event.preventDefault();
     const type = target.dataset.type;
-    return openItemPicker(this.actor, type);
+    const nomParDefaut = { arme: "Nouvelle arme", armure: "Nouvelle armure", capacite: "Nouvelle capacité", objet: "Nouvel objet" };
+    const itemData = { name: nomParDefaut[type] ?? "Nouvel objet", type };
+    return this.actor.createEmbeddedDocuments("Item", [itemData]);
   }
 
   static #onItemEdit(event, target) {

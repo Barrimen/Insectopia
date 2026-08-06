@@ -103,6 +103,12 @@
       <span class="status-label">Blessures internes</span>
       <input class="small-input" type="number" name="system.combat.blessures.blessureinterne.value" value="{{system.combat.blessures.blessureinterne.value}}" />
       <span class="status-max">/ {{system.combat.blessures.blessureinterne.max}}</span>
+      {{#if system.combat.blessures.hemorragieRounds}}
+        <span class="status-hemorragie" title="Rounds restants avant la mort par hémorragie, sans soins">
+          ⚠ Hémorragie : {{system.combat.blessures.hemorragieRounds}} round(s)
+        </span>
+        <button type="button" class="stabiliser-btn" data-action="stabiliser">Stabiliser</button>
+      {{/if}}
     </div>
     <div class="status-item status-fluide">
       <span class="status-label">Fluide</span>
@@ -250,13 +256,33 @@
         <div class="panel panel-actions">
           <h3>Actions de combat</h3>
           <div class="attack-buttons">
-            <a class="attack-roll" data-action="attackRoll" data-competence="melee"><i class="fas fa-sword"></i> Attaque Mêlée</a>
-            <a class="attack-roll" data-action="attackRoll" data-competence="tir"><i class="fas fa-bow-arrow"></i> Attaque à distance</a>
-            <a class="attack-roll" data-action="attackRoll" data-competence="predateur"><i class="fas fa-paw"></i> Attaque Prédateur</a>
+            {{#each armesParCompetence.melee}}
+              <a class="attack-roll {{#if dejaUtilisee}}attack-used{{/if}} {{#if enRecharge}}attack-reloading{{/if}}"
+                 data-action="attackRoll" data-competence="melee" {{#if id}}data-item-id="{{id}}"{{/if}}>
+                <i class="fas fa-sword"></i> Attaque Mêlée{{#if nom}} — {{nom}}{{/if}}
+                {{#if dejaUtilisee}} (déjà utilisée){{/if}}{{#if enRecharge}} (recharge){{/if}}
+              </a>
+            {{/each}}
+            {{#each armesParCompetence.tir}}
+              <a class="attack-roll {{#if dejaUtilisee}}attack-used{{/if}} {{#if enRecharge}}attack-reloading{{/if}}"
+                 data-action="attackRoll" data-competence="tir" {{#if id}}data-item-id="{{id}}"{{/if}}>
+                <i class="fas fa-bow-arrow"></i> Attaque à distance{{#if nom}} — {{nom}}{{/if}}
+                {{#if dejaUtilisee}} (déjà utilisée){{/if}}{{#if enRecharge}} (recharge){{/if}}
+              </a>
+            {{/each}}
+            {{#each armesParCompetence.predateur}}
+              <a class="attack-roll {{#if dejaUtilisee}}attack-used{{/if}}"
+                 data-action="attackRoll" data-competence="predateur" {{#if id}}data-item-id="{{id}}"{{/if}}>
+                <i class="fas fa-paw"></i> Attaque Prédateur{{#if nom}} — {{nom}}{{/if}}
+                {{#if dejaUtilisee}} (déjà utilisée){{/if}}
+              </a>
+            {{/each}}
           </div>
           <p class="hint">
             Malus courant lié aux blessures internes : {{system.malusBlessuresInternes}} (appliqué
-            automatiquement comme modificateur par défaut, y compris sur les attaques).
+            automatiquement comme modificateur par défaut, y compris sur les attaques).<br/>
+            Mains occupées : {{mainsUtilisees}} / {{mainsDisponibles}}
+            {{#unless mainsDisponibles}}(pas de capacité "Quatre mains" — armes naturelles uniquement){{/unless}}
           </p>
         </div>
 
@@ -329,6 +355,11 @@
           </p>
           <a class="item-add item-create" data-action="itemCreate" data-type="arme"><i class="fas fa-plus"></i> Ajouter une arme naturelle</a>
         </div>
+      </div>
+
+      <div class="panel panel-localisation">
+        <h3>Localisation</h3>
+        <textarea name="system.ressources.localisation.notes" placeholder="Notes de localisation des blessures (zone interactive prévue en V2)">{{system.ressources.localisation.notes}}</textarea>
       </div>
 
       {{#if jeteurDeSorts.length}}

@@ -2,6 +2,7 @@
   "name": "insectopia",
   "version": "0.4.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build:source": "node tools/build-compendium-source.mjs && node tools/build-castes-journal.mjs && node tools/build-races-journal.mjs",
     "pack:armes-armures": "fvtt package pack -n armes-armures --inputDirectory packs-src/armes-armures --outputDirectory packs",
