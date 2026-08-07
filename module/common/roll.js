@@ -1,4 +1,15 @@
-import { ROLL_TYPE, SAC_BLATTES, DIFFICULTE, RESULTAT_ATTAQUE, RESULTAT_DEGATS, RESULTAT_SORT, RESULTAT_SIMPLE, ORDRE_COULEURS_CROISSANT } from "./config.js";
+import {
+  ROLL_TYPE,
+  SAC_BLATTES,
+  DIFFICULTE,
+  RESULTAT_ATTAQUE,
+  RESULTAT_DEGATS,
+  RESULTAT_SORT,
+  RESULTAT_SIMPLE,
+  RESULTAT_SOUILLURE_CONTRACTION,
+  RESULTAT_SOUILLURE_EVOLUTION,
+  ORDRE_COULEURS_CROISSANT,
+} from "./config.js";
 
 const { DialogV2 } = foundry.applications.api;
 
@@ -263,6 +274,38 @@ export class Blattes {
     return this.showResult();
   }
 
+  /**
+   * Résout directement un test de Souillure (contraction ou évolution
+   * mensuelle, livre p.295-298), sans dialogue générique : la Difficulté a
+   * déjà été calculée par module/combat/souillure.js et placée dans
+   * this.data.difficulte avant l'appel. Modélisé sur lancerSort().
+   */
+  async testSouillure() {
+    const difficulte = this.data.difficulte ?? 0;
+    this.data.formulaValue = this.competence.value - difficulte;
+    this.data.formula = `${this.competence.value} - ${difficulte}`;
+    this.data.difficulteLabel = DIFFICULTE[difficulte] ?? difficulte;
+
+    let visibilityMode = this.data.rollMode ?? game.settings.get("core", "rollMode");
+    if (game.user.isGM) {
+      const visibilityChoice = game.settings.get("insectopia", "visibiliteJetsPNJ");
+      if (visibilityChoice === "public") visibilityMode = "publicroll";
+      else if (visibilityChoice === "private") visibilityMode = "gmroll";
+      else if (visibilityChoice === "depends") visibilityMode = game.settings.get("core", "rollMode");
+    }
+    this.data.rollMode = visibilityMode;
+    this.data.actorname = this.actor.name;
+    this.data.charImg = this.actor.img;
+    this.data.introText =
+      this.data.introTextOverride ??
+      (this.data.souillureContexte === "evolution"
+        ? `${this.actor.name} effectue son test d'évolution de la Souillure (lonas).`
+        : `${this.actor.name} effectue un test de résistance à la Souillure.`);
+
+    await this.piocher();
+    return this.showResult();
+  }
+
   // --------------------------------------------------------------------
   // Tirage des blattes
   // --------------------------------------------------------------------
@@ -363,7 +406,12 @@ export class Blattes {
     // Les jets d'Attaque et de Dégâts utilisent un gabarit à part, avec
     // des boutons de choix de couleur qui déclenchent la suite de la
     // résolution (voir hooks.js).
-    if (this.rolltype === ROLL_TYPE.ATTACK || this.rolltype === ROLL_TYPE.DEGATS || this.rolltype === ROLL_TYPE.SORT) {
+    if (
+      this.rolltype === ROLL_TYPE.ATTACK ||
+      this.rolltype === ROLL_TYPE.DEGATS ||
+      this.rolltype === ROLL_TYPE.SORT ||
+      this.rolltype === ROLL_TYPE.SOUILLURE
+    ) {
       return this.showResultChoix();
     }
 
@@ -463,8 +511,16 @@ export class Blattes {
    * resoudreChoixDegats (voir hooks.js pour le branchement du clic).
    */
   async showResultChoix() {
-    const table =
-      this.rolltype === ROLL_TYPE.ATTACK ? RESULTAT_ATTAQUE : this.rolltype === ROLL_TYPE.SORT ? RESULTAT_SORT : RESULTAT_DEGATS;
+    const isSouillure = this.rolltype === ROLL_TYPE.SOUILLURE;
+    const table = isSouillure
+      ? this.data.souillureContexte === "evolution"
+        ? RESULTAT_SOUILLURE_EVOLUTION
+        : RESULTAT_SOUILLURE_CONTRACTION
+      : this.rolltype === ROLL_TYPE.ATTACK
+      ? RESULTAT_ATTAQUE
+      : this.rolltype === ROLL_TYPE.SORT
+      ? RESULTAT_SORT
+      : RESULTAT_DEGATS;
     const choix = this.couleursPresentes().map((couleur) => ({
       couleur,
       count: this.data.blattesParCouleur[couleur],
@@ -481,6 +537,7 @@ export class Blattes {
       isAttack: this.rolltype === ROLL_TYPE.ATTACK,
       isDegats: this.rolltype === ROLL_TYPE.DEGATS,
       isSort: this.rolltype === ROLL_TYPE.SORT,
+      isSouillure,
       choix,
     };
 
@@ -498,21 +555,28 @@ export class Blattes {
       data: this.data,
     });
 
-    this.chat.setFlag("world", "chanceData", {
-      chanceActorIds: [...new Set([this.actor?.id, this.data.opposantActorId].filter(Boolean))],
-      blattesParCouleur: foundry.utils.duplicate(this.data.blattesParCouleur),
-      mode: "choix",
-      rolltype: this.rolltype,
-      templateData: foundry.utils.duplicate({
-        owner: templateData.owner,
-        actingCharName: templateData.actingCharName,
-        actingCharImg: templateData.actingCharImg,
-        data: templateData.data,
-        isAttack: templateData.isAttack,
-        isDegats: templateData.isDegats,
-        isSort: templateData.isSort,
-      }),
-    });
+    // Blattes de chance : interdites sur le test d'évolution mensuelle de
+    // Souillure (livre p.298). Autorisées sur le test de contraction, mais
+    // traitées comme une Blatte bleue (aucun bonus vert/rouge) — géré côté
+    // Blattes.echangerBlatteDeChance, non modifié ici.
+    if (!(isSouillure && this.data.souillureContexte === "evolution")) {
+      this.chat.setFlag("world", "chanceData", {
+        chanceActorIds: [...new Set([this.actor?.id, this.data.opposantActorId].filter(Boolean))],
+        blattesParCouleur: foundry.utils.duplicate(this.data.blattesParCouleur),
+        mode: "choix",
+        rolltype: this.rolltype,
+        templateData: foundry.utils.duplicate({
+          owner: templateData.owner,
+          actingCharName: templateData.actingCharName,
+          actingCharImg: templateData.actingCharImg,
+          data: templateData.data,
+          isAttack: templateData.isAttack,
+          isDegats: templateData.isDegats,
+          isSort: templateData.isSort,
+          isSouillure: templateData.isSouillure,
+        }),
+      });
+    }
   }
 
   async _chatData(html) {
@@ -814,6 +878,32 @@ export class Blattes {
       introTextOverride: `Effet du sort (${flagData.data.sphereLabel} — ${flagData.data.motPouvoirLabel}) : Puissance ${flagData.data.niveauPuissance} vs compétence d'opposition au choix du Deus (livre p.270).`,
     });
     return blattes.openDialog();
+  }
+
+  /**
+   * Le Deus a retenu `couleur` sur un test de Souillure (contraction ou
+   * évolution mensuelle, livre p.295-298). Applique le delta de Souillure
+   * correspondant et délègue la suite (paliers, mutations, mort) à
+   * module/combat/souillure.js pour ne pas dupliquer la logique de jauge.
+   */
+  static async resoudreChoixSouillure(couleur, message) {
+    const flagData = message.getFlag("world", "choixData");
+    if (!flagData) return;
+    const actor = game.actors.get(flagData.actorId);
+    if (!actor) return;
+
+    const contexte = flagData.data.souillureContexte;
+    const table = contexte === "evolution" ? RESULTAT_SOUILLURE_EVOLUTION : RESULTAT_SOUILLURE_CONTRACTION;
+    const resultat = table[couleur];
+
+    await message.update({
+      content: message.content.concat(
+        `<div class="resultText">Résultat retenu : <strong>${resultat.label}</strong> — ${resultat.description}</div>`
+      ),
+    });
+
+    const { appliquerResultatSouillure } = await import("../combat/souillure.js");
+    await appliquerResultatSouillure(actor, contexte, couleur, resultat);
   }
 
   /**

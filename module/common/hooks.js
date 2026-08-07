@@ -40,6 +40,25 @@ export default function registerHooks() {
       });
     }
 
+    // Choix de la couleur retenue pour un test de Souillure (contraction ou
+    // évolution mensuelle, livre p.295-298) : applique le delta de Souillure
+    // et déclenche les paliers (marques, phosphorescence, mutation, mort).
+    for (const btn of html.querySelectorAll(".choix-souillure")) {
+      btn.addEventListener("click", async () => {
+        await Blattes.resoudreChoixSouillure(btn.dataset.couleur, message);
+      });
+    }
+
+    // Ouvre le dialogue de sélection de mutation blafarde (Lot B, livre
+    // p.296-297), proposé au Deus au franchissement d'un seuil de Souillure.
+    for (const btn of html.querySelectorAll(".choisir-mutation")) {
+      if (!game.user.isGM) continue;
+      btn.addEventListener("click", async () => {
+        const { ouvrirDialogueMutation } = await import("../combat/souillure.js");
+        await ouvrirDialogueMutation(btn.dataset.actorId, parseInt(btn.dataset.niveau));
+      });
+    }
+
     // Choix de la couleur retenue pour un jet Opposition/Difficulté simple
     // (plusieurs Blattes tirées) : affiche uniquement le résultat retenu,
     // au Deus de l'appliquer selon le contexte (hors combat : lecture
@@ -124,6 +143,26 @@ export default function registerHooks() {
       await resetBlattesDeChanceTousPJ();
     });
     section.appendChild(button);
+
+    const boutonContraction = document.createElement("button");
+    boutonContraction.type = "button";
+    boutonContraction.innerHTML = '<i class="fas fa-biohazard"></i> Test de Souillure (contraction)';
+    boutonContraction.addEventListener("click", async () => {
+      const { ouvrirDialogueContraction } = await import("../combat/souillure.js");
+      await ouvrirDialogueContraction();
+    });
+    section.appendChild(boutonContraction);
+
+    const boutonLonas = document.createElement("button");
+    boutonLonas.type = "button";
+    boutonLonas.innerHTML = '<i class="fas fa-moon"></i> Forcer un test de lonas (Souillure)';
+    boutonLonas.title =
+      "Déclenche manuellement le test d'évolution mensuelle pour tous les personnages contaminés — utile tant qu'aucun module de calendrier n'avance le temps de la partie (voir module/combat/souillure.js).";
+    boutonLonas.addEventListener("click", async () => {
+      const { forcerTestLonasTousActeurs } = await import("../combat/souillure.js");
+      await forcerTestLonasTousActeurs();
+    });
+    section.appendChild(boutonLonas);
   });
 }
 

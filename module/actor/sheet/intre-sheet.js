@@ -1,3 +1,5 @@
+import { RACES } from "../../common/data-races.js";
+import { LORE_RACES } from "../../common/data-lore-races.js";
 import { COMPETENCES_CASTE } from "../../common/data-castes.js";
 import CharacterWizard from "../character-wizard.js";
 import { ouvrirDialogueLancerSort } from "../../common/magic.js";
@@ -286,9 +288,25 @@ export default class IntreActorSheet extends HandlebarsApplicationMixin(ActorShe
           const page = journal?.pages.find((p) => p.name === raceNomActuel);
           if (page) {
             const uuid = `Compendium.insectopia.races.JournalEntry.${journal.id}.JournalEntryPage.${page.id}`;
+
+            // Résumé pour le tooltip de survol : citation + début de l'apparence
+            // (le hover natif de Foundry sur un content-link n'affiche qu'une
+            // info-bulle simple, pas un aperçu du contenu — on construit donc
+            // nous-mêmes ce texte à partir du lore déjà collecté).
+            const raceKey = Object.keys(RACES).find((k) => RACES[k].label === raceNomActuel);
+            const lore = raceKey ? LORE_RACES[raceKey] : null;
+            let tooltip = raceNomActuel;
+            if (lore) {
+              const extraitApparence = (lore.apparence || "").slice(0, 200).trim();
+              const suite = (lore.apparence || "").length > 200 ? "…" : "";
+              tooltip = lore.phrase
+                ? `« ${lore.phrase} » — ${extraitApparence}${suite}`
+                : `${extraitApparence}${suite}`;
+            }
+
             context.raceContentLink =
               `<a class="content-link" draggable="true" data-link data-uuid="${uuid}" ` +
-              `data-id="${page.id}" data-type="JournalEntryPage" data-tooltip="${raceNomActuel} — survolez pour un aperçu, cliquez pour la fiche complète">` +
+              `data-id="${page.id}" data-type="JournalEntryPage" data-tooltip="${tooltip.replace(/"/g, "&quot;")}" data-tooltip-direction="UP">` +
               `<i class="fas fa-file-lines"></i></a>`;
           }
         }

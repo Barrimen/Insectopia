@@ -111,10 +111,21 @@
       <input class="small-input" type="number" name="system.combat.fluide.value" value="{{system.combat.fluide.value}}" />
       <span class="status-max">/ {{system.combat.fluide.max}}</span>
     </div>
-    <div class="status-item status-souillure">
+    <div class="status-item status-souillure" title="Corruption blafarde (livre p.295-298) — géré par le Deus, calculé automatiquement.">
       <span class="status-label">Souillure</span>
-      <input class="small-input" type="number" name="system.combat.souillure" value="{{system.combat.souillure}}" min="0" max="10" />
-      <span class="status-max">/ 10</span>
+      {{#if isGm}}
+      <input class="small-input" type="number" name="system.combat.souillure" value="{{system.combat.souillure}}" min="0" />
+      {{else}}
+      <span class="status-value">{{system.combat.souillure}}</span>
+      {{/if}}
+      <span class="status-max">/ 13</span>
+      {{#if (gt system.combat.souillure 2)}}<span class="badge-souillure" title="Marques blanches sur la chitine (Souillure ≥ 3)">marqué</span>{{/if}}
+      {{#if (gt system.combat.souillure 4)}}<span class="badge-souillure" title="Phosphorescence + mutations blafardes (Souillure ≥ 5)">phosphorescent</span>{{/if}}
+      {{#if flags.insectopia.mutationsBlafardes.length}}
+      <span class="mutations-blafardes" title="Mutations blafardes acquises (livre p.296-297)">
+        {{#each flags.insectopia.mutationsBlafardes}}<span class="mutation-badge">{{this.label}}</span>{{/each}}
+      </span>
+      {{/if}}
     </div>
     <div class="status-item status-initiative">
       <span class="status-label">Initiative</span>

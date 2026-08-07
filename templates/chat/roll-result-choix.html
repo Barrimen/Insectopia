@@ -18,6 +18,11 @@
         <div>Mot de pouvoir : {{data.motPouvoirLabel}}</div>
         <div>Difficulté du sort : {{data.difficulteSort}} (Puissance {{data.niveauPuissance}})</div>
     </div>
+    {{else if isSouillure}}
+    <div class="difficultyline">
+        <div>Test de Souillure ({{#if (eq data.souillureContexte "evolution")}}évolution mensuelle{{else}}contraction{{/if}})</div>
+        <div>Difficulté : {{data.difficulteLabel}} ({{data.difficulte}})</div>
+    </div>
     {{else}}
     <div class="difficultyline">
         {{#if data.difficulte includeZero=true}}<div>Difficulté : {{data.difficulteLabel}} ({{data.difficulte}})</div>{{/if}}
@@ -32,7 +37,7 @@
                 <td class="chance-blatte-line">{{this.count}}</td>
                 <td><span class="blatte blatte-{{this.couleur}}"></span></td>
                 <td>
-                    <a class="choix-couleur {{#if @root.isAttack}}choix-attaque{{else if @root.isSort}}choix-sort{{else}}choix-degats{{/if}}" data-couleur="{{this.couleur}}">
+                    <a class="choix-couleur {{#if @root.isAttack}}choix-attaque{{else if @root.isSort}}choix-sort{{else if @root.isSouillure}}choix-souillure{{else}}choix-degats{{/if}}" data-couleur="{{this.couleur}}">
                         <strong>{{this.label}}</strong>
                         {{#if @root.isDegats}} — {{this.impacts}} impact(s){{/if}}
                         <br /><span class="choix-description">{{this.description}}</span>

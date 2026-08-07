@@ -30,6 +30,7 @@ export const ROLL_TYPE = {
   INITIATIVE: "initiative",
   SIMPLE: "simple",
   SORT: "sort",
+  SOUILLURE: "souillure",
 };
 
 /**
@@ -161,6 +162,204 @@ export const RESULTAT_SIMPLE = {
   bleue: { label: "Réussite" },
   verte: { label: "Réussite améliorée" },
   rouge: { label: "Réussite critique" },
+};
+
+/**
+ * La Souillure et ses mutations (livre de base p.295-298, section Deus).
+ * Deux tests distincts partagent le ROLL_TYPE.SOUILLURE, distingués par
+ * data.souillureContexte :
+ *  - "contraction" : test de Chrysalide déclenché par une exposition
+ *    (toxicité de la source), voir TOXICITE_SOUILLURE.
+ *  - "evolution"   : test de Chrysalide mensuel (chaque lonas) pour un
+ *    personnage déjà contaminé, Difficulté = niveau de Souillure actuel.
+ *    Les Blattes de chance sont interdites sur ce test (livre p.298).
+ */
+export const TOXICITE_SOUILLURE = {
+  tresfaible: { label: "Très faible — objet souillé faiblement", difficulte: 1 },
+  faible: { label: "Faible — respirer l'air d'un lieu souillé", difficulte: 2 },
+  moyenne: { label: "Moyenne — contact objet souillé / Blafard Souillure ≥ 5", difficulte: 3 },
+  forte: { label: "Forte — blessé par un Blafard Souillure ≥ 5", difficulte: 4 },
+  tresforte: { label: "Très forte — ingestion liquide souillé / Blafard Souillure ≥ 9", difficulte: 5 },
+  fatale: { label: "Fatale — immersion liquide souillé / Blafard Souillure ≥ 9", difficulte: 5 },
+};
+
+export const RESULTAT_SOUILLURE_CONTRACTION = {
+  noire: { label: "Contamination sévère", souillureDelta: 2, description: "Gain de 2 points de Souillure." },
+  blanche: { label: "Contamination", souillureDelta: 1, description: "Gain de 1 point de Souillure." },
+  bleue: { label: "Résistance", souillureDelta: 0, description: "Aucun effet." },
+  verte: { label: "Résistance nette", souillureDelta: 0, description: "Évite le prochain test de contraction (livre p.296)." },
+  rouge: { label: "Immunité passagère", souillureDelta: 0, description: "Plus de test de contraction aujourd'hui (livre p.296)." },
+};
+
+export const RESULTAT_SOUILLURE_EVOLUTION = {
+  noire: { label: "Aggravation sévère", souillureDelta: 2, description: "Gain de 2 points de Souillure." },
+  blanche: { label: "Aggravation", souillureDelta: 1, description: "Gain de 1 point de Souillure." },
+  bleue: { label: "Stagnation", souillureDelta: 0, description: "Aucun effet." },
+  verte: { label: "Rémission", souillureDelta: -1, description: "Perte de 1 point de Souillure." },
+  rouge: { label: "Rémission nette", souillureDelta: -2, description: "Perte de 2 points de Souillure." },
+};
+
+/**
+ * Paliers d'effets de la jauge de Souillure (livre p.296-297). Purement
+ * informatif ici — l'application mécanique des mutations (Lot B) reste à
+ * la discrétion du Deus, qui choisit librement la mutation dans la liste
+ * du livre pour chaque palier atteint.
+ */
+export const SOUILLURE_PALIERS = [
+  { seuil: 3, label: "Marques blanches sur la chitine" },
+  { seuil: 5, label: "Phosphorescence + Mutation niveau 1" },
+  { seuil: 7, label: "Mutation niveau 2" },
+  { seuil: 9, label: "Mutation niveau 3" },
+  { seuil: 11, label: "Mutation niveau 4" },
+  { seuil: 13, label: "Mort" },
+];
+
+/**
+ * Mutations blafardes (livre p.296-297). À chaque seuil de Souillure
+ * (5/7/9/11), le Deus choisit librement UNE mutation dans la liste du
+ * niveau correspondant. En contrepartie, le joueur choisit une nouvelle
+ * capacité sans payer son coût en Souillure (voir souillure.js).
+ *
+ * `auto` distingue les effets automatisables sans ambiguïté (un seul
+ * modificateur chiffré, sur une seule caractéristique/compétence) de ceux
+ * qui restent à appliquer manuellement par le Deus : plusieurs mutations
+ * touchent plusieurs cibles à la fois (ex: Purulent = Résistance ET
+ * Phéromones, sous deux caractéristiques différentes) ou ont un effet
+ * narratif/de contrôle (Possédé, Insectophage) que le système générique de
+ * bonus (un item capacité = une caractéristique + une compétence) ne peut
+ * pas représenter fidèlement sans risquer d'être inexact. Dans le doute,
+ * on documente plutôt que d'automatiser une approximation — cohérent avec
+ * le reste du système (cf. cellules "À VÉRIFIER" de data-spheres.js).
+ *
+ * Effets `auto: true` :
+ *  - type "caracteristique" : modifie system.caracteristiques.{caracKey}.value
+ *    de façon permanente (ex: Inerte, Fonte de chitine).
+ *  - type "bonus" : crée un Item capacité avec system.bonus rempli
+ *    (caracKey + compKey optionnel), réutilise le mécanisme existant de
+ *    getCapaciteBonus() (ex: Couard = malus caractéristique-large sur
+ *    Mandibule, Tête de Plume/Sang-chaud = malus ciblé sur Instinct).
+ */
+export const MUTATIONS_BLAFARDES = {
+  1: [
+    {
+      key: "purulent",
+      label: "Purulent",
+      description:
+        "Des pustules d'hémolymphe et de pus parcourent sa chitine. Malus d'une Blatte à Résistance ET à Phéromones.",
+      auto: false,
+    },
+    {
+      key: "couard",
+      label: "Couard",
+      description: "Personnage craintif, ne s'engage que rarement dans le danger. Malus de deux Blattes à tous les tests de Mandibule.",
+      auto: true,
+      effet: { type: "bonus", caracKey: "mandibule", compKey: null, valeur: -2 },
+    },
+    {
+      key: "insectophage",
+      label: "Insectophage",
+      description:
+        "A goûté à l'hémolymphe des intres, ne peut plus s'en passer : doit manger de la chair d'intre tous les jours ou souffrir d'un effet de manque important.",
+      auto: false,
+    },
+  ],
+  2: [
+    {
+      key: "membre_atrophie",
+      label: "Membre atrophié",
+      description:
+        "Un membre n'est plus qu'un moignon. Si Aile : malus de deux Blattes en Aile et en Agilité. Si Patte : malus d'une Blatte à Mêlée, Prédateur et Défense.",
+      auto: false,
+    },
+    {
+      key: "decerebre",
+      label: "Décérébré",
+      description: "Raisonnement et comportement altérés. Malus de deux Blattes en Esprit et en Conscience.",
+      auto: false,
+    },
+    {
+      key: "antenne_en_moins",
+      label: "Antenne en moins",
+      description: "Une antenne (ou un pédipalpe) n'assure plus ses fonctions. Malus d'une Blatte en Antenne et de deux en Phéromones.",
+      auto: false,
+    },
+    {
+      key: "obese",
+      label: "Obèse",
+      description:
+        "Proportions gigantesques, lourd et difforme. Malus d'une Blatte en Aile, Température, Activité, Défense et Agilité ; bonus d'une Blatte en Chitine.",
+      auto: false,
+    },
+    {
+      key: "plumes_ou_poils",
+      label: "À plumes ou à poils",
+      description: "Recouvert de plumes ou de poils : aucun bonus/malus mécanique, mais ne peut plus camoufler son appartenance aux Blafards.",
+      auto: false,
+    },
+  ],
+  3: [
+    {
+      key: "aveugle",
+      label: "Aveugle",
+      description: "Ne voit plus rien, se fie uniquement à ses phéromones. Tous les tests physiques réduits d'une Blatte.",
+      auto: false,
+    },
+    {
+      key: "instable",
+      label: "Instable",
+      description:
+        "Hémolymphe partiellement explosive : si une Blessure interne lui est infligée, il explose et inflige des dégâts égaux à sa Température autour de lui.",
+      auto: false,
+    },
+    {
+      key: "possede",
+      label: "Possédé",
+      description: "N'est plus en pleine possession de ses moyens. Le Deus en prend fréquemment le contrôle au cours des aventures.",
+      auto: false,
+    },
+    {
+      key: "inerte",
+      label: "Inerte",
+      description: "Perd en température. Caractéristique Température -1 permanent.",
+      auto: true,
+      effet: { type: "caracteristique", caracKey: "temperature", delta: -1 },
+    },
+    {
+      key: "fonte_chitine",
+      label: "Fonte de chitine",
+      description: "La chitine devient très fine. Caractéristique Chitine -1 permanent.",
+      auto: true,
+      effet: { type: "caracteristique", caracKey: "chitine", delta: -1 },
+    },
+    {
+      key: "tete_plume_ou_sangchaud",
+      label: "Tête de Plume ou de Sang-chaud",
+      description: "La tête devient celle d'une créature : inspire la peur, mais Instinct réduit de trois.",
+      auto: true,
+      effet: { type: "bonus", caracKey: "esprit", compKey: "instinct", valeur: -3 },
+    },
+  ],
+  4: [
+    {
+      key: "ephemere",
+      label: "Éphémère",
+      description: "Membres, chitine et antennes se délitent rapidement : perte de 1 point de Température permanent à la fin de chaque scénario.",
+      auto: false,
+    },
+    {
+      key: "explosif",
+      label: "Explosif",
+      description:
+        "Bombe vivante consciente de son état : peut déclencher une explosion infligeant des dégâts de force 7, au prix de sa propre vie.",
+      auto: false,
+    },
+    {
+      key: "vide_magique",
+      label: "Vide magique",
+      description: "Toute magie a quitté le personnage. Résistance à la magie réduite à zéro, ne peut plus lancer de sorts.",
+      auto: false,
+    },
+  ],
 };
 
 export const INSECTOPIA = {

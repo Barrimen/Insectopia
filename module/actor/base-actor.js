@@ -5,6 +5,7 @@ import { CASTES } from "../common/data-castes.js";
 import { extraireSphereDepuisLabel, SPHERES } from "../common/data-spheres.js";
 import { asArray } from "../common/utils.js";
 import { ouvrirDialogueMutilation } from "../combat/mutilation.js";
+import { getDateActuelle } from "../common/calendrier.js";
 
 /**
  * IntreActor
@@ -27,15 +28,50 @@ export default class IntreActor extends Actor {
   _prepareDataIntre() {
     const carac = this.system.caracteristiques;
 
+    // Calendrier d'Entoma (livre p.278-279) : modificateur météo, appliqué
+    // identiquement à l'Activité et au Métabolisme (table p.279). Avec la
+    // météo par défaut "Tempéré" (modificateur 0), ces calculs sont
+    // strictement identiques à avant ce chantier — voir STATUS.md.
+    const calendrier = getDateActuelle();
+    const meteo = calendrier.meteo;
+    this.system.combat.meteo = meteo;
+    this.system.combat.kumi = { label: calendrier.kumiLabel, index: calendrier.kumiIndex };
+    this.system.combat.nuit = calendrier.estNuit;
+
+    const metabolismeBase = carac.temperature.competences.metabolisme.value;
+    const metabolismeEffectif = metabolismeBase + meteo.modificateur;
+
     this.system.combat.blessures.impact.max = carac.chitine.competences.resistance.value;
-    this.system.combat.blessures.blessureinterne.max = carac.temperature.competences.metabolisme.value;
+    this.system.combat.blessures.blessureinterne.max = Math.max(0, metabolismeEffectif);
 
     this.system.combat.initiative = Math.max(
       0,
-      carac.temperature.competences.activite.value -
+      carac.temperature.competences.activite.value +
+        meteo.modificateur -
         (this.system.combat.encombrement || 0) -
         this.getModificateursInitiativeEquipement().actionMalus
     );
+
+    // Risques liés à la météo (livre p.279) : indicateurs informatifs
+    // uniquement, jamais appliqués automatiquement (mort, blocage,
+    // etc.) — décision explicite d'Obe, la main reste au Deus.
+    this.system.combat.risqueGel = meteo.risques.includes("gel") && metabolismeEffectif <= 0;
+    this.system.combat.risqueDiapauseMeteo = meteo.risques.includes("diapause") && metabolismeEffectif <= 0;
+    this.system.combat.risqueFrenesie = meteo.risques.includes("frenesie") && metabolismeEffectif >= metabolismeBase * 2;
+
+    // Diapause hivernale (livre p.278) : concerne "la plupart des peuples
+    // intres" durant le kumi d'hiver, à l'exception des créatures à
+    // Sang-chaud et des peuples des terres septentrionales — le livre ne
+    // donnant pas de liste mécanique exploitable de ces exceptions, ce
+    // flag est purement déclaratif et basculé à la main par le Deus
+    // (cf. calendrier.js#basculerDiapauseActeur), jamais déduit
+    // automatiquement de la race ou du kumi en cours.
+    this.system.combat.diapauseHivernale = this.getFlag("insectopia", "diapause") ?? false;
+
+    // House Rule (p.278, non chiffrée par le livre) : bonus nocturne à la
+    // compétence Phéromones. Affichage uniquement pour l'instant — pas
+    // encore branché sur roll.js (voir STATUS.md, "reporté").
+    this.system.combat.bonusNuitPheromones = calendrier.bonusNuitPheromones;
 
     this.system.combat.vitesseSol = carac.aile.value;
     // Livre de base p.196 : vitesse en vol = Aile + 2 (le kit de démarrage,
@@ -55,12 +91,22 @@ export default class IntreActor extends Actor {
     // capacités pour améliorer la couleur d'un tirage. Égal à Chrysalide +
     // Métabolisme + Souillure.
     this.system.combat.fluide.max =
-      carac.chitine.competences.chrysalide.value + carac.temperature.competences.metabolisme.value + (this.system.combat.souillure || 0);
+      carac.chitine.competences.chrysalide.value + Math.max(0, metabolismeEffectif) + (this.system.combat.souillure || 0);
     if (this.system.combat.fluide.value > this.system.combat.fluide.max) {
       this.system.combat.fluide.value = this.system.combat.fluide.max;
     }
 
     this.system.malusBlessuresInternes = -(this.system.combat.blessures.blessureinterne.value || 0);
+  }
+
+  /**
+   * Diapause hivernale (livre p.278) : flag purement déclaratif, basculé à
+   * la main par le Deus (widget Calendrier ou `calendrier.js`). Ne bloque
+   * ni ne modifie aucun calcul par elle-même.
+   * @returns {boolean}
+   */
+  estEnDiapause() {
+    return this.getFlag("insectopia", "diapause") ?? false;
   }
 
   /**

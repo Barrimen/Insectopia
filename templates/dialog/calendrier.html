@@ -1,0 +1,50 @@
+<div class="insectopia-calendrier">
+  <section class="calendrier-date">
+    <p>
+      <strong>Kumi :</strong> {{etat.kumiLabel}} (lonas {{etat.lonasDansKumi}}/{{etat.lonasParKumi}})
+      {{#if etat.estHiver}}<span class="calendrier-badge calendrier-badge-hiver" title="Diapause probable, sauf exceptions (Sang-chaud, peuples septentrionaux)">❄ diapause probable</span>{{/if}}
+    </p>
+    <p><strong>Lonas :</strong> {{etat.lonasTotal}} — <strong>Jour :</strong> {{etat.jourDansLonas}}/28</p>
+    <p><strong>Moment :</strong> {{#if etat.estNuit}}Nuit{{else}}Jour{{/if}}
+      {{#if etat.estNuit}}<span class="calendrier-badge" title="House Rule non chiffrée par le livre (p.278)">🌙 Phéromones +{{etat.bonusNuitPheromones}}</span>{{/if}}
+    </p>
+  </section>
+
+  <section class="calendrier-meteo">
+    <p><strong>Météo :</strong> {{etat.meteo.label}} ({{etat.meteo.temperature}}, modificateur {{etat.meteo.modificateur}} sur Activité/Métabolisme)</p>
+    {{#if isGM}}
+      <div class="form-group">
+        <label for="calendrier-meteo">Changer la météo actuelle</label>
+        <select id="calendrier-meteo" name="calendrier-meteo">
+          {{#each meteoOptions}}
+            <option value="{{this.key}}" {{#if this.selectionnee}}selected{{/if}}>{{this.label}} ({{this.temperature}}, {{this.modificateur}})</option>
+          {{/each}}
+        </select>
+      </div>
+      <p class="calendrier-note">La météo n'est pas déduite automatiquement du kumi (le livre laisse ce choix au Deus, p.278) — à ajuster manuellement selon le scénario.</p>
+    {{/if}}
+  </section>
+
+  {{#if isGM}}
+    <section class="calendrier-controles">
+      <button type="button" data-action="jour-suivant"><i class="fas fa-forward"></i> Jour suivant</button>
+      <button type="button" data-action="lonas-suivant"><i class="fas fa-forward-fast"></i> Lonas suivant</button>
+      <button type="button" data-action="kumi-suivant"><i class="fas fa-snowflake"></i> Forcer kumi suivant</button>
+    </section>
+
+    <section class="calendrier-diapause">
+      <h3>Diapause hivernale (gestion manuelle)</h3>
+      <p class="calendrier-note">Aucun effet automatique — coche uniquement les personnages que tu considères en diapause ce kumi.</p>
+      <ul>
+        {{#each acteurs}}
+          <li>
+            <label>
+              <input type="checkbox" data-action="toggle-diapause" data-actor-id="{{this.id}}" {{#if this.diapause}}checked{{/if}} />
+              {{this.name}}
+            </label>
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+</div>

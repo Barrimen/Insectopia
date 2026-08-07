@@ -3,6 +3,9 @@ import { Blattes } from "./module/common/roll.js";
 import registerHandlebarsHelpers from "./module/common/helpers.js";
 import registerSystemSettings from "./module/common/settings.js";
 import registerHooks from "./module/common/hooks.js";
+import { registerCalendrierHooks } from "./module/common/calendrier.js";
+import CalendrierApp from "./module/dialog/calendrier-app.js";
+import { registerSouillureCalendarHook } from "./module/combat/souillure.js";
 
 import IntreActor from "./module/actor/base-actor.js";
 import IntreActorSheet from "./module/actor/sheet/intre-sheet.js";
@@ -34,26 +37,36 @@ Hooks.once("init", function () {
   registerHandlebarsHelpers();
   registerSystemSettings();
   registerHooks();
+  registerCalendrierHooks();
+  registerSouillureCalendarHook();
 });
 
 // Bouton de contrôle "Piocher des Blattes" (tirage libre pour le Deus).
 Hooks.on("init", () => {
   Hooks.on("getSceneControlButtons", (controls) => {
-    if (!game.user.isGM) return;
+    const tools = {
+      calendrier: {
+        name: "calendrier",
+        title: "Calendrier d'Entoma",
+        icon: "fas fa-calendar-alt",
+        button: true,
+        onChange: () => new CalendrierApp().render(true),
+      },
+    };
+    if (game.user.isGM) {
+      tools.piocherblattes = {
+        name: "piocherblattes",
+        title: "Piocher des Blattes",
+        icon: "fas fa-sack",
+        button: true,
+        onChange: () => new Blattes(undefined, ROLL_TYPE.SIMPLE, undefined, {}).openDialog(),
+      };
+    }
     controls.insectopia = {
       name: "insectopia",
       title: "Insectopia",
       icon: "fas fa-bug",
-      tools: {
-        piocherblattes: {
-          name: "piocherblattes",
-          title: "Piocher des Blattes",
-          icon: "fas fa-sack",
-          button: true,
-          onChange: () => new Blattes(undefined, ROLL_TYPE.SIMPLE, undefined, {}).openDialog(),
-        },
-      },
+      tools,
     };
   });
 });
-
